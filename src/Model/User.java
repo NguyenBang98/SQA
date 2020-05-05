@@ -7,8 +7,8 @@ public class User {
     private String pass;
     private String mail;
 
-    public User(String name, String pass) {
-        this.name = name;
+    public User(String code, String pass) {
+        this.code = code;
         this.pass = pass;
     }
 

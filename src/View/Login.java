@@ -5,41 +5,32 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import Controller.LogInDAO;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-public class Login extends javax.swing.JFrame implements ActionListener {
-
-    private User user;
-
+public class Login extends JFrame implements ActionListener {
+    
     public Login() {
         super("Login");
         initComponents();
         txtPass.setEchoChar('*');
-        btnLogin.addActionListener(this);
-        this.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
-                System.exit(0);
-            }
-        });
-
     }
-
+    
     public void actionPerformed(ActionEvent e) {
     }
-
+    
     public User getUser() {
-        user = new User(txtUsername.getText().toString(), String.valueOf(txtPass.getPassword()));
+        User user = new User(txtUsername.getText().toString(), String.valueOf(txtPass.getPassword()));
         return user;
     }
-
+    
     public void showMessage(String msg) {
         JOptionPane.showMessageDialog(this, msg);
     }
-
-    public void addLoginListener(ActionListener log) {
-        btnLogin.addActionListener(log);
-    }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -57,6 +48,11 @@ public class Login extends javax.swing.JFrame implements ActionListener {
         jLabel2.setText("Mật khẩu");
 
         btnLogin.setText("Đăng nhập");
+        btnLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoginActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -97,8 +93,23 @@ public class Login extends javax.swing.JFrame implements ActionListener {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+        LogInDAO login = new LogInDAO();
+        try {
+            if (login.checkUser(getUser())) {
+                MainFrame mf = new MainFrame();
+                mf.setVisible(true);
+                mf.setLocationRelativeTo(null);
+            } else {
+                showMessage("Invalid Username/Pass");
+            }
+        } catch (Exception ex) {
+        }
+        
+    }//GEN-LAST:event_btnLoginActionPerformed
+    
     public static void main(String args[]) {
-
+        
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 Login login = new Login();
