@@ -1,24 +1,45 @@
 package View;
 
+import Model.User;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import javax.swing.JOptionPane;
 
-public class Login extends javax.swing.JFrame {
-    
+public class Login extends javax.swing.JFrame implements ActionListener {
+
+    private User user;
+
     public Login() {
         super("Login");
         initComponents();
         txtPass.setEchoChar('*');
-        btnLogin.addActionListener((ActionListener) this);
+        btnLogin.addActionListener(this);
         this.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 System.exit(0);
             }
         });
-        
+
     }
-    
+
+    public void actionPerformed(ActionEvent e) {
+    }
+
+    public User getUser() {
+        user = new User(txtUsername.getText().toString(), String.valueOf(txtPass.getPassword()));
+        return user;
+    }
+
+    public void showMessage(String msg) {
+        JOptionPane.showMessageDialog(this, msg);
+    }
+
+    public void addLoginListener(ActionListener log) {
+        btnLogin.addActionListener(log);
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -77,10 +98,12 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     public static void main(String args[]) {
-        
+
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Login().setVisible(true);
+                Login login = new Login();
+                login.setVisible(true);
+                login.setLocationRelativeTo(null);
             }
         });
     }

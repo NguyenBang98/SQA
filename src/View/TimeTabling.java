@@ -569,7 +569,7 @@ public class TimeTabling extends javax.swing.JFrame implements ActionListener {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cbGroupLabActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbGroupLabActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_cbGroupLabActionPerformed
 
 

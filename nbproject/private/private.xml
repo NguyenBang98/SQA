@@ -3,9 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/White_Tiger/Documents/NetBeansProjects/TimeTabling/src/View/TimeTabling.java</file>
-            <file>file:/C:/Users/White_Tiger/Documents/NetBeansProjects/TimeTabling/src/Controller/TimeTablingDAO.java</file>
-            <file>file:/C:/Users/White_Tiger/Documents/NetBeansProjects/TimeTabling/src/View/TimeTable.java</file>
+            <file>file:/C:/Users/White_Tiger/Desktop/SQA/src/Controller/TimeTablingDAO.java</file>
+            <file>file:/C:/Users/White_Tiger/Desktop/SQA/src/Controller/TimeTablingController.java</file>
+            <file>file:/C:/Users/White_Tiger/Desktop/SQA/src/View/Login.java</file>
+            <file>file:/C:/Users/White_Tiger/Desktop/SQA/src/Controller/LogInController.java</file>
+            <file>file:/C:/Users/White_Tiger/Desktop/SQA/src/View/TimeTabling.java</file>
         </group>
     </open-files>
 </project-private>

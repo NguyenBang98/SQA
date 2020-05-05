@@ -39,7 +39,7 @@ public class LogInController {
 
     public boolean checkUser(User user) throws Exception {
 
-        String query = "Select * FROM users WHERE name ='" + user.getMail()
+        String query = "Select * FROM users WHERE name ='" + user.getCode()
                 + "' AND pass ='" + user.getPass() + "'";
         try {
             Class.forName(Utils.Parameters.dbClass);
