@@ -1,5 +1,6 @@
 package View;
 
+import Controller.TimeTablingController;
 import Controller.TimeTablingDAO;
 import Model.Room;
 import Model.Subject;
@@ -12,7 +13,9 @@ public class TimeTabling extends javax.swing.JFrame implements ActionListener {
 
     public TimeTabling() {
         initComponents();
-        btnSave.addActionListener(this);
+        jPanel1.setVisible(false);
+        TimeTablingController con = new TimeTablingController(this);
+        btnSave.addActionListener((ActionListener) con);
         
         TimeTablingDAO db = new TimeTablingDAO();
         for(Subject i : db.listSubject()){
@@ -294,33 +297,26 @@ public class TimeTabling extends javax.swing.JFrame implements ActionListener {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(30, 30, 30)
-                                .addComponent(cbTimeLab, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(cbTimeLab, 0, 95, Short.MAX_VALUE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(46, 46, 46)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jCheckBox39)
                                     .addComponent(jCheckBox31))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(0, 0, Short.MAX_VALUE)
-                                        .addComponent(jCheckBox32))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jCheckBox40)
-                                        .addGap(0, 9, Short.MAX_VALUE)))))))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jCheckBox33)
-                    .addComponent(jCheckBox41))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(2, 2, 2)
-                        .addComponent(jCheckBox34))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jCheckBox42)))
+                                    .addComponent(jCheckBox32, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jCheckBox40, javax.swing.GroupLayout.Alignment.TRAILING))))))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jCheckBox41)
+                    .addComponent(jCheckBox33))
+                .addGap(2, 2, 2)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jCheckBox34)
+                    .addComponent(jCheckBox42))
+                .addGap(16, 16, 16)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jCheckBox35)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -329,11 +325,12 @@ public class TimeTabling extends javax.swing.JFrame implements ActionListener {
                         .addComponent(jCheckBox37)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jCheckBox38))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(2, 2, 2)
                         .addComponent(jCheckBox43)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jCheckBox44)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jCheckBox45)))
                 .addGap(45, 45, 45))
         );

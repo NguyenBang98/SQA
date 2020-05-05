@@ -1,16 +1,16 @@
 package Model;
 
-public class Room {
+public class RoomLab {
 
     private String roomID;
     private String nameRoom;
 
-    public Room(String roomID, String nameRoom) {
+    public RoomLab(String roomID, String nameRoom) {
         this.roomID = roomID;
         this.nameRoom = nameRoom;
     }
 
-    public Room() {
+    public RoomLab() {
     }
 
     public String getRoomID() {

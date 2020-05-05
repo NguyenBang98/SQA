@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.Room;
+import Model.RoomLab;
 import Model.Subject;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -55,6 +56,26 @@ public class TimeTablingDAO {
                 room.setRoomID(rs.getString("RoomID"));
                 room.setNameRoom(rs.getString("NameRoom"));
                 result.add(room);
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+    
+    public ArrayList<RoomLab> listRoomLab() {
+        ArrayList<RoomLab> result = new ArrayList<RoomLab>();
+        String sql = "SELECT * FROM roomlab";
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                RoomLab roomLab = new RoomLab();
+                roomLab.setRoomID(rs.getString("RoomID"));
+                roomLab.setNameRoom(rs.getString("NameRoom"));
+                result.add(roomLab);
 
             }
         } catch (Exception e) {
