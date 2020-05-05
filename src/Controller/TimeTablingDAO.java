@@ -8,7 +8,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-
 public class TimeTablingDAO {
 
     private static Connection conn;
@@ -53,10 +52,10 @@ public class TimeTablingDAO {
 
             while (rs.next()) {
                 Room room = new Room();
-                while (rs.next()) {
-                    room.setRoomID(rs.getString("RoomID"));
-                    result.add(room);
-                }
+                room.setRoomID(rs.getString("RoomID"));
+                room.setNameRoom(rs.getString("NameRoom"));
+                result.add(room);
+
             }
         } catch (Exception e) {
             e.printStackTrace();

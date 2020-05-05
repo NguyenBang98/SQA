@@ -1,6 +1,7 @@
 package View;
 
 import Controller.TimeTablingDAO;
+import Model.Room;
 import Model.Subject;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,6 +17,9 @@ public class TimeTabling extends javax.swing.JFrame implements ActionListener {
         TimeTablingDAO db = new TimeTablingDAO();
         for(Subject i : db.listSubject()){
             cbListSubject.addItem(i.getName().toString());
+        }
+        for(Room i : db.listRoom()){
+            cbListRoom.addItem(i.getNameRoom().toString());
         }
         
     }
