@@ -12,11 +12,7 @@ public class TimeTabling extends javax.swing.JFrame implements ActionListener {
     public TimeTabling() {
         initComponents();
         btnSave.addActionListener(this);
-        this.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
-                System.exit(0);
-            }
-        });
+        
         TimeTablingDAO db = new TimeTablingDAO();
         for(Subject i : db.listSubject()){
             cbListSubject.addItem(i.getName().toString());

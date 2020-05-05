@@ -1,5 +1,6 @@
 package View;
 
+import Controller.MainFrameController;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -7,21 +8,11 @@ import java.awt.event.WindowEvent;
 
 public class MainFrame extends javax.swing.JFrame implements ActionListener {
 
-    /**
-     * Creates new form MainFrame
-     */
     public MainFrame() {
         initComponents();
-        btnTimeTabling.addActionListener(this);
-        this.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
-                System.exit(0);
-            }
-        });
-    }
-    
-    public void addCreateTimeTablingListener(ActionListener log) {
-        btnTimeTabling.addActionListener(log);
+        MainFrameController con = new MainFrameController(this);
+        btnTimeTabling.addActionListener(con);
+
     }
 
     @SuppressWarnings("unchecked")
@@ -69,6 +60,6 @@ public class MainFrame extends javax.swing.JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        
+
     }
 }

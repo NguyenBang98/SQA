@@ -7,9 +7,32 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
 
-public class LogInDAO {
+public class LogInController {
 
-    public LogInDAO() {
+    private Login login;
+    private User user;
+
+    public LogInController(Login login) {
+        this.login = login;
+        login.addLoginListener(new LoginListener());
+    }
+    
+    class LoginListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            try {
+                user = login.getUser();
+                if(checkUser(user)){
+                    MainFrame mf = new MainFrame();
+                    mf.setVisible(true);
+                    mf.setLocationRelativeTo(null);
+                    login.dispose();
+                }else{
+                    login.showMessage("Invalid username and/or password!");
+                }                
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
     }
 
     public boolean checkUser(User user) throws Exception {

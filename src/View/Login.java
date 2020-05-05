@@ -1,36 +1,36 @@
 package View;
 
+import Controller.LogInController;
 import Model.User;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import Controller.LogInDAO;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-public class Login extends JFrame implements ActionListener {
-    
+public class Login extends javax.swing.JFrame implements ActionListener {
+
+    public User user;
+
     public Login() {
         super("Login");
         initComponents();
-        txtPass.setEchoChar('*');
+        btnLogin.addActionListener(this);
     }
-    
-    public void actionPerformed(ActionEvent e) {
-    }
-    
+
     public User getUser() {
-        User user = new User(txtUsername.getText().toString(), String.valueOf(txtPass.getPassword()));
+        user = new User(txtUsername.getText(), String.valueOf(txtPass.getPassword()));
         return user;
     }
-    
+
     public void showMessage(String msg) {
         JOptionPane.showMessageDialog(this, msg);
     }
-    
+
+    public void addLoginListener(ActionListener log) {
+        btnLogin.addActionListener(log);
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -48,11 +48,6 @@ public class Login extends JFrame implements ActionListener {
         jLabel2.setText("Mật khẩu");
 
         btnLogin.setText("Đăng nhập");
-        btnLogin.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLoginActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -61,58 +56,44 @@ public class Login extends JFrame implements ActionListener {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(142, 142, 142)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2))
-                        .addGap(83, 83, 83)
+                        .addGap(168, 168, 168)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(80, 80, 80)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtUsername)
-                            .addComponent(txtPass, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)))
+                            .addComponent(txtPass, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(239, 239, 239)
+                        .addGap(258, 258, 258)
                         .addComponent(btnLogin)))
-                .addContainerGap(183, Short.MAX_VALUE))
+                .addContainerGap(221, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(103, 103, 103)
+                .addGap(132, 132, 132)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(25, 25, 25)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(95, 95, 95)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 135, Short.MAX_VALUE)
                 .addComponent(btnLogin)
-                .addContainerGap(167, Short.MAX_VALUE))
+                .addGap(127, 127, 127))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-        LogInDAO login = new LogInDAO();
-        try {
-            if (login.checkUser(getUser())) {
-                MainFrame mf = new MainFrame();
-                mf.setVisible(true);
-                mf.setLocationRelativeTo(null);
-            } else {
-                showMessage("Invalid Username/Pass");
-            }
-        } catch (Exception ex) {
-        }
-        
-    }//GEN-LAST:event_btnLoginActionPerformed
-    
     public static void main(String args[]) {
-        
+
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 Login login = new Login();
+                LogInController con = new LogInController(login);
                 login.setVisible(true);
                 login.setLocationRelativeTo(null);
             }
@@ -126,4 +107,9 @@ public class Login extends JFrame implements ActionListener {
     private javax.swing.JPasswordField txtPass;
     private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+    }
 }
