@@ -18,6 +18,7 @@ public class LogInController {
     }
     
     class LoginListener implements ActionListener {
+        @Override
         public void actionPerformed(ActionEvent e) {
             try {
                 user = login.getUser();
@@ -30,7 +31,6 @@ public class LogInController {
                     login.showMessage("Invalid username and/or password!");
                 }                
             } catch (Exception ex) {
-                ex.printStackTrace();
             }
         }
     }

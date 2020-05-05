@@ -2,12 +2,9 @@ package View;
 
 import Controller.TimeTablingController;
 import Controller.TimeTablingDAO;
-import Model.Room;
-import Model.Subject;
+import Model.Group;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 public class TimeTabling extends javax.swing.JFrame implements ActionListener {
 
@@ -18,13 +15,19 @@ public class TimeTabling extends javax.swing.JFrame implements ActionListener {
         btnSave.addActionListener((ActionListener) con);
         
         TimeTablingDAO db = new TimeTablingDAO();
-        for(Subject i : db.listSubject()){
-            cbListSubject.addItem(i.getName().toString());
-        }
-        for(Room i : db.listRoom()){
-            cbListRoom.addItem(i.getNameRoom().toString());
-        }
+        db.listSubject().forEach((i) -> {
+            cbListSubject.addItem(i.getName());
+        });
+        db.listRoom().forEach((i) -> {
+            cbListRoom.addItem(i.getNameRoom());
+        });
         
+    }
+    
+    public Group setGroup(){
+        Group group = new Group();
+        
+        return group;
     }
 
     public void addSaveListener(ActionListener log) {

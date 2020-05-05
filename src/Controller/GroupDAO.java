@@ -15,8 +15,7 @@ public class GroupDAO {
             try {
                 Class.forName(Utils.Parameters.dbClass);
                 con = DriverManager.getConnection(Utils.Parameters.dbUrl, Utils.Parameters.userName, Utils.Parameters.password);
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (ClassNotFoundException | SQLException e) {
             }
         }
     }
@@ -29,7 +28,7 @@ public class GroupDAO {
             ps.setInt(1, group.getGroupID());
             ps.setString(2, group.getSubject().getSubjectID());
             ps.setString(3, group.getRoom().getRoomID());
-        } catch (Exception e) {
+        } catch (SQLException e) {
         }
     }
 
