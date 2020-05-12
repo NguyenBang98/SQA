@@ -77,15 +77,15 @@ public class GroupDAO {
 
     public Room searchroom(String key) {
         Room result = new Room();
-        String sql = "SELECT * FROM room WHERE RoomID = ?";
+        String sql = "SELECT * FROM room WHERE NameRoom = ?";
         Connection conn = null;
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, "%" + key + "%");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-
                 result.setRoomID(rs.getString("RoomID"));
+                result.setNameRoom(rs.getString("NameRoom"));
             }
         } catch (Exception e) {
         }

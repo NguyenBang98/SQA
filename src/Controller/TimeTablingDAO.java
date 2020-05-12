@@ -1,5 +1,6 @@
 package Controller;
 
+import Model.Group;
 import Model.Room;
 import Model.RoomLab;
 import Model.Subject;
@@ -82,5 +83,14 @@ public class TimeTablingDAO {
             e.printStackTrace();
         }
         return result;
+    }
+    
+    public void saveGroup(Group group){
+        String sql = "INSERT INTO group()";
+        PreparedStatement pstm = null;
+        try {
+            pstm = conn.prepareStatement(sql);
+        } catch (Exception e) {
+        }
     }
 }

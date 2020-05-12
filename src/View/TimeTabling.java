@@ -1,19 +1,27 @@
 package View;
 
+import Controller.GroupDAO;
 import Controller.TimeTablingController;
 import Controller.TimeTablingDAO;
 import Model.Group;
+import Model.Room;
+import Model.RoomLab;
+import Model.Subject;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class TimeTabling extends javax.swing.JFrame implements ActionListener {
+
+    Room room;
+    Subject subject;
+    RoomLab roomLab;
 
     public TimeTabling() {
         initComponents();
         jPanel1.setVisible(false);
         TimeTablingController con = new TimeTablingController(this);
         btnSave.addActionListener((ActionListener) con);
-        
+
         TimeTablingDAO db = new TimeTablingDAO();
         db.listSubject().forEach((i) -> {
             cbListSubject.addItem(i.getName());
@@ -21,11 +29,16 @@ public class TimeTabling extends javax.swing.JFrame implements ActionListener {
         db.listRoom().forEach((i) -> {
             cbListRoom.addItem(i.getNameRoom());
         });
-        
+
     }
-    
-    public Group setGroup(){
+
+    public Group setGroup() {
         Group group = new Group();
+        GroupDAO dao = new GroupDAO();
+        group.setGroupID(Integer.parseInt(cbListGroup.getSelectedItem().toString()));
+        group.setSubject(dao.searchSubject(cbListSubject.getSelectedItem().toString()));
+        group.setRoom(dao.searchroom(cbListRoom.getSelectedItem().toString()));
+        group.setDay(cbDay.getSelectedItem().toString());
         
         return group;
     }
@@ -82,7 +95,7 @@ public class TimeTabling extends javax.swing.JFrame implements ActionListener {
         cbListGroup = new javax.swing.JComboBox<>();
         btnSave = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cbDay = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
@@ -206,13 +219,13 @@ public class TimeTabling extends javax.swing.JFrame implements ActionListener {
 
         jLabel7.setText("Nhóm");
 
-        cbListGroup.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nhóm 2" }));
+        cbListGroup.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4" }));
 
         btnSave.setText("Lưu");
 
         jLabel1.setText("Thứ");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6" }));
+        cbDay.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6" }));
 
         jButton1.setText("Xem TKB");
 
@@ -220,7 +233,7 @@ public class TimeTabling extends javax.swing.JFrame implements ActionListener {
 
         jLabel9.setText("Tổ thực hành");
 
-        cbGroupLab.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tổ 1", "Tổ 2", "Tổ 3", "Tổ 4" }));
+        cbGroupLab.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4" }));
         cbGroupLab.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbGroupLabActionPerformed(evt);
@@ -283,8 +296,8 @@ public class TimeTabling extends javax.swing.JFrame implements ActionListener {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel9)
-                                .addGap(36, 36, 36)
-                                .addComponent(cbGroupLab, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addComponent(cbGroupLab, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel11)
@@ -300,7 +313,7 @@ public class TimeTabling extends javax.swing.JFrame implements ActionListener {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(30, 30, 30)
-                                .addComponent(cbTimeLab, 0, 95, Short.MAX_VALUE))
+                                .addComponent(cbTimeLab, 0, 110, Short.MAX_VALUE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(46, 46, 46)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -399,6 +412,7 @@ public class TimeTabling extends javax.swing.JFrame implements ActionListener {
                     .addComponent(cbListSubject, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(cbListGroup, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(cbListTime1, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(cbListRoom, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(cbListTime2, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -442,7 +456,7 @@ public class TimeTabling extends javax.swing.JFrame implements ActionListener {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jCheckBox10))
                                     .addComponent(jCheckBox15)
-                                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(cbDay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel6)
                                 .addGap(18, 18, 18)
@@ -476,8 +490,7 @@ public class TimeTabling extends javax.swing.JFrame implements ActionListener {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(jCheckBox29)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jCheckBox30))))))
-                    .addComponent(cbListGroup, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(jCheckBox30)))))))
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(117, 117, 117)
@@ -497,7 +510,7 @@ public class TimeTabling extends javax.swing.JFrame implements ActionListener {
                     .addComponent(cbListSubject, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbSubject)
                     .addComponent(jLabel1)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbDay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -569,12 +582,13 @@ public class TimeTabling extends javax.swing.JFrame implements ActionListener {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cbGroupLabActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbGroupLabActionPerformed
-        
+
     }//GEN-LAST:event_cbGroupLabActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSave;
+    private javax.swing.JComboBox<String> cbDay;
     private javax.swing.JComboBox<String> cbGroupLab;
     private javax.swing.JComboBox<String> cbListGroup;
     private javax.swing.JComboBox<String> cbListRoom;
@@ -629,7 +643,6 @@ public class TimeTabling extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JCheckBox jCheckBox7;
     private javax.swing.JCheckBox jCheckBox8;
     private javax.swing.JCheckBox jCheckBox9;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox8;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -650,8 +663,7 @@ public class TimeTabling extends javax.swing.JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        
+
     }
 
-    
 }

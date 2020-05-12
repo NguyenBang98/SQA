@@ -8,14 +8,16 @@ public class GroupLab {
     private int team;
     private RoomLab roomLab;
     private Subject subject;
-    private LocalDateTime day;
+    private String day;
+    private String hour;
 
-    public GroupLab(int groupID, int team, RoomLab roomLab, Subject subject, LocalDateTime day) {
+    public GroupLab(int groupID, int team, RoomLab roomLab, Subject subject, String day, String hour) {
         this.groupID = groupID;
         this.team = team;
         this.roomLab = roomLab;
         this.subject = subject;
         this.day = day;
+        this.hour = hour;
     }
 
     public GroupLab() {
@@ -53,12 +55,19 @@ public class GroupLab {
         this.subject = subject;
     }
 
-    public LocalDateTime getDay() {
+    public String getDay() {
         return day;
     }
 
-    public void setDay(LocalDateTime day) {
+    public void setDay(String day) {
         this.day = day;
     }
 
+    public String getHour() {
+        return hour;
+    }
+
+    public void setHour(String hour) {
+        this.hour = hour;
+    }
 }

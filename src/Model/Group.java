@@ -7,16 +7,18 @@ public class Group {
     private int groupID;
     private Room room;
     private Subject subject;
-    private LocalDateTime day;
+    private String day;
+    private String hour;
 
     public Group() {
     }
 
-    public Group(Room room, Subject subject, int groupID, LocalDateTime day) {
+    public Group(int groupID, Room room, Subject subject, String day, String hour) {
+        this.groupID = groupID;
         this.room = room;
         this.subject = subject;
-        this.groupID = groupID;
         this.day = day;
+        this.hour = hour;
     }
 
     public Room getRoom() {
@@ -43,12 +45,19 @@ public class Group {
         this.groupID = groupID;
     }
 
-    public LocalDateTime getDay() {
+    public String getDay() {
         return day;
     }
 
-    public void setDay(LocalDateTime day) {
+    public void setDay(String day) {
         this.day = day;
     }
 
+    public String getHour() {
+        return hour;
+    }
+
+    public void setHour(String hour) {
+        this.hour = hour;
+    }
 }
