@@ -8,17 +8,19 @@ public class Group {
     private Room room;
     private Subject subject;
     private String day;
-    private String hour;
+    private String hour1;
+    private String hour2;
 
     public Group() {
     }
 
-    public Group(int groupID, Room room, Subject subject, String day, String hour) {
+    public Group(int groupID, Room room, Subject subject, String day, String hour1, String hour2) {
         this.groupID = groupID;
         this.room = room;
         this.subject = subject;
         this.day = day;
-        this.hour = hour;
+        this.hour1 = hour1;
+        this.hour2 = hour2;
     }
 
     public Room getRoom() {
@@ -53,11 +55,21 @@ public class Group {
         this.day = day;
     }
 
-    public String getHour() {
-        return hour;
+    public String getHour1() {
+        return hour1;
     }
 
-    public void setHour(String hour) {
-        this.hour = hour;
+    public void setHour1(String hour1) {
+        this.hour1 = hour1;
     }
+
+    public String getHour2() {
+        return hour2;
+    }
+
+    public void setHour2(String hour2) {
+        this.hour2 = hour2;
+    }
+    
+    
 }

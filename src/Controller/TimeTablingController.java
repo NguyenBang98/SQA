@@ -10,7 +10,7 @@ import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public class TimeTablingController {
+public class TimeTablingController implements ActionListener{
 
     private Group group;
     private TimeTabling tb;
@@ -18,6 +18,11 @@ public class TimeTablingController {
     public TimeTablingController(TimeTabling tb) {
         this.tb = tb;
         tb.addSaveListener(new SaveListener());
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        
     }
 
     class SaveListener implements ActionListener {

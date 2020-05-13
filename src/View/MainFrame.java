@@ -7,10 +7,10 @@ import java.awt.event.ActionListener;
 public class MainFrame extends javax.swing.JFrame implements ActionListener {
 
     public MainFrame() {
+        super("Main home");
         initComponents();
         MainFrameController con = new MainFrameController(this);
-        btnTimeTabling.addActionListener(con);
-
+        btnTimeTabling.addActionListener(con);       
     }
 
     @SuppressWarnings("unchecked")

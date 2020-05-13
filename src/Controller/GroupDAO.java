@@ -58,7 +58,7 @@ public class GroupDAO {
 
     public Subject searchSubject(String key) {
         Subject result = new Subject();
-        String sql = "SELECT * FROM subject WHERE SubjectID = ?";
+        String sql = "SELECT * FROM subject WHERE Name = ?";
         Connection conn = null;
         try {
             PreparedStatement ps = conn.prepareStatement(sql);

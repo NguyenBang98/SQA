@@ -5,6 +5,7 @@ public class TimeTable extends javax.swing.JFrame {
 
     
     public TimeTable() {
+        super("Timetable");
         initComponents();
     }
 

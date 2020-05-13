@@ -5,12 +5,13 @@ import View.MainFrame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class MainFrameController implements ActionListener{
+public class MainFrameController implements ActionListener {
 
     private MainFrame mainF;
 
     public MainFrameController(MainFrame mainF) {
         this.mainF = mainF;
+
     }
 
     @Override
