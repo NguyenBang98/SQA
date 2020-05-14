@@ -53,7 +53,7 @@ public class TimeTablingDAO {
 
             while (rs.next()) {
                 Room room = new Room();
-                room.setRoomID(rs.getString("RoomID"));
+                room.setRoomID(rs.getInt("RoomID"));
                 room.setNameRoom(rs.getString("NameRoom"));
                 result.add(room);
 
@@ -73,7 +73,7 @@ public class TimeTablingDAO {
 
             while (rs.next()) {
                 RoomLab roomLab = new RoomLab();
-                roomLab.setRoomID(rs.getString("RoomLabID"));
+                roomLab.setRoomID(rs.getInt("RoomLabID"));
                 roomLab.setNameRoom(rs.getString("NameRoomLab"));
                 result.add(roomLab);
 

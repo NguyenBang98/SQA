@@ -9,17 +9,16 @@ public class GroupLab {
     private RoomLab roomLab;
     private Subject subject;
     private String day;
-    private String hour1;
-    private String hour2;
+    private String hour;
 
-    public GroupLab(int groupID, int team, RoomLab roomLab, Subject subject, String day, String hour1, String hour2) {
+    public GroupLab(int groupID, int team, RoomLab roomLab, Subject subject, String day, String hour) {
         this.groupID = groupID;
         this.team = team;
         this.roomLab = roomLab;
         this.subject = subject;
         this.day = day;
-        this.hour1 = hour1;
-        this.hour2 = hour2;
+        this.hour = hour;
+        
     }
 
     public GroupLab() {
@@ -65,20 +64,12 @@ public class GroupLab {
         this.day = day;
     }
 
-    public String getHour1() {
-        return hour1;
+    public String getHour() {
+        return hour;
     }
 
-    public void setHour1(String hour1) {
-        this.hour1 = hour1;
-    }
-
-    public String getHour2() {
-        return hour2;
-    }
-
-    public void setHour2(String hour2) {
-        this.hour2 = hour2;
+    public void setHour(String hour) {
+        this.hour = hour;
     }
 
 }

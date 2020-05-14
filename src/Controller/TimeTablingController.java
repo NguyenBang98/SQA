@@ -7,8 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class TimeTablingController {
-
-    private Group group;
+   
     private TimeTabling tb;
 
     public TimeTablingController(TimeTabling tb) {
@@ -22,6 +21,7 @@ public class TimeTablingController {
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            Group group;
             
         }
         

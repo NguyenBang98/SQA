@@ -1,7 +1,9 @@
 package Controller;
 
 import Model.Group;
+import Model.GroupLab;
 import Model.Room;
+import Model.RoomLab;
 import Model.Subject;
 import java.sql.*;
 import java.util.ArrayList;
@@ -21,13 +23,32 @@ public class GroupDAO {
     }
 
     public void saveGroup(Group group) {
-        String sql = "INSERT INTO groups_subject(GroupID, SubjectID, RoomID) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO groups_subject(GroupID, SubjectID, RoomID, Days, hour1, hour2) VALUES (?, ?, ?, ?, ?, ?)";
         PreparedStatement ps = null;
         try {
             ps = con.prepareStatement(sql);
             ps.setInt(1, group.getGroupID());
             ps.setString(2, group.getSubject().getSubjectID());
-            ps.setString(3, group.getRoom().getRoomID());
+            ps.setInt(3, group.getRoom().getRoomID());
+            ps.setString(4, group.getDay());
+            ps.setString(5, group.getHour1());
+            ps.setString(6, group.getHour2());
+        } catch (SQLException e) {
+        }
+    }
+
+    public void saveGroupLab(GroupLab lab) {
+        String sql = "INSERT INTO group(team, GroupID, SubjectID, RoomLabID, Days, hour1) VALUES (?, ?, ?, ?, ?, ?)";
+        PreparedStatement ps = null;
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, lab.getTeam());
+            ps.setInt(2, lab.getGroupID());
+            ps.setString(3, lab.getSubject().getSubjectID());
+            ps.setInt(4, lab.getRoomLab().getRoomID());
+            ps.setString(5, lab.getDay());
+            ps.setString(6, lab.getHour());
+            
         } catch (SQLException e) {
         }
     }
@@ -49,8 +70,7 @@ public class GroupDAO {
 
                 result.add(group);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
         }
         return result;
     }
@@ -69,7 +89,7 @@ public class GroupDAO {
                 result.setName(rs.getString("Name"));
                 result.setCredits(rs.getInt("Credit"));
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
         }
         return result;
     }
@@ -77,9 +97,9 @@ public class GroupDAO {
     public Subject searchSubjectID(String key) {
         Subject result = new Subject();
         String sql = "SELECT * FROM subject WHERE SubjectID = ?";
-        Connection conn = null;
+        
         try {
-            PreparedStatement ps = conn.prepareStatement(sql);
+            PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, "%" + key + "%");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -88,7 +108,7 @@ public class GroupDAO {
                 result.setName(rs.getString("Name"));
                 result.setCredits(rs.getInt("Credit"));
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
         }
         return result;
     }
@@ -96,16 +116,33 @@ public class GroupDAO {
     public Room searchroom(String key) {
         Room result = new Room();
         String sql = "SELECT * FROM room WHERE NameRoom = ?";
-        Connection conn = null;
+        
         try {
-            PreparedStatement ps = conn.prepareStatement(sql);
+            PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, "%" + key + "%");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                result.setRoomID(rs.getString("RoomID"));
+                result.setRoomID(rs.getInt("RoomID"));
                 result.setNameRoom(rs.getString("NameRoom"));
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
+        }
+        return result;
+    }
+    
+    public RoomLab searchroomLab(String key) {
+        RoomLab result = new RoomLab();
+        String sql = "SELECT * FROM roomlab WHERE NameRoom = ?";
+        
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, "%" + key + "%");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                result.setRoomID(rs.getInt("RoomLabID"));
+                result.setNameRoom(rs.getString("NameRoom"));
+            }
+        } catch (SQLException e) {
         }
         return result;
     }

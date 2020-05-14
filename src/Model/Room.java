@@ -2,10 +2,10 @@ package Model;
 
 public class Room {
 
-    private String roomID;
+    private int roomID;
     private String nameRoom;
 
-    public Room(String roomID, String nameRoom) {
+    public Room(int roomID, String nameRoom) {
         this.roomID = roomID;
         this.nameRoom = nameRoom;
     }
@@ -13,11 +13,11 @@ public class Room {
     public Room() {
     }
 
-    public String getRoomID() {
+    public int getRoomID() {
         return roomID;
     }
 
-    public void setRoomID(String roomID) {
+    public void setRoomID(int roomID) {
         this.roomID = roomID;
     }
 
