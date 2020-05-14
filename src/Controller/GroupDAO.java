@@ -44,7 +44,6 @@ public class GroupDAO {
                 group.setGroupID(rs.getInt("GroupID"));
                 String subjectID = rs.getString("SubjectID");
                 group.setSubject(searchSubject(subjectID));
-
                 String roomID = rs.getString("RoomID");
                 group.setRoom(searchroom(roomID));
 
@@ -59,6 +58,25 @@ public class GroupDAO {
     public Subject searchSubject(String key) {
         Subject result = new Subject();
         String sql = "SELECT * FROM subject WHERE Name = ?";
+        Connection conn = null;
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, "%" + key + "%");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+
+                result.setSubjectID(rs.getString("SubjectID"));
+                result.setName(rs.getString("Name"));
+                result.setCredits(rs.getInt("Credit"));
+            }
+        } catch (Exception e) {
+        }
+        return result;
+    }
+
+    public Subject searchSubjectID(String key) {
+        Subject result = new Subject();
+        String sql = "SELECT * FROM subject WHERE SubjectID = ?";
         Connection conn = null;
         try {
             PreparedStatement ps = conn.prepareStatement(sql);

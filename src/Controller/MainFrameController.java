@@ -11,13 +11,13 @@ public class MainFrameController implements ActionListener {
 
     public MainFrameController(MainFrame mainF) {
         this.mainF = mainF;
-
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         try {
             TimeTabling timeTabling = new TimeTabling();
+            TimeTablingController tbc = new TimeTablingController(timeTabling);
             timeTabling.setVisible(true);
             timeTabling.setLocationRelativeTo(null);
             mainF.dispose();
