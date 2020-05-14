@@ -6,8 +6,6 @@ import Model.Subject;
 import View.TimeTabling;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class TimeTablingController implements ActionListener{

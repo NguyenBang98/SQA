@@ -111,7 +111,7 @@ public class TimeTabling extends javax.swing.JFrame implements ActionListener {
         btnSave = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         cbDay = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
+        btnShowTimtable = new javax.swing.JButton();
         panelLab = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
@@ -242,7 +242,7 @@ public class TimeTabling extends javax.swing.JFrame implements ActionListener {
 
         cbDay.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6" }));
 
-        jButton1.setText("Xem TKB");
+        btnShowTimtable.setText("Xem TKB");
 
         jLabel8.setText("Thực hành");
 
@@ -511,7 +511,7 @@ public class TimeTabling extends javax.swing.JFrame implements ActionListener {
                 .addGap(117, 117, 117)
                 .addComponent(btnSave)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(btnShowTimtable)
                 .addGap(142, 142, 142))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
@@ -589,7 +589,7 @@ public class TimeTabling extends javax.swing.JFrame implements ActionListener {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSave)
-                    .addComponent(jButton1))
+                    .addComponent(btnShowTimtable))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -603,6 +603,7 @@ public class TimeTabling extends javax.swing.JFrame implements ActionListener {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSave;
+    private javax.swing.JButton btnShowTimtable;
     private javax.swing.JComboBox<String> cbDay;
     private javax.swing.JComboBox<String> cbGroupLab;
     private javax.swing.JComboBox<String> cbListGroup;
@@ -612,7 +613,6 @@ public class TimeTabling extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JComboBox<String> cbListTime2;
     private javax.swing.JComboBox<String> cbRoomLab;
     private javax.swing.JComboBox<String> cbTimeLab;
-    private javax.swing.JButton jButton1;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JCheckBox jCheckBox10;
     private javax.swing.JCheckBox jCheckBox11;

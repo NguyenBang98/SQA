@@ -75,8 +75,8 @@ public class TimeTablingDAO {
 
             while (rs.next()) {
                 RoomLab roomLab = new RoomLab();
-                roomLab.setRoomID(rs.getString("RoomID"));
-                roomLab.setNameRoom(rs.getString("NameRoom"));
+                roomLab.setRoomID(rs.getString("RoomLabID"));
+                roomLab.setNameRoom(rs.getString("NameRoomLab"));
                 result.add(roomLab);
 
             }
