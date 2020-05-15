@@ -2,31 +2,42 @@ package Model;
 
 public class RoomLab {
 
-    private int roomID;
-    private String nameRoom;
+    private int roomLabID;
+    private String nameRoomLab;
 
-    public RoomLab(int roomID, String nameRoom) {
-        this.roomID = roomID;
-        this.nameRoom = nameRoom;
+    public RoomLab(int roomLabID, String nameRoomLab) {
+        this.roomLabID = roomLabID;
+        this.nameRoomLab = nameRoomLab;
     }
 
     public RoomLab() {
     }
 
-    public int getRoomID() {
-        return roomID;
+    public int getRoomLabID() {
+        return roomLabID;
     }
 
-    public void setRoomID(int roomID) {
-        this.roomID = roomID;
+    public void setRoomLabID(int roomLabID) {
+        this.roomLabID = roomLabID;
     }
 
-    public String getNameRoom() {
-        return nameRoom;
+    public String getNameRoomLab() {
+        return nameRoomLab;
     }
 
-    public void setNameRoom(String nameRoom) {
-        this.nameRoom = nameRoom;
+    public void setNameRoomLab(String nameRoomLab) {
+        this.nameRoomLab = nameRoomLab;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof RoomLab){
+            RoomLab lab = (RoomLab) obj;
+            if(this.getRoomLabID() == lab.getRoomLabID() &&
+                    this.getNameRoomLab().equals(lab.getNameRoomLab())){
+                return true;
+            } 
+        }
+        return false;
+    }
 }

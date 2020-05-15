@@ -1,5 +1,7 @@
 package Controller;
 
+import Model.Group;
+import Model.GroupLab;
 import Model.Room;
 import Model.RoomLab;
 import Model.Subject;
@@ -30,7 +32,6 @@ public class TimeTablingDAO {
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
-
             while (rs.next()) {
                 Subject subject = new Subject();
                 subject.setSubjectID(rs.getString("SubjectID"));
@@ -63,7 +64,7 @@ public class TimeTablingDAO {
         }
         return result;
     }
-    
+
     public ArrayList<RoomLab> listRoomLab() {
         ArrayList<RoomLab> result = new ArrayList<RoomLab>();
         String sql = "SELECT * FROM roomlab";
@@ -73,8 +74,8 @@ public class TimeTablingDAO {
 
             while (rs.next()) {
                 RoomLab roomLab = new RoomLab();
-                roomLab.setRoomID(rs.getInt("RoomLabID"));
-                roomLab.setNameRoom(rs.getString("NameRoomLab"));
+                roomLab.setRoomLabID(rs.getInt("RoomLabID"));
+                roomLab.setNameRoomLab(rs.getString("NameRoomLab"));
                 result.add(roomLab);
 
             }
@@ -83,5 +84,51 @@ public class TimeTablingDAO {
         }
         return result;
     }
+
+    public ArrayList<Group> listGroup() {
+        ArrayList<Group> result = new ArrayList<Group>();
+        String sql = "SELECT * FROM groups_subject";
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Group group = new Group();
+                GroupDAO dao = new GroupDAO();
+                group.setGroupID(rs.getInt("GroupID"));
+                group.setSubject(dao.searchSubjectID(rs.getString("SubjectID")));
+                group.setRoom(dao.searchroomID(rs.getInt("RoomID")));
+                group.setDay(rs.getString("Days"));
+                group.setHour1(rs.getString("hour1"));
+                group.setHour2(rs.getString("hour2"));
+                result.add(group);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
     
+    public ArrayList<GroupLab> listGroupLab() {
+        ArrayList<GroupLab> result = new ArrayList<GroupLab>();
+        String sql = "SELECT * FROM grouplab";
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                GroupLab grouplab = new GroupLab();
+                GroupDAO dao = new GroupDAO();
+                grouplab.setTeam(rs.getInt("team"));
+                grouplab.setGroupID(rs.getInt("GroupID"));
+                grouplab.setSubject(dao.searchSubjectID(rs.getString("SubjectID")));
+                grouplab.setRoomLab(dao.searchroomLabID(rs.getInt("RoomLabID")));
+                grouplab.setDay(rs.getString("Days"));
+                grouplab.setHour(rs.getString("hour1"));
+                result.add(grouplab);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
 }

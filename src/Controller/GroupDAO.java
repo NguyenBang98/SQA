@@ -45,7 +45,7 @@ public class GroupDAO {
             ps.setInt(1, lab.getTeam());
             ps.setInt(2, lab.getGroupID());
             ps.setString(3, lab.getSubject().getSubjectID());
-            ps.setInt(4, lab.getRoomLab().getRoomID());
+            ps.setInt(4, lab.getRoomLab().getRoomLabID());
             ps.setString(5, lab.getDay());
             ps.setString(6, lab.getHour());
             
@@ -130,17 +130,51 @@ public class GroupDAO {
         return result;
     }
     
+    public Room searchroomID(int key) {
+        Room result = new Room();
+        String sql = "SELECT * FROM room WHERE RoomID = ?";
+        
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, key);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                result.setRoomID(rs.getInt("RoomID"));
+                result.setNameRoom(rs.getString("NameRoom"));
+            }
+        } catch (SQLException e) {
+        }
+        return result;
+    }
+    
     public RoomLab searchroomLab(String key) {
         RoomLab result = new RoomLab();
-        String sql = "SELECT * FROM roomlab WHERE NameRoom = ?";
+        String sql = "SELECT * FROM roomlab WHERE NameRoomLab = ?";
         
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, "%" + key + "%");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                result.setRoomID(rs.getInt("RoomLabID"));
-                result.setNameRoom(rs.getString("NameRoom"));
+                result.setRoomLabID(rs.getInt("RoomLabID"));
+                result.setNameRoomLab(rs.getString("NameRoomLab"));
+            }
+        } catch (SQLException e) {
+        }
+        return result;
+    }
+    
+    public RoomLab searchroomLabID(int key) {
+        RoomLab result = new RoomLab();
+        String sql = "SELECT * FROM roomlab WHERE RoomLabID = ?";
+        
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, key);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                result.setRoomLabID(rs.getInt("RoomLabID"));
+                result.setNameRoomLab(rs.getString("NameRoomLab"));
             }
         } catch (SQLException e) {
         }

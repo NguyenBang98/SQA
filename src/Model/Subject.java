@@ -39,4 +39,17 @@ public class Subject {
         this.credits = credits;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Subject) {
+            Subject s = (Subject) obj;
+            if (this.getCredits() == s.getCredits()
+                    && this.getSubjectID().equals(s.getSubjectID())
+                    && this.getName().equals(s.getName())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

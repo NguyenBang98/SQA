@@ -29,4 +29,16 @@ public class Room {
         this.nameRoom = nameRoom;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Room) {
+            Room r = (Room) obj;
+            if (this.getRoomID() == r.getRoomID()
+                    && this.getNameRoom().equals(r.getNameRoom())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

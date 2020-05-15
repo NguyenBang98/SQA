@@ -18,7 +18,7 @@ public class GroupLab {
         this.subject = subject;
         this.day = day;
         this.hour = hour;
-        
+
     }
 
     public GroupLab() {
@@ -70,6 +70,22 @@ public class GroupLab {
 
     public void setHour(String hour) {
         this.hour = hour;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof GroupLab) {
+            GroupLab lab2 = (GroupLab) obj;
+            if (this.getGroupID() == lab2.getGroupID()
+                    && this.getSubject().equals(lab2.getSubject())
+                    && this.getRoomLab().equals(lab2.getRoomLab())
+                    && this.getTeam() == lab2.getTeam()
+                    && this.getDay().equals(lab2.getDay())
+                    && this.getHour().equals(lab2.getHour())) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

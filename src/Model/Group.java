@@ -70,6 +70,22 @@ public class Group {
     public void setHour2(String hour2) {
         this.hour2 = hour2;
     }
-    
-    
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Group) {
+            Group g2 = (Group) obj;
+            if (this.getGroupID() == g2.getGroupID()
+                    && this.getSubject().equals(g2.getSubject())
+                    && this.getRoom().equals(g2.getRoom())
+                    && this.getDay().equals(g2.getDay())
+                    && this.getHour1().equals(g2.getHour1())
+                    && this.getHour2().equals(g2.getHour2())) {
+                return true;
+            }
+
+        }
+        return false;
+
+    }
 }

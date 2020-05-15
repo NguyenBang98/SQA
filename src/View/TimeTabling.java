@@ -68,7 +68,7 @@ public class TimeTabling extends javax.swing.JFrame implements ActionListener {
             cbListRoom.addItem(i.getNameRoom());
         });
         db.listRoomLab().forEach((i) -> {
-            cbRoomLab.addItem(i.getNameRoom());
+            cbRoomLab.addItem(i.getNameRoomLab());
         });
 
     }
