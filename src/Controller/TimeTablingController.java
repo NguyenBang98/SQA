@@ -32,6 +32,7 @@ public class TimeTablingController {
         @Override
         public void actionPerformed(ActionEvent e) {
             TimeTable time = new TimeTable();
+            TimeTableController c = new TimeTableController(time);
             time.setVisible(true);
             time.setLocationRelativeTo(null);
             tb.dispose();

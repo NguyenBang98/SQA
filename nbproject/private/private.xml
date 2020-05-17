@@ -4,11 +4,10 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/White_Tiger/Desktop/SQA/src/Controller/TimeTablingController.java</file>
-            <file>file:/C:/Users/White_Tiger/Desktop/SQA/src/Controller/TimeTablingDAO.java</file>
-            <file>file:/C:/Users/White_Tiger/Desktop/SQA/src/Controller/GroupDAO.java</file>
-            <file>file:/C:/Users/White_Tiger/Desktop/SQA/src/Model/Group.java</file>
-            <file>file:/C:/Users/White_Tiger/Desktop/SQA/src/Model/RoomLab.java</file>
-            <file>file:/C:/Users/White_Tiger/Desktop/SQA/src/Model/GroupLab.java</file>
+            <file>file:/C:/Users/White_Tiger/Desktop/SQA/src/View/TimeTabling.java</file>
+            <file>file:/C:/Users/White_Tiger/Desktop/SQA/src/Controller/TimeTableController.java</file>
+            <file>file:/C:/Users/White_Tiger/Desktop/SQA/src/Controller/GroupTableModel.java</file>
+            <file>file:/C:/Users/White_Tiger/Desktop/SQA/src/View/TimeTable.java</file>
         </group>
     </open-files>
 </project-private>

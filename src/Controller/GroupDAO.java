@@ -77,10 +77,9 @@ public class GroupDAO {
 
     public Subject searchSubject(String key) {
         Subject result = new Subject();
-        String sql = "SELECT * FROM subject WHERE Name = ?";
-        Connection conn = null;
+        String sql = "SELECT * FROM subject WHERE Name = ?";        
         try {
-            PreparedStatement ps = conn.prepareStatement(sql);
+            PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, "%" + key + "%");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {

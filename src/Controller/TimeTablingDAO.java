@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class TimeTablingDAO {
@@ -20,8 +21,7 @@ public class TimeTablingDAO {
             try {
                 Class.forName(Utils.Parameters.dbClass);
                 conn = DriverManager.getConnection(Utils.Parameters.dbUrl, Utils.Parameters.userName, Utils.Parameters.password);
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (ClassNotFoundException | SQLException e) {
             }
         }
     }
@@ -39,8 +39,7 @@ public class TimeTablingDAO {
                 subject.setCredits(rs.getInt("Credit"));
                 result.add(subject);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
         }
         return result;
     }
@@ -59,8 +58,7 @@ public class TimeTablingDAO {
                 result.add(room);
 
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
         }
         return result;
     }
@@ -79,8 +77,7 @@ public class TimeTablingDAO {
                 result.add(roomLab);
 
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
         }
         return result;
     }
@@ -102,8 +99,7 @@ public class TimeTablingDAO {
                 group.setHour2(rs.getString("hour2"));
                 result.add(group);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
         }
         return result;
     }
@@ -125,8 +121,7 @@ public class TimeTablingDAO {
                 grouplab.setHour(rs.getString("hour1"));
                 result.add(grouplab);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
         }
         return result;
     }
