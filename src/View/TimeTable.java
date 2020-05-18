@@ -4,16 +4,27 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import Controller.TimeTableController.*;
 import Controller.TimeTablingDAO;
+import Model.*;
+import java.awt.Component;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.Vector;
 import javax.swing.DefaultListModel;
+import javax.swing.JButton;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 
-public class TimeTable extends javax.swing.JFrame implements ActionListener{
-    
-    Vector tableRecord = new Vector();
-    
+public class TimeTable extends javax.swing.JFrame implements ActionListener {
+
     DefaultListModel list = new DefaultListModel();
     TimeTablingDAO dao = new TimeTablingDAO();
-    
+    private JTable tblResult;
+    private ArrayList<Group> listGroup;
+    private ArrayList<GroupLab> listGroupLab;
+    private ArrayList<JButton> listEdit;
+
     public TimeTable() {
         super("Timetable");
         initComponents();
@@ -21,33 +32,120 @@ public class TimeTable extends javax.swing.JFrame implements ActionListener{
             list.addElement(i.getName());
         });
         lstSubject.setModel(list);
-        
+
         btnSearch.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                
+                String key = txtSubjectID.getText().trim();
             }
         });
         btnExit.addActionListener(this);
         btnExcel.addActionListener(this);
+
+        TableCellRenderer buttonRenderer = new JTableButtonRenderer();
+        tblResult.getColumn("Edit").setCellRenderer(buttonRenderer);
     }
-    
-    public void addExcelActionListener(ActionListener log){
+
+    class SubjectTableModel extends DefaultTableModel {
+
+        private String[] columnNames = {"MMH", "Tên môn học", "NMH", "TTH",
+            "TH", "Thứ", "Giờ BĐ1", "Tuần","Giờ BĐ2", "Tuần", "Edit"};
+        private final Class<?>[] columnTypes = new Class<?>[]{String.class, String.class, Integer.class, Integer.class,
+            String.class, String.class, String.class, String.class, String.class, String.class, JButton.class};
+
+        @Override
+        public int getColumnCount() {
+            return columnNames.length;
+        }
+
+        @Override
+        public int getRowCount() {
+            return listGroup.size() + listGroupLab.size();
+        }
+
+        @Override
+        public String getColumnName(int columnIndex) {
+            return columnNames[columnIndex];
+        }
+
+        @Override
+        public Class<?> getColumnClass(int columnIndex) {
+            return columnTypes[columnIndex];
+        }
+        
+        @Override public Object getValueAt(final int rowIndex, final int columnIndex) {
+                
+            switch (columnIndex) {
+                case 0: 
+                    return listGroup.get(rowIndex).getSubject().getSubjectID();
+                case 1: 
+                    return listGroup.get(rowIndex).getSubject().getName();
+                case 2: 
+                    return listGroup.get(rowIndex).getGroupID();
+                case 3: 
+                    return listGroup.get(rowIndex).getGroupID();
+                case 4: 
+                    return " ";
+                case 5: 
+                    return listGroup.get(rowIndex).getDay();
+                case 6: 
+                    return listGroup.get(rowIndex).getHour1();
+                case 7: 
+                    return listGroup.get(rowIndex).getDay();
+                case 8:
+                    return listGroup;
+                default: return "Error";
+            }
+        }
+    }
+
+    class JTableButtonMouseListener extends MouseAdapter {
+
+        private final JTable table;
+
+        public JTableButtonMouseListener(JTable table) {
+            this.table = table;
+        }
+
+        public void mouseClicked(MouseEvent e) {
+            int column = table.getColumnModel().getColumnIndexAtX(e.getX());
+            int row = e.getY() / table.getRowHeight();
+
+            if (row < table.getRowCount() && row >= 0 && column < table.getColumnCount() && column >= 0) {
+                Object value = table.getValueAt(row, column);
+                if (value instanceof JButton) {
+
+                    ((JButton) value).doClick();
+                }
+            }
+        }
+    }
+
+    class JTableButtonRenderer implements TableCellRenderer {
+
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+                boolean hasFocus, int row, int column) {
+            JButton button = (JButton) value;
+            return button;
+        }
+    }
+
+    public void addExcelActionListener(ActionListener log) {
         btnExcel.addActionListener(log);
     }
-    
-    public void addExitActionListener(ActionListener log){
+
+    public void addExitActionListener(ActionListener log) {
         btnExit.addActionListener(log);
     }
 
-    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtSubjectID = new javax.swing.JTextField();
         btnSearch = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -102,7 +200,7 @@ public class TimeTable extends javax.swing.JFrame implements ActionListener{
                 .addGap(28, 28, 28)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtSubjectID, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(96, 96, 96)
                         .addComponent(btnSearch))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -114,7 +212,7 @@ public class TimeTable extends javax.swing.JFrame implements ActionListener{
                 .addGap(25, 25, 25)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtSubjectID, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSearch))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -161,13 +259,13 @@ public class TimeTable extends javax.swing.JFrame implements ActionListener{
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JList<String> lstSubject;
     private javax.swing.JPanel pnTimeTable;
+    private javax.swing.JTextField txtSubjectID;
     // End of variables declaration//GEN-END:variables
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        
+
     }
 }
