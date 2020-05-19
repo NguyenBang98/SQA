@@ -50,14 +50,14 @@ public class GroupDAO {
             ps.setString(5, lab.getDay());
             ps.setString(6, lab.getHour());
             ps.setString(7, lab.getWeek());
-            
+
         } catch (SQLException e) {
         }
     }
 
     public Subject searchSubject(String key) {
         Subject result = new Subject();
-        String sql = "SELECT * FROM subject WHERE Name = ?";        
+        String sql = "SELECT * FROM subject WHERE Name = ?";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, "%" + key + "%");
@@ -76,13 +76,12 @@ public class GroupDAO {
     public Subject searchSubjectID(String key) {
         Subject result = new Subject();
         String sql = "SELECT * FROM subject WHERE SubjectID = ?";
-        
+
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, "%" + key + "%");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-
                 result.setSubjectID(rs.getString("SubjectID"));
                 result.setName(rs.getString("Name"));
                 result.setCredits(rs.getInt("Credit"));
@@ -95,7 +94,7 @@ public class GroupDAO {
     public Room searchroom(String key) {
         Room result = new Room();
         String sql = "SELECT * FROM room WHERE NameRoom = ?";
-        
+
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, "%" + key + "%");
@@ -108,11 +107,11 @@ public class GroupDAO {
         }
         return result;
     }
-    
+
     public Room searchroomID(int key) {
         Room result = new Room();
         String sql = "SELECT * FROM room WHERE RoomID = ?";
-        
+
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, key);
@@ -125,11 +124,11 @@ public class GroupDAO {
         }
         return result;
     }
-    
+
     public RoomLab searchroomLab(String key) {
         RoomLab result = new RoomLab();
         String sql = "SELECT * FROM roomlab WHERE NameRoomLab = ?";
-        
+
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, "%" + key + "%");
@@ -142,11 +141,11 @@ public class GroupDAO {
         }
         return result;
     }
-    
+
     public RoomLab searchroomLabID(int key) {
         RoomLab result = new RoomLab();
         String sql = "SELECT * FROM roomlab WHERE RoomLabID = ?";
-        
+
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, key);
@@ -158,6 +157,27 @@ public class GroupDAO {
         } catch (SQLException e) {
         }
         return result;
+    }
+
+    public void deleteGroup(int GroupID) {
+        String sql = "DELETE FROM groups_subject WHERE GroupID = ?";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, GroupID);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+        }
+    }
+    
+    public void deleteGroupLab(int team, int GroupID){
+        String sql = "DELETE FROM grouplab WHERE team = ? AND GroupID = ?";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, team);
+            ps.setInt(2, GroupID);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+        }
     }
 
 }

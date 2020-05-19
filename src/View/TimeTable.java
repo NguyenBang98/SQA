@@ -1,5 +1,6 @@
 package View;
 
+import Controller.GroupDAO;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import Controller.TimeTableController.*;
@@ -20,14 +21,23 @@ public class TimeTable extends javax.swing.JFrame implements ActionListener {
 
     DefaultListModel list = new DefaultListModel();
     TimeTablingDAO dao = new TimeTablingDAO();
+    GroupDAO gdao = new GroupDAO();
     private JTable tblResult;
     private ArrayList<Group> listGroup;
     private ArrayList<GroupLab> listGroupLab;
     private ArrayList<JButton> listEdit;
+    private ArrayList<JButton> listDelete;
 
     public TimeTable() {
         super("Timetable");
         initComponents();
+
+        listGroup = new ArrayList<Group>();
+        listGroupLab = new ArrayList<GroupLab>();
+        listEdit = new ArrayList<JButton>();
+        listDelete = new ArrayList<JButton>();
+        tblResult = new JTable(new SubjectTableModel());
+
         dao.listSubject().forEach((i) -> {
             list.addElement(i.getName());
         });
@@ -37,6 +47,21 @@ public class TimeTable extends javax.swing.JFrame implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String key = txtSubjectID.getText().trim();
+                if (key == null || key.length() == 0) {
+                    return;
+                }
+                TimeTablingDAO dao = new TimeTablingDAO();
+                listGroup = dao.searchGroupBySubjectID(key);
+                listGroupLab = dao.searchGroupLab(key);
+                for (int i = 0; i < (listGroup.size() + listGroupLab.size()); i++) {
+                    JButton btn = new JButton("Edit");
+                    btn.addActionListener(this);
+                    listEdit.add(btn);
+                    btn = new JButton("Delete");
+                    btn.addActionListener(this);
+                    listDelete.add(btn);
+                }
+                ((DefaultTableModel)tblResult.getModel()).fireTableDataChanged();
             }
         });
         btnExit.addActionListener(this);
@@ -44,14 +69,16 @@ public class TimeTable extends javax.swing.JFrame implements ActionListener {
 
         TableCellRenderer buttonRenderer = new JTableButtonRenderer();
         tblResult.getColumn("Edit").setCellRenderer(buttonRenderer);
+        tblResult.getColumn("Delete").setCellRenderer(buttonRenderer);
+        tblResult.addMouseListener(new JTableButtonMouseListener(tblResult));
     }
 
     class SubjectTableModel extends DefaultTableModel {
 
         private String[] columnNames = {"MMH", "Tên môn học", "NMH", "TTH",
-            "TH", "Thứ", "Giờ BĐ", "Tuần","Giờ TH", "Tuần TH", "Edit"};
+            "TH", "Thứ", "Giờ BĐ", "Tuần", "Giờ TH", "Tuần TH", "Edit", "Delete"};
         private final Class<?>[] columnTypes = new Class<?>[]{String.class, String.class, Integer.class, Integer.class,
-            String.class, String.class, String.class, String.class, String.class, String.class, JButton.class};
+            String.class, String.class, String.class, String.class, String.class, String.class, JButton.class, JButton.class};
 
         @Override
         public int getColumnCount() {
@@ -72,34 +99,38 @@ public class TimeTable extends javax.swing.JFrame implements ActionListener {
         public Class<?> getColumnClass(int columnIndex) {
             return columnTypes[columnIndex];
         }
-        
-        @Override public Object getValueAt(final int rowIndex, final int columnIndex) {
-                
+
+        @Override
+        public Object getValueAt(final int rowIndex, final int columnIndex) {
+
             switch (columnIndex) {
-                case 0: 
+                case 0:
                     return listGroup.get(rowIndex).getSubject().getSubjectID();
-                case 1: 
+                case 1:
                     return listGroup.get(rowIndex).getSubject().getName();
-                case 2: 
+                case 2:
                     return listGroup.get(rowIndex).getGroupID();
-                case 3: 
+                case 3:
                     return listGroupLab.get(rowIndex).getTeam();
-                case 4: 
+                case 4:
                     return " ";
-                case 5: 
+                case 5:
                     return listGroup.get(rowIndex).getDay();
-                case 6: 
+                case 6:
                     return listGroup.get(rowIndex).getHour1()
                             .concat("\n").concat(listGroup.get(rowIndex).getHour2());
-                case 7: 
+                case 7:
                     return listGroup.get(rowIndex).getWeek();
                 case 8:
                     return listGroupLab.get(rowIndex).getHour();
-                case 9: 
+                case 9:
                     return listGroupLab.get(rowIndex).getWeek();
-                case 10: 
+                case 10:
                     return listEdit.get(rowIndex);
-                default: return "Error";
+                case 11:
+                    return listDelete.get(rowIndex);
+                default:
+                    return "Error";
             }
         }
     }

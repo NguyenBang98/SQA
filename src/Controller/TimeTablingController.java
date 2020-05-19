@@ -13,8 +13,7 @@ public class TimeTablingController {
     public TimeTablingController(TimeTabling tb) {
         this.tb = tb;
         tb.addSaveListener(new SaveListener());
-        tb.addShowTimetable(new ShowListerner());
-        
+        tb.addShowTimetable(new ShowListerner());        
     }
 
     class SaveListener implements ActionListener{

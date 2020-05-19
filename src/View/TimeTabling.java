@@ -19,7 +19,7 @@ public class TimeTabling extends javax.swing.JFrame implements ActionListener {
     public TimeTabling() {
         super("Create Timetable");
         initComponents();
-        
+
         TimeTablingDAO db = new TimeTablingDAO();
         db.listSubject().forEach((i) -> {
             cbListSubject.addItem(i.getName());
@@ -30,8 +30,7 @@ public class TimeTabling extends javax.swing.JFrame implements ActionListener {
         db.listRoomLab().forEach((i) -> {
             cbRoomLab.addItem(i.getNameRoomLab());
         });
-        
-        
+
         cbListSubject.addActionListener((ActionEvent e) -> {
             if (cbListSubject.getSelectedItem().toString().equals("Phát triển ứng dụng cho các thiết bị di động")) {
                 panelLab.setVisible(true);
@@ -39,40 +38,39 @@ public class TimeTabling extends javax.swing.JFrame implements ActionListener {
                 panelLab.setVisible(false);
             }
         });
-        
+
         cbListSubject.addActionListener((ActionEvent e) -> {
             if (cbListSubject.getSelectedItem().toString().equals("Chuyên đề công nghệ phần mềm")) {
                 panelHour2.setVisible(false);
                 panelLab.setVisible(false);
-                if(cbListTime1.getSelectedItem().toString().equals("7:00-9:00") || cbListTime1.getSelectedItem().toString().equals("9:00-11:00")
-                        || cbListTime1.getSelectedItem().toString().equals("14:00-16:00") || cbListTime1.getSelectedItem().toString().equals("16:00-18:00")){
-                    jCheckBox8.setSelected(false);
-                    jCheckBox9.setSelected(false);
-                    jCheckBox10.setSelected(false);
-                    jCheckBox11.setSelected(false);
-                    jCheckBox12.setSelected(false);
-                    jCheckBox13.setSelected(false);
-                    jCheckBox14.setSelected(false);
-                    jCheckBox15.setSelected(false);
-                }else{
-                    jCheckBox8.setSelected(false);
-                    jCheckBox1.setSelected(false);
-                    jCheckBox2.setSelected(false);
-                    jCheckBox3.setSelected(false);
-                    jCheckBox4.setSelected(false);
-                    jCheckBox5.setSelected(false);
-                    jCheckBox6.setSelected(false);
-                    jCheckBox7.setSelected(false);
-                }
-            }
-            else{
+//                if (cbListTime1.getSelectedItem().toString().equals("7:00-9:00") || cbListTime1.getSelectedItem().toString().equals("9:00-11:00")
+//                        || cbListTime1.getSelectedItem().toString().equals("14:00-16:00") || cbListTime1.getSelectedItem().toString().equals("16:00-18:00")) {
+//                    jCheckBox8.setSelected(false);
+//                    jCheckBox9.setSelected(false);
+//                    jCheckBox10.setSelected(false);
+//                    jCheckBox11.setSelected(false);
+//                    jCheckBox12.setSelected(false);
+//                    jCheckBox13.setSelected(false);
+//                    jCheckBox14.setSelected(false);
+//                    jCheckBox15.setSelected(false);
+//                } else {
+//                    jCheckBox8.setSelected(false);
+//                    jCheckBox1.setSelected(false);
+//                    jCheckBox2.setSelected(false);
+//                    jCheckBox3.setSelected(false);
+//                    jCheckBox4.setSelected(false);
+//                    jCheckBox5.setSelected(false);
+//                    jCheckBox6.setSelected(false);
+//                    jCheckBox7.setSelected(false);
+//                }
+            } else {
                 panelHour2.setVisible(true);
+                
             }
         });
 
         btnSave.addActionListener(this);
         btnShowTimtable.addActionListener(this);
-
     }
 
     public Group setGroup() {
@@ -86,8 +84,8 @@ public class TimeTabling extends javax.swing.JFrame implements ActionListener {
         group.setHour2(cbListTime2.getSelectedItem().toString());
         return group;
     }
-    
-    public GroupLab setLab(){
+
+    public GroupLab setLab() {
         GroupLab lab = new GroupLab();
         GroupDAO dao = new GroupDAO();
         lab.setTeam(Integer.parseInt(cbGroupLab.getSelectedItem().toString()));

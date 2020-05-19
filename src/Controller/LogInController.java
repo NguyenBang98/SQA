@@ -24,6 +24,7 @@ public class LogInController {
                 user = login.getUser();
                 if(checkUser(user)){
                     MainFrame mf = new MainFrame();
+                    MainFrameController mfc = new MainFrameController(mf);
                     mf.setVisible(true);
                     mf.setLocationRelativeTo(null);
                     login.dispose();

@@ -9,8 +9,16 @@ public class MainFrame extends javax.swing.JFrame implements ActionListener {
     public MainFrame() {
         super("Main home");
         initComponents();
-        MainFrameController con = new MainFrameController(this);
-        btnTimeTabling.addActionListener(con);       
+        btnTimeTabling.addActionListener(this);
+        btnStatics.addActionListener(this);
+    }
+    
+    public void addCreateTimeTable(ActionListener log){
+        btnTimeTabling.addActionListener(log);
+    }
+    
+    public void addStatic(ActionListener log){
+        btnStatics.addActionListener(log);
     }
 
     @SuppressWarnings("unchecked")
