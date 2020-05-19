@@ -97,6 +97,7 @@ public class TimeTablingDAO {
                 group.setDay(rs.getString("Days"));
                 group.setHour1(rs.getString("hour1"));
                 group.setHour2(rs.getString("hour2"));
+                group.setWeek(rs.getString("week"));
                 result.add(group);
             }
         } catch (SQLException e) {
@@ -119,6 +120,7 @@ public class TimeTablingDAO {
                 grouplab.setRoomLab(dao.searchroomLabID(rs.getInt("RoomLabID")));
                 grouplab.setDay(rs.getString("Days"));
                 grouplab.setHour(rs.getString("hour1"));
+                grouplab.setWeek(rs.getString("week"));
                 result.add(grouplab);
             }
         } catch (SQLException e) {

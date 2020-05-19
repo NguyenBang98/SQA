@@ -23,7 +23,7 @@ public class GroupDAO {
     }
 
     public void saveGroup(Group group) {
-        String sql = "INSERT INTO groups_subject(GroupID, SubjectID, RoomID, Days, hour1, hour2) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO groups_subject(GroupID, SubjectID, RoomID, Days, hour1, hour2, week) VALUES (?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement ps = null;
         try {
             ps = con.prepareStatement(sql);
@@ -33,12 +33,13 @@ public class GroupDAO {
             ps.setString(4, group.getDay());
             ps.setString(5, group.getHour1());
             ps.setString(6, group.getHour2());
+            ps.setString(7, group.getWeek());
         } catch (SQLException e) {
         }
     }
 
     public void saveGroupLab(GroupLab lab) {
-        String sql = "INSERT INTO group(team, GroupID, SubjectID, RoomLabID, Days, hour1) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO group(team, GroupID, SubjectID, RoomLabID, Days, hour1, week) VALUES (?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement ps = null;
         try {
             ps = con.prepareStatement(sql);
@@ -48,31 +49,10 @@ public class GroupDAO {
             ps.setInt(4, lab.getRoomLab().getRoomLabID());
             ps.setString(5, lab.getDay());
             ps.setString(6, lab.getHour());
+            ps.setString(7, lab.getWeek());
             
         } catch (SQLException e) {
         }
-    }
-
-    public ArrayList<Group> listGroup() {
-        ArrayList<Group> result = new ArrayList<Group>();
-        String sql = "SELECT * FROM groups_subject";
-
-        try {
-            PreparedStatement ps = con.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                Group group = new Group();
-                group.setGroupID(rs.getInt("GroupID"));
-                String subjectID = rs.getString("SubjectID");
-                group.setSubject(searchSubject(subjectID));
-                String roomID = rs.getString("RoomID");
-                group.setRoom(searchroom(roomID));
-
-                result.add(group);
-            }
-        } catch (SQLException e) {
-        }
-        return result;
     }
 
     public Subject searchSubject(String key) {

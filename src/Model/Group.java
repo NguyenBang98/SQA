@@ -10,17 +10,19 @@ public class Group {
     private String day;
     private String hour1;
     private String hour2;
+    private String week;
 
     public Group() {
     }
 
-    public Group(int groupID, Room room, Subject subject, String day, String hour1, String hour2) {
+    public Group(int groupID, Room room, Subject subject, String day, String hour1, String hour2, String week) {
         this.groupID = groupID;
         this.room = room;
         this.subject = subject;
         this.day = day;
         this.hour1 = hour1;
         this.hour2 = hour2;
+        this.week = week;
     }
 
     public Room getRoom() {
@@ -71,6 +73,14 @@ public class Group {
         this.hour2 = hour2;
     }
 
+    public String getWeek() {
+        return week;
+    }
+
+    public void setWeek(String week) {
+        this.week = week;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof Group) {
@@ -80,7 +90,8 @@ public class Group {
                     && this.getRoom().equals(g2.getRoom())
                     && this.getDay().equals(g2.getDay())
                     && this.getHour1().equals(g2.getHour1())
-                    && this.getHour2().equals(g2.getHour2())) {
+                    && this.getHour2().equals(g2.getHour2())
+                    && this.getWeek().equals(g2.getWeek())) {
                 return true;
             }
 

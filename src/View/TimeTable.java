@@ -49,7 +49,7 @@ public class TimeTable extends javax.swing.JFrame implements ActionListener {
     class SubjectTableModel extends DefaultTableModel {
 
         private String[] columnNames = {"MMH", "Tên môn học", "NMH", "TTH",
-            "TH", "Thứ", "Giờ BĐ1", "Tuần","Giờ BĐ2", "Tuần", "Edit"};
+            "TH", "Thứ", "Giờ BĐ", "Tuần","Giờ TH", "Tuần TH", "Edit"};
         private final Class<?>[] columnTypes = new Class<?>[]{String.class, String.class, Integer.class, Integer.class,
             String.class, String.class, String.class, String.class, String.class, String.class, JButton.class};
 
@@ -83,17 +83,22 @@ public class TimeTable extends javax.swing.JFrame implements ActionListener {
                 case 2: 
                     return listGroup.get(rowIndex).getGroupID();
                 case 3: 
-                    return listGroup.get(rowIndex).getGroupID();
+                    return listGroupLab.get(rowIndex).getTeam();
                 case 4: 
                     return " ";
                 case 5: 
                     return listGroup.get(rowIndex).getDay();
                 case 6: 
-                    return listGroup.get(rowIndex).getHour1();
+                    return listGroup.get(rowIndex).getHour1()
+                            .concat("\n").concat(listGroup.get(rowIndex).getHour2());
                 case 7: 
-                    return listGroup.get(rowIndex).getDay();
+                    return listGroup.get(rowIndex).getWeek();
                 case 8:
-                    return listGroup;
+                    return listGroupLab.get(rowIndex).getHour();
+                case 9: 
+                    return listGroupLab.get(rowIndex).getWeek();
+                case 10: 
+                    return listEdit.get(rowIndex);
                 default: return "Error";
             }
         }

@@ -10,15 +10,16 @@ public class GroupLab {
     private Subject subject;
     private String day;
     private String hour;
+    private String week;
 
-    public GroupLab(int groupID, int team, RoomLab roomLab, Subject subject, String day, String hour) {
+    public GroupLab(int groupID, int team, RoomLab roomLab, Subject subject, String day, String hour, String week) {
         this.groupID = groupID;
         this.team = team;
         this.roomLab = roomLab;
         this.subject = subject;
         this.day = day;
         this.hour = hour;
-
+        this.week = week;
     }
 
     public GroupLab() {
@@ -72,6 +73,14 @@ public class GroupLab {
         this.hour = hour;
     }
 
+    public String getWeek() {
+        return week;
+    }
+
+    public void setWeek(String week) {
+        this.week = week;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof GroupLab) {
@@ -81,7 +90,8 @@ public class GroupLab {
                     && this.getRoomLab().equals(lab2.getRoomLab())
                     && this.getTeam() == lab2.getTeam()
                     && this.getDay().equals(lab2.getDay())
-                    && this.getHour().equals(lab2.getHour())) {
+                    && this.getHour().equals(lab2.getHour())
+                    && this.getWeek().equals(lab2.getWeek())) {
                 return true;
             }
         }
