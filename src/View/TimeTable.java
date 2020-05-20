@@ -45,7 +45,7 @@ public class TimeTable extends javax.swing.JFrame implements ActionListener {
             list.addElement(i.getName());
         });
         lstSubject.setModel(list);
-        
+
         lstSubject.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
@@ -60,7 +60,7 @@ public class TimeTable extends javax.swing.JFrame implements ActionListener {
                     btn.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                            
+
                         }
                     });
                     listEdit.add(btn);
@@ -68,12 +68,12 @@ public class TimeTable extends javax.swing.JFrame implements ActionListener {
                     btn.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                            
+
                         }
                     });
                     listDelete.add(btn);
                 }
-                ((DefaultTableModel)tblResult.getModel()).fireTableDataChanged();
+                ((DefaultTableModel) tblResult.getModel()).fireTableDataChanged();
             }
         });
 
@@ -89,26 +89,17 @@ public class TimeTable extends javax.swing.JFrame implements ActionListener {
                 listGroupLab = dao.searchGroupLab(key);
                 for (int i = 0; i < (listGroup.size() + listGroupLab.size()); i++) {
                     JButton btn = new JButton("Edit");
-                    btn.addActionListener(new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            
-                        }
-                    });
+                    btn.addActionListener(this);
                     listEdit.add(btn);
                     btn = new JButton("Delete");
-                    btn.addActionListener(new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            
-                        }
-                    });
+                    btn.addActionListener(this);
                     listDelete.add(btn);
                 }
                 txtSubjectID.setText("");
-                ((DefaultTableModel)tblResult.getModel()).fireTableDataChanged();
+                ((DefaultTableModel) tblResult.getModel()).fireTableDataChanged();
             }
         });
+
         btnExit.addActionListener(this);
         btnExcel.addActionListener(this);
 
@@ -116,6 +107,20 @@ public class TimeTable extends javax.swing.JFrame implements ActionListener {
         tblResult.getColumn("Edit").setCellRenderer(buttonRenderer);
         tblResult.getColumn("Delete").setCellRenderer(buttonRenderer);
         tblResult.addMouseListener(new JTableButtonMouseListener(tblResult));
+    }
+
+    private void deleteGroup(int index) {
+        int dialogButton = JOptionPane.YES_NO_OPTION;
+        int dialogResult = JOptionPane.showConfirmDialog(rootPane, "Bạn chắc chắn muốn xóa?", "Cảnh báo!", dialogButton);
+        if (dialogResult == JOptionPane.YES_OPTION) {
+            GroupDAO dao = new GroupDAO();
+            dao.deleteGroup(listGroup.get(index).getGroupID());
+            dao.deleteGroupLab(listGroupLab.get(index).getTeam(), listGroupLab.get(index).getGroupID());
+        }
+    }
+    
+    private void editGroup(int index){
+        
     }
 
     class SubjectTableModel extends DefaultTableModel {
