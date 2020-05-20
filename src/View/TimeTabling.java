@@ -43,29 +43,18 @@ public class TimeTabling extends javax.swing.JFrame implements ActionListener {
             if (cbListSubject.getSelectedItem().toString().equals("Chuyên đề công nghệ phần mềm")) {
                 panelHour2.setVisible(false);
                 panelLab.setVisible(false);
-//                if (cbListTime1.getSelectedItem().toString().equals("7:00-9:00") || cbListTime1.getSelectedItem().toString().equals("9:00-11:00")
-//                        || cbListTime1.getSelectedItem().toString().equals("14:00-16:00") || cbListTime1.getSelectedItem().toString().equals("16:00-18:00")) {
-//                    jCheckBox8.setSelected(false);
-//                    jCheckBox9.setSelected(false);
-//                    jCheckBox10.setSelected(false);
-//                    jCheckBox11.setSelected(false);
-//                    jCheckBox12.setSelected(false);
-//                    jCheckBox13.setSelected(false);
-//                    jCheckBox14.setSelected(false);
-//                    jCheckBox15.setSelected(false);
-//                } else {
-//                    jCheckBox8.setSelected(false);
-//                    jCheckBox1.setSelected(false);
-//                    jCheckBox2.setSelected(false);
-//                    jCheckBox3.setSelected(false);
-//                    jCheckBox4.setSelected(false);
-//                    jCheckBox5.setSelected(false);
-//                    jCheckBox6.setSelected(false);
-//                    jCheckBox7.setSelected(false);
-//                }
+//                
+                jCheckBox8.setSelected(false);
+                jCheckBox9.setSelected(false);
+                jCheckBox10.setSelected(false);
+                jCheckBox11.setSelected(false);
+                jCheckBox12.setSelected(false);
+                jCheckBox13.setSelected(false);
+                jCheckBox14.setSelected(false);
+                jCheckBox15.setSelected(false);
             } else {
                 panelHour2.setVisible(true);
-                
+
             }
         });
 
@@ -286,16 +275,17 @@ public class TimeTabling extends javax.swing.JFrame implements ActionListener {
                         .addGroup(panelLabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panelLabLayout.createSequentialGroup()
                                 .addGap(30, 30, 30)
-                                .addComponent(cbTimeLab, 0, 110, Short.MAX_VALUE))
+                                .addComponent(cbTimeLab, 0, 104, Short.MAX_VALUE))
                             .addGroup(panelLabLayout.createSequentialGroup()
                                 .addGap(46, 46, 46)
                                 .addGroup(panelLabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jCheckBox39)
                                     .addComponent(jCheckBox31))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(18, 18, 18)
                                 .addGroup(panelLabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jCheckBox32, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jCheckBox40, javax.swing.GroupLayout.Alignment.TRAILING))))))
+                                    .addComponent(jCheckBox32)
+                                    .addComponent(jCheckBox40))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addGap(18, 18, 18)
                 .addGroup(panelLabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jCheckBox41)
@@ -304,23 +294,23 @@ public class TimeTabling extends javax.swing.JFrame implements ActionListener {
                 .addGroup(panelLabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jCheckBox34)
                     .addComponent(jCheckBox42))
-                .addGap(16, 16, 16)
-                .addGroup(panelLabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(panelLabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelLabLayout.createSequentialGroup()
-                        .addComponent(jCheckBox35)
+                        .addGap(18, 18, 18)
+                        .addComponent(jCheckBox43)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jCheckBox44)
+                        .addGap(18, 18, 18)
+                        .addComponent(jCheckBox45))
+                    .addGroup(panelLabLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jCheckBox35)
+                        .addGap(6, 6, 6)
                         .addComponent(jCheckBox36)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jCheckBox37)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jCheckBox38))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLabLayout.createSequentialGroup()
-                        .addGap(2, 2, 2)
-                        .addComponent(jCheckBox43)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jCheckBox44)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jCheckBox45)))
+                        .addComponent(jCheckBox38)))
                 .addGap(45, 45, 45))
         );
         panelLabLayout.setVerticalGroup(

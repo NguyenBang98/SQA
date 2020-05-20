@@ -13,7 +13,10 @@ import java.util.ArrayList;
 import java.util.Vector;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
@@ -42,25 +45,67 @@ public class TimeTable extends javax.swing.JFrame implements ActionListener {
             list.addElement(i.getName());
         });
         lstSubject.setModel(list);
+        
+        lstSubject.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                String text = lstSubject.getSelectedValue();
+                //JOptionPane.showMessageDialog(rootPane, text);
+                TimeTablingDAO dao = new TimeTablingDAO();
+                GroupDAO gdao = new GroupDAO();
+                listGroup = dao.searchGroupBySubjectID(gdao.searchSubject(text).getSubjectID());
+                listGroupLab = dao.searchGroupLab(gdao.searchSubject(text).getSubjectID());
+                for (int i = 0; i < (listGroup.size() + listGroupLab.size()); i++) {
+                    JButton btn = new JButton("Edit");
+                    btn.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            
+                        }
+                    });
+                    listEdit.add(btn);
+                    btn = new JButton("Delete");
+                    btn.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            
+                        }
+                    });
+                    listDelete.add(btn);
+                }
+                ((DefaultTableModel)tblResult.getModel()).fireTableDataChanged();
+            }
+        });
 
         btnSearch.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String key = txtSubjectID.getText().trim();
                 if (key == null || key.length() == 0) {
-                    return;
+                    JOptionPane.showMessageDialog(rootPane, "Nhập mã môn học");
                 }
                 TimeTablingDAO dao = new TimeTablingDAO();
                 listGroup = dao.searchGroupBySubjectID(key);
                 listGroupLab = dao.searchGroupLab(key);
                 for (int i = 0; i < (listGroup.size() + listGroupLab.size()); i++) {
                     JButton btn = new JButton("Edit");
-                    btn.addActionListener(this);
+                    btn.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            
+                        }
+                    });
                     listEdit.add(btn);
                     btn = new JButton("Delete");
-                    btn.addActionListener(this);
+                    btn.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            
+                        }
+                    });
                     listDelete.add(btn);
                 }
+                txtSubjectID.setText("");
                 ((DefaultTableModel)tblResult.getModel()).fireTableDataChanged();
             }
         });

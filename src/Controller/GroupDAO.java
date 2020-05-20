@@ -179,5 +179,13 @@ public class GroupDAO {
         } catch (SQLException e) {
         }
     }
+    
+    public void updateGroup(Group group){
+        String sql = "UPDATE groups_subject SET ";
+    }
+    
+    public void updateGroupLab(GroupLab lab){
+        String sql = "UPDATE grouplab SET";
+    }
 
 }
