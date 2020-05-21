@@ -74,6 +74,7 @@ public class TimeTable extends javax.swing.JFrame implements ActionListener {
                     listDelete.add(btn);
                 }
                 ((DefaultTableModel) tblResult.getModel()).fireTableDataChanged();
+                pnTimeTable.add(tblResult);
             }
         });
 
@@ -97,6 +98,7 @@ public class TimeTable extends javax.swing.JFrame implements ActionListener {
                 }
                 txtSubjectID.setText("");
                 ((DefaultTableModel) tblResult.getModel()).fireTableDataChanged();
+                pnTimeTable.add(tblResult);
             }
         });
 
@@ -118,9 +120,17 @@ public class TimeTable extends javax.swing.JFrame implements ActionListener {
             dao.deleteGroupLab(listGroupLab.get(index).getTeam(), listGroupLab.get(index).getGroupID());
         }
     }
-    
-    private void editGroup(int index){
-        
+
+    private void editGroup(int index) {
+        new EditFrm(this, listGroup.get(index), listGroupLab.get(index), index);
+    }
+
+    public void refreshResultAfterUpdate(int index, Group group, GroupLab lab) {
+        listGroup.remove(index);
+        listGroup.add(index, group);
+        listGroupLab.remove(index);
+        listGroupLab.add(index, lab);
+        ((DefaultTableModel) tblResult.getModel()).fireTableDataChanged();
     }
 
     class SubjectTableModel extends DefaultTableModel {
