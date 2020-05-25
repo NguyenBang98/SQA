@@ -741,7 +741,10 @@ public class EditFrm extends javax.swing.JFrame implements ActionListener {
 
     private void btnUpdateClick() {
         if(lab != null && group == null){
-            
+            lab.setTeam(Integer.parseInt(txtTeam.getText()));
+            lab.setDay(txtDayLab.getText());
+            lab.setHour(txtTimeLab.getText());
+            //lab.setRoomLab(txt);
         }
         if(group != null && lab == null){
             
