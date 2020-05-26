@@ -6,6 +6,7 @@ import View.Login;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
+import javax.swing.JOptionPane;
 
 public class LogInController {
 
@@ -29,7 +30,7 @@ public class LogInController {
                     mf.setLocationRelativeTo(null);
                     login.dispose();
                 }else{
-                    login.showMessage("Invalid username and/or password!");
+                    login.showMessage("Vui lòng nhập chính xác tên đăng nhập/mật khẩu");
                 }                
             } catch (Exception ex) {
             }

@@ -15,10 +15,12 @@ public class TimeTabling extends javax.swing.JFrame implements ActionListener {
     Room room;
     Subject subject;
     RoomLab roomLab;
+    String week;
 
     public TimeTabling() {
         super("Create Timetable");
         initComponents();
+        week = new String();
 
         TimeTablingDAO db = new TimeTablingDAO();
         db.listSubject().forEach((i) -> {
@@ -57,6 +59,153 @@ public class TimeTabling extends javax.swing.JFrame implements ActionListener {
 
             }
         });
+        
+        cbListSubject.addActionListener((ActionEvent e) -> {
+            if (cbListSubject.getSelectedItem().toString().equals("Chuyên đề công nghệ phần mềm") == false) {
+                panelHour2.setVisible(true);
+                panelLab.setVisible(false);
+//                
+                jCheckBox8.setSelected(true);
+                jCheckBox9.setSelected(true);
+                jCheckBox10.setSelected(true);
+                jCheckBox11.setSelected(true);
+                jCheckBox12.setSelected(true);
+                jCheckBox13.setSelected(true);
+                jCheckBox14.setSelected(true);
+                jCheckBox15.setSelected(true);
+            } else {
+                panelHour2.setVisible(true);
+
+            }
+        });
+        
+        cbListTime1.addActionListener((ActionEvent e) -> {
+            if (cbListTime1.getSelectedItem().toString().equals("7:00-9:00") || cbListTime1.getSelectedItem().toString().equals("14:00-16:00")) {              
+                jCheckBox16.setSelected(true);
+                jCheckBox17.setSelected(true);
+                jCheckBox18.setSelected(true);
+                jCheckBox19.setSelected(true);
+                jCheckBox20.setSelected(true);
+                jCheckBox21.setSelected(true);
+                jCheckBox22.setSelected(true);
+                jCheckBox24.setSelected(false);
+                jCheckBox25.setSelected(false);
+                jCheckBox26.setSelected(false);
+                jCheckBox27.setSelected(false);
+                jCheckBox28.setSelected(false);
+                jCheckBox29.setSelected(false);
+                jCheckBox30.setSelected(false);
+            } else {
+                jCheckBox16.setSelected(false);
+                jCheckBox17.setSelected(false);
+                jCheckBox18.setSelected(false);
+                jCheckBox19.setSelected(false);
+                jCheckBox20.setSelected(false);
+                jCheckBox21.setSelected(false);
+                jCheckBox22.setSelected(false);
+                jCheckBox24.setSelected(true);
+                jCheckBox25.setSelected(true);
+                jCheckBox26.setSelected(true);
+                jCheckBox27.setSelected(true);
+                jCheckBox28.setSelected(true);
+                jCheckBox29.setSelected(true);
+                jCheckBox30.setSelected(true);
+
+            }
+        });
+        
+        if(jCheckBox1.isSelected()){
+            week.concat("1");
+        }
+        if(jCheckBox2.isSelected()){
+            week.concat("2");
+        }
+        if(jCheckBox3.isSelected()){
+            week.concat("3");
+        }
+        if(jCheckBox4.isSelected()){
+            week.concat("");
+        }
+        if(jCheckBox5.isSelected()){
+            week.concat("5");
+        }
+        if(jCheckBox6.isSelected()){
+            week.concat("6");
+        }
+        if(jCheckBox7.isSelected()){
+            week.concat("7");
+        }
+        if(jCheckBox8.isSelected()){
+            week.concat("8");
+        }
+        if(jCheckBox9.isSelected()){
+            week.concat("9");
+        }
+        if(jCheckBox10.isSelected()){
+            week.concat("10");
+        }
+        if(jCheckBox11.isSelected()){
+            week.concat("11");
+        }
+        if(jCheckBox12.isSelected()){
+            week.concat("12");
+        }
+        if(jCheckBox13.isSelected()){
+            week.concat("13");
+        }
+        if(jCheckBox14.isSelected()){
+            week.concat("14");
+        }
+        if(jCheckBox15.isSelected()){
+            week.concat("15");
+        }
+        if(jCheckBox16.isSelected()){
+            week.concat("2");
+        }
+        if(jCheckBox17.isSelected()){
+            week.concat("1");
+        }
+        if(jCheckBox18.isSelected()){
+            week.concat("3");
+        }
+        if(jCheckBox19.isSelected()){
+            week.concat("4");
+        }
+        if(jCheckBox20.isSelected()){
+            week.concat("5");
+        }
+        if(jCheckBox21.isSelected()){
+            week.concat("6");
+        }
+        if(jCheckBox22.isSelected()){
+            week.concat("7");
+        }
+        if(jCheckBox23.isSelected()){
+            week.concat("8");
+        }
+        if(jCheckBox24.isSelected()){
+            week.concat("9");
+        }
+        if(jCheckBox25.isSelected()){
+            week.concat("10");
+        }
+        if(jCheckBox26.isSelected()){
+            week.concat("11");
+        }
+        if(jCheckBox27.isSelected()){
+            week.concat("12");
+        }
+        if(jCheckBox28.isSelected()){
+            week.concat("13");
+        }
+        if(jCheckBox29.isSelected()){
+            week.concat("14");
+        }
+        if(jCheckBox30.isSelected()){
+            week.concat("15");
+        }
+        
+        
 
         btnSave.addActionListener(this);
         btnShowTimtable.addActionListener(this);
@@ -71,6 +220,7 @@ public class TimeTabling extends javax.swing.JFrame implements ActionListener {
         group.setDay(cbDay.getSelectedItem().toString());
         group.setHour1(cbListTime1.getSelectedItem().toString());
         group.setHour2(cbListTime2.getSelectedItem().toString());
+        group.setWeek(week);
         return group;
     }
 
