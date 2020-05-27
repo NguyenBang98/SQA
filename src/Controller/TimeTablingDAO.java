@@ -109,6 +109,7 @@ public class TimeTablingDAO {
         String sql = "SELECT * FROM groups_subject WHERE SubjectID = ?";
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, key);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Group group = new Group();
@@ -127,11 +128,12 @@ public class TimeTablingDAO {
         return result;
     }
     
-    public ArrayList<GroupLab> listGroupLab() {
+    public ArrayList<GroupLab> listGroupLab(String key) {
         ArrayList<GroupLab> result = new ArrayList<GroupLab>();
         String sql = "SELECT * FROM grouplab WHERE SubjectID = ?";
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, key);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 GroupLab grouplab = new GroupLab();
@@ -150,7 +152,7 @@ public class TimeTablingDAO {
         return result;
     }
     
-    public ArrayList<GroupLab> searchGroupLab(String key) {
+    public ArrayList<GroupLab> searchGroupLab() {
         ArrayList<GroupLab> result = new ArrayList<GroupLab>();
         String sql = "SELECT * FROM grouplab";
         try {

@@ -40,6 +40,8 @@ public class TimeTable extends javax.swing.JFrame implements ActionListener {
         listEdit = new ArrayList<JButton>();
         listDelete = new ArrayList<JButton>();
         tblResult = new JTable(new SubjectTableModel());
+        tblResult.setFillsViewportHeight(false);
+        pnTimeTable.add(tblResult);
 
         dao.listSubject().forEach((i) -> {
             list.addElement(i.getName());
@@ -54,13 +56,13 @@ public class TimeTable extends javax.swing.JFrame implements ActionListener {
                 TimeTablingDAO dao = new TimeTablingDAO();
                 GroupDAO gdao = new GroupDAO();
                 listGroup = dao.searchGroupBySubjectID(gdao.searchSubject(text).getSubjectID());
-                listGroupLab = dao.searchGroupLab(gdao.searchSubject(text).getSubjectID());
+                listGroupLab = dao.listGroupLab(gdao.searchSubject(text).getSubjectID());
                 for (int i = 0; i < (listGroup.size() + listGroupLab.size()); i++) {
                     JButton btn = new JButton("Edit");
                     btn.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-
+                            //editGroup(i);
                         }
                     });
                     listEdit.add(btn);
@@ -87,7 +89,7 @@ public class TimeTable extends javax.swing.JFrame implements ActionListener {
                 }
                 TimeTablingDAO dao = new TimeTablingDAO();
                 listGroup = dao.searchGroupBySubjectID(key);
-                listGroupLab = dao.searchGroupLab(key);
+                listGroupLab = dao.searchGroupLab();
                 for (int i = 0; i < (listGroup.size() + listGroupLab.size()); i++) {
                     JButton btn = new JButton("Edit");
                     btn.addActionListener(this);

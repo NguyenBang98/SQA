@@ -34,6 +34,7 @@ public class GroupDAO {
             ps.setString(5, group.getHour1());
             ps.setString(6, group.getHour2());
             ps.setString(7, group.getWeek());
+            ps.executeUpdate();
         } catch (SQLException e) {
         }
     }
@@ -50,7 +51,7 @@ public class GroupDAO {
             ps.setString(5, lab.getDay());
             ps.setString(6, lab.getHour());
             ps.setString(7, lab.getWeek());
-
+            ps.executeUpdate();
         } catch (SQLException e) {
         }
     }
@@ -60,7 +61,7 @@ public class GroupDAO {
         String sql = "SELECT * FROM subject WHERE Name = ?";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setString(1, "%" + key + "%");
+            ps.setString(1, key);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
 
@@ -79,7 +80,7 @@ public class GroupDAO {
 
         try {
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setString(1, "%" + key + "%");
+            ps.setString(1, key);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 result.setSubjectID(rs.getString("SubjectID"));
@@ -97,7 +98,7 @@ public class GroupDAO {
 
         try {
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setString(1, "%" + key + "%");
+            ps.setString(1, key);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 result.setRoomID(rs.getInt("RoomID"));
@@ -168,8 +169,8 @@ public class GroupDAO {
         } catch (SQLException e) {
         }
     }
-    
-    public void deleteGroupLab(int team, int GroupID){
+
+    public void deleteGroupLab(int team, int GroupID) {
         String sql = "DELETE FROM grouplab WHERE team = ? AND GroupID = ?";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
@@ -179,12 +180,12 @@ public class GroupDAO {
         } catch (SQLException e) {
         }
     }
-    
-    public void updateGroup(Group group){
+
+    public void updateGroup(Group group) {
         String sql = "UPDATE groups_subject SET ";
     }
-    
-    public void updateGroupLab(GroupLab lab){
+
+    public void updateGroupLab(GroupLab lab) {
         String sql = "UPDATE grouplab SET";
     }
 
