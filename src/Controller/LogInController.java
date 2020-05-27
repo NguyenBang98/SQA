@@ -17,21 +17,23 @@ public class LogInController {
         this.login = login;
         login.addLoginListener(new LoginListener());
     }
-    
+
     class LoginListener implements ActionListener {
+
         @Override
         public void actionPerformed(ActionEvent e) {
             try {
                 user = login.getUser();
-                if(checkUser(user)){
+                //if(user.getCode() == null || user.getPass() == null)JOptionPane.showMessageDialog(login, "Hrloo");
+                if (checkUser(user)) {
                     MainFrame mf = new MainFrame();
                     MainFrameController mfc = new MainFrameController(mf);
                     mf.setVisible(true);
                     mf.setLocationRelativeTo(null);
                     login.dispose();
-                }else{
+                } else {
                     login.showMessage("Vui lòng nhập chính xác tên đăng nhập/mật khẩu");
-                }                
+                }
             } catch (Exception ex) {
             }
         }
@@ -39,13 +41,14 @@ public class LogInController {
 
     public boolean checkUser(User user) throws Exception {
 
-        String query = "Select * FROM users WHERE code ='" + user.getCode()
-                + "' AND pass ='" + user.getPass() + "'";
+        String query = "Select * FROM users WHERE code = ? AND pass = ?";
         try {
             Class.forName(Utils.Parameters.dbClass);
             try (Connection con = DriverManager.getConnection(Utils.Parameters.dbUrl, Utils.Parameters.userName, Utils.Parameters.password)) {
-                Statement stmt = con.createStatement();
-                ResultSet rs = stmt.executeQuery(query);
+                PreparedStatement stmt = con.prepareStatement(query);
+                stmt.setString(1, user.getCode());
+                stmt.setString(2, user.getPass());
+                ResultSet rs = stmt.executeQuery();
                 if (rs.next()) {
                     return true;
                 }

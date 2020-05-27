@@ -4,6 +4,11 @@ import Controller.LogInController;
 import Model.User;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import javax.swing.JOptionPane;
 
 public class Login extends javax.swing.JFrame implements ActionListener {
@@ -14,6 +19,7 @@ public class Login extends javax.swing.JFrame implements ActionListener {
         super("Login");
         initComponents();
         btnLogin.addActionListener(this);
+
     }
 
     public User getUser() {

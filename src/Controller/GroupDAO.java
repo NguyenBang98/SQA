@@ -23,7 +23,7 @@ public class GroupDAO {
     }
 
     public void saveGroup(Group group) {
-        String sql = "INSERT INTO groups_subject(GroupID, SubjectID, RoomID, Days, hour1, hour2, week) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO groups_subject(GroupID, SubjectID, RoomID, Days, hour1, hour2, weeks) VALUES (?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement ps = null;
         try {
             ps = con.prepareStatement(sql);

@@ -21,6 +21,7 @@ public class TimeTabling extends javax.swing.JFrame implements ActionListener {
         super("Create Timetable");
         initComponents();
         week = new String();
+        panelLab.setVisible(false);
 
         TimeTablingDAO db = new TimeTablingDAO();
         db.listSubject().forEach((i) -> {
