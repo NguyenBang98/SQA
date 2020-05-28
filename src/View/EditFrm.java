@@ -17,7 +17,7 @@ public class EditFrm extends javax.swing.JFrame implements ActionListener {
     private GroupDAO dao;
     private TimeTablingDAO tdao;
 
-    public EditFrm(TimeTable time, Group group, GroupLab lab, int index) {
+    public EditFrm(TimeTable time, Group group, int index) {
         super("Edit TimeTable");
         initComponents();
         this.timetable = time;

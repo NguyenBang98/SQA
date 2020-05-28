@@ -24,7 +24,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
 public class TimeTable extends javax.swing.JFrame implements ActionListener {
-
+    
     DefaultListModel list = new DefaultListModel();
     TimeTablingDAO dao = new TimeTablingDAO();
     GroupDAO gdao = new GroupDAO();
@@ -34,34 +34,45 @@ public class TimeTable extends javax.swing.JFrame implements ActionListener {
     private ArrayList<GroupLab> listGroupLab;
     private ArrayList<JButton> listEdit;
     private ArrayList<JButton> listDelete;
-
+    
     public TimeTable() {
         super("Timetable");
         initComponents();
-
+        
         lstGroup = dao.listGroup();
         listGroup = new ArrayList<Group>(Arrays.asList(lstGroup));
         listEdit = new ArrayList<JButton>();
         listDelete = new ArrayList<JButton>();
-
+        
         dao.listSubject().forEach((i) -> {
             list.addElement(i.getName());
         });
         lstSubject.setModel(list);
-
+        
         lstSubject.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
+                if (e.getValueIsAdjusting()) {
+                    return;
+                }
                 String text = lstSubject.getSelectedValue();
-
+                
                 TimeTablingDAO dao = new TimeTablingDAO();
                 GroupDAO gdao = new GroupDAO();
                 lstGroup = dao.searchGroupBySubjectID(gdao.searchSubject(text).getSubjectID());
-                listGroup = new ArrayList<Group>(Arrays.asList(lstGroup));
-
+                
+                model = (DefaultTableModel) tblResult.getModel();
+                Object[] row = new Object[lstGroup.length];
+                for (int i = 0; i < lstGroup.length; i++) {
+                    Object[] obj = {lstGroup[i].getSubject().getSubjectID(), lstGroup[i].getSubject().getName(),
+                        lstGroup[i].getGroupID(), lstGroup[i].getDay(), lstGroup[i].getHour1().concat(lstGroup[i].getHour2()),
+                        lstGroup[i].getRoom().getNameRoom(), lstGroup[i].getWeek()};
+                    model.addRow(obj);
+                }
+                
             }
         });
-
+        
         btnSearch.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -74,29 +85,38 @@ public class TimeTable extends javax.swing.JFrame implements ActionListener {
 //                    JOptionPane.showMessageDialog(rootPane, "Môn học không tồn tại");
 //                    txtSubjectID.setText("");
 //                } else {
-                    lstGroup = dao.searchGroupBySubjectID(key);
+                lstGroup = dao.searchGroupBySubjectID(key);
+                
+                model = (DefaultTableModel) tblResult.getModel();
+                Object[] row = new Object[lstGroup.length];
+                for (int i = 0; i < lstGroup.length; i++) {
+                    Object[] obj = {lstGroup[i].getSubject().getSubjectID(), lstGroup[i].getSubject().getName(),
+                        lstGroup[i].getGroupID(), lstGroup[i].getDay(), lstGroup[i].getHour1().concat(lstGroup[i].getHour2()),
+                        lstGroup[i].getRoom().getNameRoom(), lstGroup[i].getWeek()};
+                    model.addRow(obj);
+                }
+                txtSubjectID.setText("");
 
-                    model = (DefaultTableModel) tblResult.getModel();
-                    Object[] row = new Object[lstGroup.length];
-                    for (int i = 0; i < lstGroup.length; i++) {
-                        Object[] obj = {lstGroup[i].getSubject().getSubjectID(), lstGroup[i].getSubject().getName(),
-                            lstGroup[i].getGroupID(), lstGroup[i].getDay(), lstGroup[i].getHour1().concat(lstGroup[i].getHour2()),
-                            lstGroup[i].getRoom().getNameRoom(), lstGroup[i].getWeek()};
-                        model.addRow(obj);
-                    }
-                    txtSubjectID.setText("");
-                    pnTimeTable.setVisible(true);
 //                }
-
             }
         });
-
+        
+        tblResult.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if (e.getValueIsAdjusting()) {
+                    return;
+                }
+                
+            }
+        });
+        
         btnExit.addActionListener(this);
         btnExcel.addActionListener(this);
-
+        
         this.pack();
     }
-
+    
     private void deleteGroup(int index) {
         int dialogButton = JOptionPane.YES_NO_OPTION;
         int dialogResult = JOptionPane.showConfirmDialog(rootPane, "Bạn chắc chắn muốn xóa?", "Cảnh báo!", dialogButton);
@@ -106,19 +126,19 @@ public class TimeTable extends javax.swing.JFrame implements ActionListener {
             dao.deleteGroupLab(listGroupLab.get(index).getTeam(), listGroupLab.get(index).getGroupID());
         }
     }
-
+    
     private void editGroup(int index) {
-        new EditFrm(this, (Group) listGroup.get(index), listGroupLab.get(index), index);
+        new EditFrm(this, lstGroup[index], index);
     }
-
+    
     public void addExcelActionListener(ActionListener log) {
         btnExcel.addActionListener(log);
     }
-
+    
     public void addExitActionListener(ActionListener log) {
         btnExit.addActionListener(log);
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -135,8 +155,6 @@ public class TimeTable extends javax.swing.JFrame implements ActionListener {
         pnTimeTable = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblResult = new javax.swing.JTable();
-        btnEdit = new javax.swing.JButton();
-        btnDelete = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -162,43 +180,21 @@ public class TimeTable extends javax.swing.JFrame implements ActionListener {
         ));
         jScrollPane2.setViewportView(tblResult);
 
-        btnEdit.setText("Edit");
-
-        btnDelete.setText("Delete");
-
         javax.swing.GroupLayout pnTimeTableLayout = new javax.swing.GroupLayout(pnTimeTable);
         pnTimeTable.setLayout(pnTimeTableLayout);
         pnTimeTableLayout.setHorizontalGroup(
             pnTimeTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnTimeTableLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 590, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(pnTimeTableLayout.createSequentialGroup()
-                .addGap(93, 93, 93)
-                .addComponent(btnEdit)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnDelete)
-                .addGap(148, 148, 148))
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         pnTimeTableLayout.setVerticalGroup(
             pnTimeTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnTimeTableLayout.createSequentialGroup()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
-                .addGroup(pnTimeTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnEdit)
-                    .addComponent(btnDelete))
-                .addGap(24, 24, 24))
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout pnMainLayout = new javax.swing.GroupLayout(pnMain);
         pnMain.setLayout(pnMainLayout);
         pnMainLayout.setHorizontalGroup(
             pnMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnMainLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(pnTimeTable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(pnMainLayout.createSequentialGroup()
                 .addGroup(pnMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnMainLayout.createSequentialGroup()
@@ -213,13 +209,14 @@ public class TimeTable extends javax.swing.JFrame implements ActionListener {
                                 .addGap(96, 96, 96)
                                 .addComponent(btnSearch))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(0, 163, Short.MAX_VALUE))
                     .addGroup(pnMainLayout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addComponent(btnExcel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnExit)))
                 .addContainerGap())
+            .addComponent(pnTimeTable, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         pnMainLayout.setVerticalGroup(
             pnMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -273,8 +270,6 @@ public class TimeTable extends javax.swing.JFrame implements ActionListener {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnDelete;
-    private javax.swing.JButton btnEdit;
     private javax.swing.JButton btnExcel;
     private javax.swing.JButton btnExit;
     private javax.swing.JButton btnSearch;
@@ -291,6 +286,6 @@ public class TimeTable extends javax.swing.JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        
     }
 }
