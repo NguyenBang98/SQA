@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
 public class TimeTablingController {
 
     private TimeTabling tb;
-    private ArrayList<Group> lstGroup;
+    Group[] lstGroup;
     private boolean tick = false;
 
     public TimeTablingController(TimeTabling tb) {
@@ -26,13 +26,12 @@ public class TimeTablingController {
         public void actionPerformed(ActionEvent e) {
             TimeTablingDAO dao = new TimeTablingDAO();
             lstGroup = dao.searchGroupBySubjectID(tb.setGroup().getSubject().getSubjectID());
-            for (int i = 0; i < lstGroup.size(); i++) {
-//                if (lstGroup.get(i).equals(tb.setGroup())) {
-//                    JOptionPane.showMessageDialog(tb, "Nhóm môn học đã tồn tại. Vui lòng chỉnh sửa thông tin!");
-//                    tick = true;
-//                }
-//                break;
-                System.out.println(lstGroup.get(i).getGroupID());
+            for (int i = 0; i < lstGroup.length; i++) {
+                 if(lstGroup[i].equals(tb.setGroup())){
+                     JOptionPane.showMessageDialog(tb, "Nhóm môn học đã tồn tại. Vui lòng chỉnh sửa thông tin!");
+                    tick = true;
+                    break;
+                 }
             }
             if (tick == false) {
                 GroupDAO daog = new GroupDAO();
