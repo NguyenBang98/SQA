@@ -96,6 +96,7 @@ public class TimeTabling extends javax.swing.JFrame implements ActionListener {
                 jCheckBox28.setSelected(false);
                 jCheckBox29.setSelected(false);
                 jCheckBox30.setSelected(false);
+                week = "123456789101112131415-1234567";
             } else {
                 jCheckBox16.setSelected(false);
                 jCheckBox17.setSelected(false);
@@ -111,103 +112,10 @@ public class TimeTabling extends javax.swing.JFrame implements ActionListener {
                 jCheckBox28.setSelected(true);
                 jCheckBox29.setSelected(true);
                 jCheckBox30.setSelected(true);
-
+                week = "123456789101112131415-9101112131415";
             }
         });
-        
-        if(jCheckBox1.isSelected()){
-            week.concat("1");
-        }
-        if(jCheckBox2.isSelected()){
-            week.concat("2");
-        }
-        if(jCheckBox3.isSelected()){
-            week.concat("3");
-        }
-        if(jCheckBox4.isSelected()){
-            week.concat("");
-        }
-        if(jCheckBox5.isSelected()){
-            week.concat("5");
-        }
-        if(jCheckBox6.isSelected()){
-            week.concat("6");
-        }
-        if(jCheckBox7.isSelected()){
-            week.concat("7");
-        }
-        if(jCheckBox8.isSelected()){
-            week.concat("8");
-        }
-        if(jCheckBox9.isSelected()){
-            week.concat("9");
-        }
-        if(jCheckBox10.isSelected()){
-            week.concat("10");
-        }
-        if(jCheckBox11.isSelected()){
-            week.concat("11");
-        }
-        if(jCheckBox12.isSelected()){
-            week.concat("12");
-        }
-        if(jCheckBox13.isSelected()){
-            week.concat("13");
-        }
-        if(jCheckBox14.isSelected()){
-            week.concat("14");
-        }
-        if(jCheckBox15.isSelected()){
-            week.concat("15");
-        }
-        if(jCheckBox16.isSelected()){
-            week.concat("2");
-        }
-        if(jCheckBox17.isSelected()){
-            week.concat("1");
-        }
-        if(jCheckBox18.isSelected()){
-            week.concat("3");
-        }
-        if(jCheckBox19.isSelected()){
-            week.concat("4");
-        }
-        if(jCheckBox20.isSelected()){
-            week.concat("5");
-        }
-        if(jCheckBox21.isSelected()){
-            week.concat("6");
-        }
-        if(jCheckBox22.isSelected()){
-            week.concat("7");
-        }
-        if(jCheckBox23.isSelected()){
-            week.concat("8");
-        }
-        if(jCheckBox24.isSelected()){
-            week.concat("9");
-        }
-        if(jCheckBox25.isSelected()){
-            week.concat("10");
-        }
-        if(jCheckBox26.isSelected()){
-            week.concat("11");
-        }
-        if(jCheckBox27.isSelected()){
-            week.concat("12");
-        }
-        if(jCheckBox28.isSelected()){
-            week.concat("13");
-        }
-        if(jCheckBox29.isSelected()){
-            week.concat("14");
-        }
-        if(jCheckBox30.isSelected()){
-            week.concat("15");
-        }
-        
-        
-        
+                
 
         btnSave.addActionListener(this);
         btnShowTimtable.addActionListener(this);

@@ -24,7 +24,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
 public class TimeTable extends javax.swing.JFrame implements ActionListener {
-    
+
     DefaultListModel list = new DefaultListModel();
     TimeTablingDAO dao = new TimeTablingDAO();
     GroupDAO gdao = new GroupDAO();
@@ -32,47 +32,51 @@ public class TimeTable extends javax.swing.JFrame implements ActionListener {
     private Group[] lstGroup;
     private ArrayList<Group> listGroup;
     private ArrayList<GroupLab> listGroupLab;
-    private ArrayList<JButton> listEdit;
-    private ArrayList<JButton> listDelete;
-    
+
     public TimeTable() {
         super("Timetable");
         initComponents();
-        
+
         lstGroup = dao.listGroup();
         listGroup = new ArrayList<Group>(Arrays.asList(lstGroup));
-        listEdit = new ArrayList<JButton>();
-        listDelete = new ArrayList<JButton>();
-        
+
         dao.listSubject().forEach((i) -> {
             list.addElement(i.getName());
         });
         lstSubject.setModel(list);
-        
+
         lstSubject.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                if (e.getValueIsAdjusting()) {
-                    return;
+
+                if (tblResult.getModel().getRowCount() != 0) {
+                    for (int i = tblResult.getModel().getRowCount() - 1; i >= 0; i--) {
+                        model.removeRow(i);
+                    }
+                } else {
+
+                    if (e.getValueIsAdjusting()) {
+                        return;
+                    }
+                    String text = lstSubject.getSelectedValue();
+
+                    TimeTablingDAO dao = new TimeTablingDAO();
+                    GroupDAO gdao = new GroupDAO();
+                    lstGroup = dao.searchGroupBySubjectID(gdao.searchSubject(text).getSubjectID());
+
+                    model = (DefaultTableModel) tblResult.getModel();
+                    Object[] row = new Object[lstGroup.length];
+                    for (int i = 0; i < lstGroup.length; i++) {
+                        Object[] obj = {lstGroup[i].getSubject().getSubjectID(), lstGroup[i].getSubject().getName(),
+                            lstGroup[i].getGroupID(), lstGroup[i].getDay(), lstGroup[i].getHour1().concat(lstGroup[i].getHour2()),
+                            lstGroup[i].getRoom().getNameRoom(), lstGroup[i].getWeek()};
+                        model.addRow(obj);
+                    }
+
                 }
-                String text = lstSubject.getSelectedValue();
-                
-                TimeTablingDAO dao = new TimeTablingDAO();
-                GroupDAO gdao = new GroupDAO();
-                lstGroup = dao.searchGroupBySubjectID(gdao.searchSubject(text).getSubjectID());
-                
-                model = (DefaultTableModel) tblResult.getModel();
-                Object[] row = new Object[lstGroup.length];
-                for (int i = 0; i < lstGroup.length; i++) {
-                    Object[] obj = {lstGroup[i].getSubject().getSubjectID(), lstGroup[i].getSubject().getName(),
-                        lstGroup[i].getGroupID(), lstGroup[i].getDay(), lstGroup[i].getHour1().concat(lstGroup[i].getHour2()),
-                        lstGroup[i].getRoom().getNameRoom(), lstGroup[i].getWeek()};
-                    model.addRow(obj);
-                }
-                
             }
         });
-        
+
         btnSearch.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -80,43 +84,60 @@ public class TimeTable extends javax.swing.JFrame implements ActionListener {
                 if (key == null || key.length() == 0) {
                     JOptionPane.showMessageDialog(rootPane, "Nhập mã môn học");
                 }
-                TimeTablingDAO dao = new TimeTablingDAO();
+                if (tblResult.getModel().getRowCount() != 0) {
+                    for (int j = tblResult.getModel().getRowCount() - 1; j >= 0; j--) {
+                        model.removeRow(j);
+                    }
+                    TimeTablingDAO dao = new TimeTablingDAO();
+                    lstGroup = dao.searchGroupBySubjectID(key);
+
+                    model = (DefaultTableModel) tblResult.getModel();
+                    Object[] row = new Object[lstGroup.length];
+                    for (int i = 0; i < lstGroup.length; i++) {
+                        Object[] obj = {lstGroup[i].getSubject().getSubjectID(), lstGroup[i].getSubject().getName(),
+                            lstGroup[i].getGroupID(), lstGroup[i].getDay(), lstGroup[i].getHour1().concat(lstGroup[i].getHour2()),
+                            lstGroup[i].getRoom().getNameRoom(), lstGroup[i].getWeek()};
+                        model.addRow(obj);
+                    }
+                    txtSubjectID.setText("");
+                } else {
+                    TimeTablingDAO dao = new TimeTablingDAO();
 //                if (gdao.searchSubjectID(key)) {
 //                    JOptionPane.showMessageDialog(rootPane, "Môn học không tồn tại");
 //                    txtSubjectID.setText("");
 //                } else {
-                lstGroup = dao.searchGroupBySubjectID(key);
-                
-                model = (DefaultTableModel) tblResult.getModel();
-                Object[] row = new Object[lstGroup.length];
-                for (int i = 0; i < lstGroup.length; i++) {
-                    Object[] obj = {lstGroup[i].getSubject().getSubjectID(), lstGroup[i].getSubject().getName(),
-                        lstGroup[i].getGroupID(), lstGroup[i].getDay(), lstGroup[i].getHour1().concat(lstGroup[i].getHour2()),
-                        lstGroup[i].getRoom().getNameRoom(), lstGroup[i].getWeek()};
-                    model.addRow(obj);
-                }
-                txtSubjectID.setText("");
+                    lstGroup = dao.searchGroupBySubjectID(key);
 
-//                }
+                    model = (DefaultTableModel) tblResult.getModel();
+                    Object[] row = new Object[lstGroup.length];
+                    for (int i = 0; i < lstGroup.length; i++) {
+                        Object[] obj = {lstGroup[i].getSubject().getSubjectID(), lstGroup[i].getSubject().getName(),
+                            lstGroup[i].getGroupID(), lstGroup[i].getDay(), lstGroup[i].getHour1().concat(lstGroup[i].getHour2()),
+                            lstGroup[i].getRoom().getNameRoom(), lstGroup[i].getWeek()};
+                        model.addRow(obj);
+                    }
+                    txtSubjectID.setText("");
+
+                }
             }
         });
-        
+
         tblResult.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 if (e.getValueIsAdjusting()) {
                     return;
                 }
-                
+
             }
         });
-        
+
         btnExit.addActionListener(this);
         btnExcel.addActionListener(this);
-        
+
         this.pack();
     }
-    
+
     private void deleteGroup(int index) {
         int dialogButton = JOptionPane.YES_NO_OPTION;
         int dialogResult = JOptionPane.showConfirmDialog(rootPane, "Bạn chắc chắn muốn xóa?", "Cảnh báo!", dialogButton);
@@ -126,19 +147,19 @@ public class TimeTable extends javax.swing.JFrame implements ActionListener {
             dao.deleteGroupLab(listGroupLab.get(index).getTeam(), listGroupLab.get(index).getGroupID());
         }
     }
-    
+
     private void editGroup(int index) {
         new EditFrm(this, lstGroup[index], index);
     }
-    
+
     public void addExcelActionListener(ActionListener log) {
         btnExcel.addActionListener(log);
     }
-    
+
     public void addExitActionListener(ActionListener log) {
         btnExit.addActionListener(log);
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -286,6 +307,6 @@ public class TimeTable extends javax.swing.JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        
+
     }
 }
