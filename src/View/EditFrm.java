@@ -17,13 +17,13 @@ public class EditFrm extends javax.swing.JFrame implements ActionListener {
     private GroupDAO dao;
     private TimeTablingDAO tdao;
 
-    public EditFrm(TimeTable time, Group group, int index) {
+    public EditFrm(TimeTable time, Group group) {
         super("Edit TimeTable");
         initComponents();
         this.timetable = time;
         this.group = group;
         this.lab = lab;
-        this.index = index;
+        
 
         btnUpdate.addActionListener(this);
         btnReset.addActionListener(this);
@@ -38,7 +38,7 @@ public class EditFrm extends javax.swing.JFrame implements ActionListener {
         });
         
         initForm();
-        this.pack();
+        
     }
 
     @SuppressWarnings("unchecked")
@@ -752,19 +752,19 @@ public class EditFrm extends javax.swing.JFrame implements ActionListener {
     }
 
     private void initForm() {
-        if(lab != null && group == null){
-            txtSubject.setText(lab.getSubject().getName());
-            pnDay.setVisible(false);
-            panelHour1.setVisible(false);
-            panelHour2.setVisible(false);
-            pnRoom.setVisible(false);
-            panelLab.setVisible(true);
-            txtTeam.setText(String.valueOf(lab.getTeam()));
-            txtTimeLab.setText(lab.getHour());
-            txtDayLab.setText(lab.getDay());
-            txtRoomLab.setText(lab.getRoomLab().getNameRoomLab());
-        }
-        if(group != null && lab == null){
+//        if(lab != null && group == null){
+//            txtSubject.setText(lab.getSubject().getName());
+//            pnDay.setVisible(false);
+//            panelHour1.setVisible(false);
+//            panelHour2.setVisible(false);
+//            pnRoom.setVisible(false);
+//            panelLab.setVisible(true);
+//            txtTeam.setText(String.valueOf(lab.getTeam()));
+//            txtTimeLab.setText(lab.getHour());
+//            txtDayLab.setText(lab.getDay());
+//            txtRoomLab.setText(lab.getRoomLab().getNameRoomLab());
+//        }
+        if(group != null){
             txtSubject.setText(group.getSubject().getName());
             pnDay.setVisible(true);
             panelHour1.setVisible(true);

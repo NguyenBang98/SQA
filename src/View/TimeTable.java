@@ -6,22 +6,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import Controller.TimeTablingDAO;
 import Model.*;
-import Model.Subject;
-import java.awt.Component;
-import java.awt.List;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
-import javax.swing.JButton;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
 
 public class TimeTable extends javax.swing.JFrame implements ActionListener {
 
@@ -128,6 +122,17 @@ public class TimeTable extends javax.swing.JFrame implements ActionListener {
                 if (e.getValueIsAdjusting()) {
                     return;
                 }
+                
+                Group group = new Group();
+               try {
+                    group = dao.searchGroupBySubjectIDAndGroupID((String)tblResult.getValueAt(tblResult.getSelectedRow(), 0), (int) tblResult.getValueAt(tblResult.getSelectedRow(), 2));
+                } catch (SQLException ex) {
+                   Logger.getLogger(TimeTable.class.getName()).log(Level.SEVERE, null, ex);
+              }
+                ;
+                //System.out.println(group.getRoom().getNameRoom());//index row
+                editGroup(group);
+                
 
             }
         });
@@ -148,8 +153,11 @@ public class TimeTable extends javax.swing.JFrame implements ActionListener {
         }
     }
 
-    private void editGroup(int index) {
-        new EditFrm(this, lstGroup[index], index);
+    private void editGroup(Group group) {
+        EditFrm frm = new EditFrm(this, group);
+        frm.setVisible(true);
+        frm.setLocationRelativeTo(null);
+        this.dispose();
     }
 
     public void addExcelActionListener(ActionListener log) {

@@ -4,11 +4,6 @@ import Controller.LogInController;
 import Model.User;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import javax.swing.JOptionPane;
 
 public class Login extends javax.swing.JFrame implements ActionListener {
@@ -16,7 +11,7 @@ public class Login extends javax.swing.JFrame implements ActionListener {
     public User user;
 
     public Login() {
-        super("Login");
+        super("Đăng nhập");
         initComponents();
         btnLogin.addActionListener(this);
 
@@ -71,7 +66,7 @@ public class Login extends javax.swing.JFrame implements ActionListener {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(258, 258, 258)
                         .addComponent(btnLogin)))
-                .addContainerGap(221, Short.MAX_VALUE))
+                .addContainerGap(150, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -84,7 +79,7 @@ public class Login extends javax.swing.JFrame implements ActionListener {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 135, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
                 .addComponent(btnLogin)
                 .addGap(127, 127, 127))
         );

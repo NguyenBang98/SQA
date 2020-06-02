@@ -102,8 +102,8 @@ public class TimeTablingDAO {
         }
         return result;
     }
-    
-    public Group[] searchGroupBySubjectID(String key){
+
+    public Group[] searchGroupBySubjectID(String key) {
         Group[] result = null;
         String sql = "SELECT * FROM groups_subject WHERE SubjectID = ?";
         GroupDAO dao;
@@ -116,9 +116,33 @@ public class TimeTablingDAO {
                 rs.beforeFirst();
             }
             int count = 0;
-            while(rs.next()){
+            while (rs.next()) {
                 dao = new GroupDAO();
                 result[count] = new Group(rs.getInt(1), dao.searchroomID(rs.getInt(3)), dao.searchSubjectID(rs.getString(2)), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7));
+                count++;
+            }
+        } catch (SQLException e) {
+        }
+        return result;
+    }
+
+    public Group searchGroupBySubjectIDAndGroupID(String key1, int key2) throws SQLException {
+        Group result = null;
+        String sql = "SELECT * FROM groups_subject WHERE SubjectID = ? AND GroupID = ?";
+        GroupDAO dao = null;
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, key1);
+            ps.setInt(2, key2);
+            ResultSet rs = ps.executeQuery();
+            if (rs.last()) {
+                result = new Group();
+                rs.beforeFirst();
+            }
+            int count = 0;
+            while (rs.next()) {
+                dao = new GroupDAO();
+                result = new Group(rs.getInt(1), dao.searchroomID(rs.getInt(3)), dao.searchSubjectID(rs.getString(2)), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7));
                 count++;
             }
         } catch (SQLException e) {
@@ -145,7 +169,6 @@ public class TimeTablingDAO {
 //        }
 //        return result;
 //    }
-
     public ArrayList<GroupLab> listGroupLab(String key) {
         ArrayList<GroupLab> result = new ArrayList<GroupLab>();
         String sql = "SELECT * FROM grouplab WHERE SubjectID = ?";
