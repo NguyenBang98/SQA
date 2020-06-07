@@ -3,7 +3,7 @@ package Model;
 import java.time.LocalDateTime;
 
 public class GroupLab {
-
+    
     private int groupID;
     private int team;
     private RoomLab roomLab;
@@ -12,7 +12,7 @@ public class GroupLab {
     private String hour;
     private String week;
 
-    public GroupLab(int groupID, int team, RoomLab roomLab, Subject subject, String day, String hour, String week) {
+    public GroupLab( int groupID, int team, RoomLab roomLab, Subject subject, String day, String hour, String week) {
         this.groupID = groupID;
         this.team = team;
         this.roomLab = roomLab;

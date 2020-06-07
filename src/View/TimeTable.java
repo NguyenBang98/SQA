@@ -129,7 +129,7 @@ public class TimeTable extends javax.swing.JFrame implements ActionListener {
                 } catch (SQLException ex) {
                    Logger.getLogger(TimeTable.class.getName()).log(Level.SEVERE, null, ex);
               }
-                ;
+                
                 //System.out.println(group.getRoom().getNameRoom());//index row
                 editGroup(group);
                 
@@ -143,15 +143,15 @@ public class TimeTable extends javax.swing.JFrame implements ActionListener {
         this.pack();
     }
 
-    private void deleteGroup(int index) {
-        int dialogButton = JOptionPane.YES_NO_OPTION;
-        int dialogResult = JOptionPane.showConfirmDialog(rootPane, "Bạn chắc chắn muốn xóa?", "Cảnh báo!", dialogButton);
-        if (dialogResult == JOptionPane.YES_OPTION) {
-            GroupDAO dao = new GroupDAO();
-            dao.deleteGroup(listGroup.get(index).getGroupID());
-            dao.deleteGroupLab(listGroupLab.get(index).getTeam(), listGroupLab.get(index).getGroupID());
-        }
-    }
+//    private void deleteGroup(int index) {
+//        int dialogButton = JOptionPane.YES_NO_OPTION;
+//        int dialogResult = JOptionPane.showConfirmDialog(rootPane, "Bạn chắc chắn muốn xóa?", "Cảnh báo!", dialogButton);
+//        if (dialogResult == JOptionPane.YES_OPTION) {
+//            GroupDAO dao = new GroupDAO();
+//            dao.deleteGroup(listGroup.get(index).getGroupID());
+//            dao.deleteGroupLab(listGroupLab.get(index).getTeam(), listGroupLab.get(index).getGroupID());
+//        }
+//    }
 
     private void editGroup(Group group) {
         EditFrm frm = new EditFrm(this, group);

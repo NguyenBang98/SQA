@@ -161,7 +161,7 @@ public class GroupDAO {
     }
 
     public void deleteGroup(int GroupID) {
-        String sql = "DELETE FROM groups_subject WHERE GroupID = ?";
+        String sql = "DELETE FROM groups_subject WHERE code = ?";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, GroupID);
@@ -171,7 +171,7 @@ public class GroupDAO {
     }
 
     public void deleteGroupLab(int team, int GroupID) {
-        String sql = "DELETE FROM grouplab WHERE team = ? AND GroupID = ?";
+        String sql = "DELETE FROM grouplab WHERE team = ? AND codelab = ?";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, team);

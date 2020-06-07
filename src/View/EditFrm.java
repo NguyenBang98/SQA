@@ -18,7 +18,7 @@ public class EditFrm extends javax.swing.JFrame implements ActionListener {
     private TimeTablingDAO tdao;
 
     public EditFrm(TimeTable time, Group group) {
-        super("Edit TimeTable");
+        super("Chỉnh sửa thời khóa biểu");
         initComponents();
         this.timetable = time;
         this.group = group;
@@ -28,6 +28,7 @@ public class EditFrm extends javax.swing.JFrame implements ActionListener {
         btnUpdate.addActionListener(this);
         btnReset.addActionListener(this);
         btnExit.addActionListener(this);
+        btnDelete.addActionListener(this);
         
         TimeTablingDAO db = new TimeTablingDAO();
         db.listRoom().forEach((i) -> {
@@ -39,6 +40,26 @@ public class EditFrm extends javax.swing.JFrame implements ActionListener {
         
         initForm();
         
+        cbDay.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                txtDay.setText(cbDay.getSelectedItem().toString());
+            }
+        });
+        
+        cbListTime1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+               txtTime1.setText(cbListTime1.getSelectedItem().toString());
+            }
+        });
+        
+        cbListTime2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+               txtTime2.setText(cbListTime2.getSelectedItem().toString());
+            }
+        });
     }
 
     @SuppressWarnings("unchecked")
@@ -131,7 +152,7 @@ public class EditFrm extends javax.swing.JFrame implements ActionListener {
         jLabel4 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         txtGroupID = new javax.swing.JTextField();
-        cbListGroup = new javax.swing.JComboBox<>();
+        btnDelete = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -239,7 +260,7 @@ public class EditFrm extends javax.swing.JFrame implements ActionListener {
                         .addComponent(jCheckBox14)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jCheckBox15)))
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelHour1Layout.setVerticalGroup(
             panelHour1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -585,9 +606,9 @@ public class EditFrm extends javax.swing.JFrame implements ActionListener {
         pnDayLayout.setHorizontalGroup(
             pnDayLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnDayLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
+                .addContainerGap(75, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(txtDay, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(cbDay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -608,8 +629,6 @@ public class EditFrm extends javax.swing.JFrame implements ActionListener {
 
         jLabel7.setText("Nhóm");
 
-        cbListGroup.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4" }));
-
         javax.swing.GroupLayout pnRoomLayout = new javax.swing.GroupLayout(pnRoom);
         pnRoom.setLayout(pnRoomLayout);
         pnRoomLayout.setHorizontalGroup(
@@ -617,17 +636,15 @@ public class EditFrm extends javax.swing.JFrame implements ActionListener {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnRoomLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel4)
-                .addGap(18, 18, 18)
-                .addComponent(txtRoom, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtRoom, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(cbListRoom, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(85, 85, 85)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 179, Short.MAX_VALUE)
                 .addComponent(jLabel7)
-                .addGap(18, 18, 18)
+                .addGap(32, 32, 32)
                 .addComponent(txtGroupID, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(cbListGroup, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addGap(22, 22, 22))
         );
         pnRoomLayout.setVerticalGroup(
             pnRoomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -638,40 +655,44 @@ public class EditFrm extends javax.swing.JFrame implements ActionListener {
                     .addComponent(txtRoom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)
                     .addComponent(jLabel7)
-                    .addComponent(txtGroupID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbListGroup, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtGroupID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(39, 39, 39))
         );
+
+        btnDelete.setText("Xóa");
 
         javax.swing.GroupLayout pnMainLayout = new javax.swing.GroupLayout(pnMain);
         pnMain.setLayout(pnMainLayout);
         pnMainLayout.setHorizontalGroup(
             pnMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnMainLayout.createSequentialGroup()
-                .addGap(35, 35, 35)
-                .addComponent(btnUpdate)
-                .addGap(175, 175, 175)
-                .addComponent(btnReset)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnExit)
-                .addGap(37, 37, 37))
             .addComponent(panelHour1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(panelHour2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(pnMainLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(panelLab, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(pnMainLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lbSubject)
-                .addGap(18, 18, 18)
-                .addComponent(txtSubject, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(74, 74, 74)
-                .addComponent(pnDay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(pnMainLayout.createSequentialGroup()
                 .addComponent(pnRoom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(pnMainLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnMainLayout.createSequentialGroup()
+                        .addComponent(lbSubject)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtSubject, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(pnDay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(pnMainLayout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(btnUpdate)
+                        .addGap(97, 97, 97)
+                        .addComponent(btnReset)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(81, 81, 81)
+                        .addComponent(btnExit)
+                        .addGap(37, 37, 37))
+                    .addGroup(pnMainLayout.createSequentialGroup()
+                        .addComponent(panelLab, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
         pnMainLayout.setVerticalGroup(
             pnMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -698,7 +719,8 @@ public class EditFrm extends javax.swing.JFrame implements ActionListener {
                 .addGroup(pnMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnUpdate)
                     .addComponent(btnReset)
-                    .addComponent(btnExit))
+                    .addComponent(btnExit)
+                    .addComponent(btnDelete))
                 .addContainerGap())
         );
 
@@ -749,6 +771,10 @@ public class EditFrm extends javax.swing.JFrame implements ActionListener {
         if(group != null && lab == null){
             
         }
+    }
+    
+    private void btnDeleteClick(){
+        
     }
 
     private void initForm() {
@@ -806,13 +832,13 @@ public class EditFrm extends javax.swing.JFrame implements ActionListener {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnExit;
     private javax.swing.JButton btnReset;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JComboBox<String> cbDay;
     private javax.swing.JComboBox<String> cbDayLab;
     private javax.swing.JComboBox<String> cbGroupLab;
-    private javax.swing.JComboBox<String> cbListGroup;
     private javax.swing.JComboBox<String> cbListRoom;
     private javax.swing.JComboBox<String> cbListTime1;
     private javax.swing.JComboBox<String> cbListTime2;
