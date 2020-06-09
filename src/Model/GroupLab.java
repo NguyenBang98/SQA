@@ -1,7 +1,5 @@
 package Model;
 
-import java.time.LocalDateTime;
-
 public class GroupLab {
     
     private int groupID;

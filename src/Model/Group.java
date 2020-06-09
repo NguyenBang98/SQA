@@ -91,7 +91,16 @@ public class Group {
                     && this.getDay().equals(g2.getDay())
                     && this.getHour1().equals(g2.getHour1())
                     && this.getHour2().equals(g2.getHour2())
-                    && this.getWeek().equals(g2.getWeek())) {
+                    && this.getWeek().equals(g2.getWeek()))  {
+                return true;
+            }
+            if(this.getGroupID() == g2.getGroupID()
+                    && this.getSubject().equals(g2.getSubject())){
+                return true;
+            }
+            if(this.getDay().equals(g2.getDay())
+                    && this.getHour1().equals(g2.getHour1())
+                    && this.getHour2().equals(g2.getHour2())){
                 return true;
             }
 

@@ -160,11 +160,12 @@ public class GroupDAO {
         return result;
     }
 
-    public void deleteGroup(int GroupID) {
-        String sql = "DELETE FROM groups_subject WHERE code = ?";
+    public void deleteGroup(int GroupID, String SubjectID) {
+        String sql = "DELETE FROM groups_subject WHERE GroupID = ? AND SubjectID = ?";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, GroupID);
+            ps.setString(2, SubjectID);
             ps.executeUpdate();
         } catch (SQLException e) {
         }
@@ -182,7 +183,19 @@ public class GroupDAO {
     }
 
     public void updateGroup(Group group) {
-        String sql = "UPDATE groups_subject SET ";
+        String sql = "UPDATE groups_subject SET RoomID = ?, Days = ?, hour1 = ?, hour2 = ? WHERE GroupID = ? AND SubjectID = ?";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, group.getRoom().getRoomID());
+            ps.setString(2, group.getDay());
+            ps.setString(3, group.getHour1());
+            ps.setString(4, group.getHour2());
+            ps.setInt(5, group.getGroupID());
+            ps.setString(6, group.getSubject().getSubjectID());
+            
+            ps.executeUpdate();
+        } catch (Exception e) {
+        }
     }
 
     public void updateGroupLab(GroupLab lab) {

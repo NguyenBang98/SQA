@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import Model.*;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 
 public class EditFrm extends javax.swing.JFrame implements ActionListener {
 
@@ -23,13 +24,12 @@ public class EditFrm extends javax.swing.JFrame implements ActionListener {
         this.timetable = time;
         this.group = group;
         this.lab = lab;
-        
 
         btnUpdate.addActionListener(this);
         btnReset.addActionListener(this);
         btnExit.addActionListener(this);
         btnDelete.addActionListener(this);
-        
+
         TimeTablingDAO db = new TimeTablingDAO();
         db.listRoom().forEach((i) -> {
             cbListRoom.addItem(i.getNameRoom());
@@ -37,27 +37,65 @@ public class EditFrm extends javax.swing.JFrame implements ActionListener {
         db.listRoomLab().forEach((i) -> {
             cbRoomLab.addItem(i.getNameRoomLab());
         });
-        
+
         initForm();
-        
+
         cbDay.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 txtDay.setText(cbDay.getSelectedItem().toString());
             }
         });
-        
+
         cbListTime1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-               txtTime1.setText(cbListTime1.getSelectedItem().toString());
+                txtTime1.setText(cbListTime1.getSelectedItem().toString());
+                if (cbListTime1.getSelectedItem().toString().equals("7:00-9:00") || cbListTime1.getSelectedItem().toString().equals("14:00-16:00")) {
+                    jCheckBox16.setSelected(true);
+                    jCheckBox17.setSelected(true);
+                    jCheckBox18.setSelected(true);
+                    jCheckBox19.setSelected(true);
+                    jCheckBox20.setSelected(true);
+                    jCheckBox21.setSelected(true);
+                    jCheckBox22.setSelected(true);
+                    jCheckBox24.setSelected(false);
+                    jCheckBox25.setSelected(false);
+                    jCheckBox26.setSelected(false);
+                    jCheckBox27.setSelected(false);
+                    jCheckBox28.setSelected(false);
+                    jCheckBox29.setSelected(false);
+                    jCheckBox30.setSelected(false);
+                } else {
+                    jCheckBox16.setSelected(false);
+                    jCheckBox17.setSelected(false);
+                    jCheckBox18.setSelected(false);
+                    jCheckBox19.setSelected(false);
+                    jCheckBox20.setSelected(false);
+                    jCheckBox21.setSelected(false);
+                    jCheckBox22.setSelected(false);
+                    jCheckBox24.setSelected(true);
+                    jCheckBox25.setSelected(true);
+                    jCheckBox26.setSelected(true);
+                    jCheckBox27.setSelected(true);
+                    jCheckBox28.setSelected(true);
+                    jCheckBox29.setSelected(true);
+                    jCheckBox30.setSelected(true);
+                }
             }
         });
-        
+
         cbListTime2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-               txtTime2.setText(cbListTime2.getSelectedItem().toString());
+                txtTime2.setText(cbListTime2.getSelectedItem().toString());
+            }
+        });
+        
+        cbListRoom.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                txtRoom.setText(cbListRoom.getSelectedItem().toString());
             }
         });
     }
@@ -756,25 +794,41 @@ public class EditFrm extends javax.swing.JFrame implements ActionListener {
         if (btnClicked.equals(btnUpdate)) {
             btnUpdateClick();
         }
-        if(btnClicked.equals(btnExit)){
+        if (btnClicked.equals(btnExit)) {
             btnExitClick();
+        }
+        if (btnClicked.equals(btnDelete)) {
+            btnDeleteClick();
         }
     }
 
     private void btnUpdateClick() {
-        if(lab != null && group == null){
-            lab.setTeam(Integer.parseInt(txtTeam.getText()));
-            lab.setDay(txtDayLab.getText());
-            lab.setHour(txtTimeLab.getText());
-            //lab.setRoomLab(txt);
-        }
-        if(group != null && lab == null){
-            
-        }
+        Group group = new Group();
+        GroupDAO dao = new GroupDAO();
+        group.setGroupID(Integer.parseInt(txtGroupID.getText().toString().trim()));
+        group.setSubject(dao.searchSubject(txtSubject.getText().toString().trim()));
+        group.setRoom(dao.searchroom(txtRoom.getText().toString().trim()));
+        group.setDay(txtDay.getText().toString().trim());
+        group.setHour1(txtTime1.getText().toString().trim());
+        group.setHour2(txtTime2.getText().toString().trim());
+        dao.updateGroup(group);
     }
-    
-    private void btnDeleteClick(){
-        
+
+    private void btnDeleteClick() {
+        int dialogButton = JOptionPane.YES_NO_OPTION;
+        int dialogResult = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn xóa nhóm môn học?", "Cảnh báo", dialogButton);
+        if (dialogResult == JOptionPane.YES_OPTION) {
+
+            GroupDAO dao = new GroupDAO();
+            int GroupID = Integer.parseInt(txtGroupID.getText().toString().trim());
+            String SubjectID = dao.searchSubject(txtSubject.getText().toString().trim()).getSubjectID();
+            dao.deleteGroup(GroupID, SubjectID);
+            TimeTable t = new TimeTable();
+            TimeTableController tr = new TimeTableController(t);
+            t.setVisible(true);
+            t.setLocationRelativeTo(null);
+            this.dispose();
+        }
     }
 
     private void initForm() {
@@ -790,19 +844,25 @@ public class EditFrm extends javax.swing.JFrame implements ActionListener {
 //            txtDayLab.setText(lab.getDay());
 //            txtRoomLab.setText(lab.getRoomLab().getNameRoomLab());
 //        }
-        if(group != null){
+        if (group != null) {
             txtSubject.setText(group.getSubject().getName());
+            txtSubject.setEditable(false);
             pnDay.setVisible(true);
             panelHour1.setVisible(true);
             panelHour2.setVisible(true);
             pnRoom.setVisible(true);
             panelLab.setVisible(false);
             txtDay.setText(group.getDay());
+            txtDay.setEditable(false);
             txtTime1.setText(group.getHour1());
+            txtTime1.setEditable(false);
             txtTime2.setText(group.getHour2());
+            txtTime2.setEditable(false);
             txtRoom.setText(group.getRoom().getNameRoom());
+            txtRoom.setEditable(false);
             txtGroupID.setText(String.valueOf(group.getGroupID()));
-            if(group.getHour1().equals("7:00-9:00") || group.getHour1().equals("14:00-16:00")){
+            txtGroupID.setEditable(false);
+            if (group.getHour1().equals("7:00-9:00") || group.getHour1().equals("14:00-16:00")) {
                 jCheckBox16.setSelected(true);
                 jCheckBox17.setSelected(true);
                 jCheckBox18.setSelected(true);
@@ -811,7 +871,7 @@ public class EditFrm extends javax.swing.JFrame implements ActionListener {
                 jCheckBox21.setSelected(true);
                 jCheckBox22.setSelected(true);
             }
-            if(group.getHour1().equals("9:00-11:00") || group.getHour1().equals("16:00-18:00")){
+            if (group.getHour1().equals("9:00-11:00") || group.getHour1().equals("16:00-18:00")) {
                 jCheckBox24.setSelected(true);
                 jCheckBox25.setSelected(true);
                 jCheckBox26.setSelected(true);
@@ -820,10 +880,10 @@ public class EditFrm extends javax.swing.JFrame implements ActionListener {
                 jCheckBox29.setSelected(true);
                 jCheckBox30.setSelected(true);
             }
-        }       
+        }
     }
-    
-    private void btnExitClick(){
+
+    private void btnExitClick() {
         TimeTable t = new TimeTable();
         TimeTableController tr = new TimeTableController(t);
         t.setVisible(true);

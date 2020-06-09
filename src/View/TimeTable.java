@@ -143,16 +143,6 @@ public class TimeTable extends javax.swing.JFrame implements ActionListener {
         this.pack();
     }
 
-//    private void deleteGroup(int index) {
-//        int dialogButton = JOptionPane.YES_NO_OPTION;
-//        int dialogResult = JOptionPane.showConfirmDialog(rootPane, "Bạn chắc chắn muốn xóa?", "Cảnh báo!", dialogButton);
-//        if (dialogResult == JOptionPane.YES_OPTION) {
-//            GroupDAO dao = new GroupDAO();
-//            dao.deleteGroup(listGroup.get(index).getGroupID());
-//            dao.deleteGroupLab(listGroupLab.get(index).getTeam(), listGroupLab.get(index).getGroupID());
-//        }
-//    }
-
     private void editGroup(Group group) {
         EditFrm frm = new EditFrm(this, group);
         frm.setVisible(true);
@@ -291,12 +281,12 @@ public class TimeTable extends javax.swing.JFrame implements ActionListener {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public static void main(String[] args) {
-        TimeTable t = new TimeTable();
-        TimeTableController c = new TimeTableController(t);
-        t.setVisible(true);
-        t.setLocationRelativeTo(null);
-    }
+//    public static void main(String[] args) {
+//        TimeTable t = new TimeTable();
+//        TimeTableController c = new TimeTableController(t);
+//        t.setVisible(true);
+//        t.setLocationRelativeTo(null);
+//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnExcel;
