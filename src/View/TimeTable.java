@@ -79,7 +79,7 @@ public class TimeTable extends javax.swing.JFrame implements ActionListener {
         btnSearch.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String key = txtSubjectID.getText().trim();
+                String key = txtSubjectID.getText().trim().toUpperCase();
                 if (key == null || key.length() == 0) {
                     JOptionPane.showMessageDialog(rootPane, "Nhập mã môn học");
                 }
