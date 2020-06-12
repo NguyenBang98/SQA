@@ -58,13 +58,18 @@ public class TimeTable extends javax.swing.JFrame implements ActionListener {
                     GroupDAO gdao = new GroupDAO();
                     lstGroup = dao.searchGroupBySubjectID(gdao.searchSubject(text).getSubjectID());
 
-                    model = (DefaultTableModel) tblResult.getModel();
-                    Object[] row = new Object[lstGroup.length];
-                    for (int i = 0; i < lstGroup.length; i++) {
-                        Object[] obj = {lstGroup[i].getSubject().getSubjectID(), lstGroup[i].getSubject().getName(),
-                            lstGroup[i].getGroupID(), lstGroup[i].getDay(), lstGroup[i].getHour1().concat(lstGroup[i].getHour2()),
-                            lstGroup[i].getRoom().getNameRoom(), lstGroup[i].getWeek()};
-                        model.addRow(obj);
+                    if (lstGroup == null) {
+                        JOptionPane.showMessageDialog(rootPane, "Môn học chưa được lên lịch thời khóa biểu!");
+                    } else {
+
+                        model = (DefaultTableModel) tblResult.getModel();
+                        Object[] row = new Object[lstGroup.length];
+                        for (int i = 0; i < lstGroup.length; i++) {
+                            Object[] obj = {lstGroup[i].getSubject().getSubjectID(), lstGroup[i].getSubject().getName(),
+                                lstGroup[i].getGroupID(), lstGroup[i].getDay(), lstGroup[i].getHour1().concat(lstGroup[i].getHour2()),
+                                lstGroup[i].getRoom().getNameRoom(), lstGroup[i].getWeek()};
+                            model.addRow(obj);
+                        }
                     }
 
                 }
@@ -122,17 +127,16 @@ public class TimeTable extends javax.swing.JFrame implements ActionListener {
                 if (e.getValueIsAdjusting()) {
                     return;
                 }
-                
+
                 Group group = new Group();
-               try {
-                    group = dao.searchGroupBySubjectIDAndGroupID((String)tblResult.getValueAt(tblResult.getSelectedRow(), 0), (int) tblResult.getValueAt(tblResult.getSelectedRow(), 2));
+                try {
+                    group = dao.searchGroupBySubjectIDAndGroupID((String) tblResult.getValueAt(tblResult.getSelectedRow(), 0), (int) tblResult.getValueAt(tblResult.getSelectedRow(), 2));
                 } catch (SQLException ex) {
-                   Logger.getLogger(TimeTable.class.getName()).log(Level.SEVERE, null, ex);
-              }
-                
+                    Logger.getLogger(TimeTable.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
                 //System.out.println(group.getRoom().getNameRoom());//index row
                 editGroup(group);
-                
 
             }
         });
