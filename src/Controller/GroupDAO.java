@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class GroupDAO {
 
-    private Connection con;
+    Connection con;
 
     public GroupDAO() {
         if (con == null) {
@@ -38,22 +38,109 @@ public class GroupDAO {
         } catch (SQLException e) {
         }
     }
-
-    public void saveGroupLab(GroupLab lab) {
-        String sql = "INSERT INTO group(team, GroupID, SubjectID, RoomLabID, Days, hour1, week) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        PreparedStatement ps = null;
+    
+    public ArrayList<Subject> listSubject() {
+        ArrayList<Subject> result = new ArrayList<Subject>();
+        String sql = "SELECT * FROM subject";
         try {
-            ps = con.prepareStatement(sql);
-            ps.setInt(1, lab.getTeam());
-            ps.setInt(2, lab.getGroupID());
-            ps.setString(3, lab.getSubject().getSubjectID());
-            ps.setInt(4, lab.getRoomLab().getRoomLabID());
-            ps.setString(5, lab.getDay());
-            ps.setString(6, lab.getHour());
-            ps.setString(7, lab.getWeek());
-            ps.executeUpdate();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Subject subject = new Subject();
+                subject.setSubjectID(rs.getString("SubjectID"));
+                subject.setName(rs.getString("Name"));
+                subject.setCredits(rs.getInt("Credit"));
+                result.add(subject);
+            }
         } catch (SQLException e) {
         }
+        return result;
+    }
+    
+    public ArrayList<Room> listRoom() {
+        ArrayList<Room> result = new ArrayList<Room>();
+        String sql = "SELECT * FROM room";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Room room = new Room();
+                room.setRoomID(rs.getInt("RoomID"));
+                room.setNameRoom(rs.getString("NameRoom"));
+                result.add(room);
+            }
+        } catch (SQLException e) {
+        }
+        return result;
+    }
+    
+    public Group[] listGroup() {
+        Group[] result = null;
+        String sql = "SELECT * FROM groups_subject";
+        GroupDAO dao;
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            if (rs.last()) {
+                result = new Group[rs.getRow()];
+                rs.beforeFirst();
+            }
+            int count = 0;
+            while (rs.next()) {
+                dao = new GroupDAO();
+                result[count] = new Group(rs.getInt(1), dao.searchroomID(rs.getInt(3)), dao.searchSubjectID(rs.getString(2)), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7));
+                count++;
+            }
+        } catch (Exception e) {
+        }
+        return result;
+    }
+    
+    public Group[] searchGroupBySubjectID(String key) {
+        Group[] result = null;
+        String sql = "SELECT * FROM groups_subject WHERE SubjectID = ?";
+        GroupDAO dao;
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, key);
+            ResultSet rs = ps.executeQuery();
+            if (rs.last()) {
+                result = new Group[rs.getRow()];
+                rs.beforeFirst();
+            }
+            int count = 0;
+            while (rs.next()) {
+                dao = new GroupDAO();
+                result[count] = new Group(rs.getInt(1), dao.searchroomID(rs.getInt(3)), dao.searchSubjectID(rs.getString(2)), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7));
+                count++;
+            }
+        } catch (SQLException e) {
+        }
+        return result;
+    }
+    
+    public Group searchGroupBySubjectIDAndGroupID(String key1, int key2) throws SQLException {
+        Group result = null;
+        String sql = "SELECT * FROM groups_subject WHERE SubjectID = ? AND GroupID = ?";
+        GroupDAO dao = null;
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, key1);
+            ps.setInt(2, key2);
+            ResultSet rs = ps.executeQuery();
+            if (rs.last()) {
+                result = new Group();
+                rs.beforeFirst();
+            }
+            int count = 0;
+            while (rs.next()) {
+                dao = new GroupDAO();
+                result = new Group(rs.getInt(1), dao.searchroomID(rs.getInt(3)), dao.searchSubjectID(rs.getString(2)), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7));
+                count++;
+            }
+        } catch (SQLException e) {
+        }
+        return result;
     }
 
     public Subject searchSubject(String key) {
@@ -126,39 +213,7 @@ public class GroupDAO {
         return result;
     }
 
-    public RoomLab searchroomLab(String key) {
-        RoomLab result = new RoomLab();
-        String sql = "SELECT * FROM roomlab WHERE NameRoomLab = ?";
-
-        try {
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setString(1, "%" + key + "%");
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                result.setRoomLabID(rs.getInt("RoomLabID"));
-                result.setNameRoomLab(rs.getString("NameRoomLab"));
-            }
-        } catch (SQLException e) {
-        }
-        return result;
-    }
-
-    public RoomLab searchroomLabID(int key) {
-        RoomLab result = new RoomLab();
-        String sql = "SELECT * FROM roomlab WHERE RoomLabID = ?";
-
-        try {
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, key);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                result.setRoomLabID(rs.getInt("RoomLabID"));
-                result.setNameRoomLab(rs.getString("NameRoomLab"));
-            }
-        } catch (SQLException e) {
-        }
-        return result;
-    }
+//   
 
     public void deleteGroup(int GroupID, String SubjectID) {
         String sql = "DELETE FROM groups_subject WHERE GroupID = ? AND SubjectID = ?";
@@ -166,17 +221,6 @@ public class GroupDAO {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, GroupID);
             ps.setString(2, SubjectID);
-            ps.executeUpdate();
-        } catch (SQLException e) {
-        }
-    }
-
-    public void deleteGroupLab(int team, int GroupID) {
-        String sql = "DELETE FROM grouplab WHERE team = ? AND codelab = ?";
-        try {
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, team);
-            ps.setInt(2, GroupID);
             ps.executeUpdate();
         } catch (SQLException e) {
         }
@@ -198,8 +242,5 @@ public class GroupDAO {
         }
     }
 
-    public void updateGroupLab(GroupLab lab) {
-        String sql = "UPDATE grouplab SET";
-    }
 
 }

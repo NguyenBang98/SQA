@@ -24,7 +24,7 @@ public class TimeTablingController {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            TimeTablingDAO dao = new TimeTablingDAO();
+            GroupDAO dao = new GroupDAO();
             lstGroup = dao.searchGroupBySubjectID(tb.setGroup().getSubject().getSubjectID());
             if (lstGroup == null) {
                 GroupDAO daog = new GroupDAO();

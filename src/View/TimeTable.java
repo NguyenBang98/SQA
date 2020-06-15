@@ -4,7 +4,7 @@ import Controller.GroupDAO;
 import Controller.TimeTableController;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import Controller.TimeTablingDAO;
+import Controller.GroupLabDAO;
 import Model.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -20,7 +20,6 @@ import javax.swing.table.DefaultTableModel;
 public class TimeTable extends javax.swing.JFrame implements ActionListener {
 
     DefaultListModel list = new DefaultListModel();
-    TimeTablingDAO dao = new TimeTablingDAO();
     GroupDAO gdao = new GroupDAO();
     DefaultTableModel model;
     private Group[] lstGroup;
@@ -31,10 +30,10 @@ public class TimeTable extends javax.swing.JFrame implements ActionListener {
         super("Timetable");
         initComponents();
 
-        lstGroup = dao.listGroup();
+        lstGroup = gdao.listGroup();
         listGroup = new ArrayList<Group>(Arrays.asList(lstGroup));
 
-        dao.listSubject().forEach((i) -> {
+        gdao.listSubject().forEach((i) -> {
             list.addElement(i.getName());
         });
         lstSubject.setModel(list);
@@ -54,9 +53,9 @@ public class TimeTable extends javax.swing.JFrame implements ActionListener {
                     }
                     String text = lstSubject.getSelectedValue();
 
-                    TimeTablingDAO dao = new TimeTablingDAO();
+                    GroupLabDAO dao = new GroupLabDAO();
                     GroupDAO gdao = new GroupDAO();
-                    lstGroup = dao.searchGroupBySubjectID(gdao.searchSubject(text).getSubjectID());
+                    lstGroup = gdao.searchGroupBySubjectID(gdao.searchSubject(text).getSubjectID());
 
                     if (lstGroup == null) {
                         JOptionPane.showMessageDialog(rootPane, "Môn học chưa được lên lịch thời khóa biểu!");
@@ -87,8 +86,8 @@ public class TimeTable extends javax.swing.JFrame implements ActionListener {
                     for (int j = tblResult.getModel().getRowCount() - 1; j >= 0; j--) {
                         model.removeRow(j);
                     }
-                    TimeTablingDAO dao = new TimeTablingDAO();
-                    lstGroup = dao.searchGroupBySubjectID(key);
+                    GroupLabDAO dao = new GroupLabDAO();
+                    lstGroup = gdao.searchGroupBySubjectID(key);
 
                     model = (DefaultTableModel) tblResult.getModel();
                     Object[] row = new Object[lstGroup.length];
@@ -100,12 +99,12 @@ public class TimeTable extends javax.swing.JFrame implements ActionListener {
                     }
                     txtSubjectID.setText("");
                 } else {
-                    TimeTablingDAO dao = new TimeTablingDAO();
+                    GroupLabDAO dao = new GroupLabDAO();
 //                if (gdao.searchSubjectID(key)) {
 //                    JOptionPane.showMessageDialog(rootPane, "Môn học không tồn tại");
 //                    txtSubjectID.setText("");
 //                } else {
-                    lstGroup = dao.searchGroupBySubjectID(key);
+                    lstGroup = gdao.searchGroupBySubjectID(key);
 
                     model = (DefaultTableModel) tblResult.getModel();
                     Object[] row = new Object[lstGroup.length];
@@ -130,7 +129,7 @@ public class TimeTable extends javax.swing.JFrame implements ActionListener {
 
                 Group group = new Group();
                 try {
-                    group = dao.searchGroupBySubjectIDAndGroupID((String) tblResult.getValueAt(tblResult.getSelectedRow(), 0), (int) tblResult.getValueAt(tblResult.getSelectedRow(), 2));
+                    group = gdao.searchGroupBySubjectIDAndGroupID((String) tblResult.getValueAt(tblResult.getSelectedRow(), 0), (int) tblResult.getValueAt(tblResult.getSelectedRow(), 2));
                 } catch (SQLException ex) {
                     Logger.getLogger(TimeTable.class.getName()).log(Level.SEVERE, null, ex);
                 }

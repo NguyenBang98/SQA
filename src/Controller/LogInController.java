@@ -24,7 +24,6 @@ public class LogInController {
         public void actionPerformed(ActionEvent e) {
             try {
                 user = login.getUser();
-                //if(user.getCode() == null || user.getPass() == null)JOptionPane.showMessageDialog(login, "Hrloo");
                 if (checkUser(user)) {
                     MainFrame mf = new MainFrame();
                     MainFrameController mfc = new MainFrameController(mf);

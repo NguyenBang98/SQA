@@ -1,8 +1,9 @@
 package Model;
 
+import java.io.Serializable;
 import java.time.*;
 
-public class Group {
+public class Group implements Serializable{
 
     private int groupID;
     private Room room;
@@ -85,22 +86,14 @@ public class Group {
     public boolean equals(Object obj) {
         if (obj instanceof Group) {
             Group g2 = (Group) obj;
-            if (this.getGroupID() == g2.getGroupID()
-                    && this.getSubject().equals(g2.getSubject())
-                    && this.getRoom().equals(g2.getRoom())
-                    && this.getDay().equals(g2.getDay())
-                    && this.getHour1().equals(g2.getHour1())
-                    && this.getHour2().equals(g2.getHour2())
-                    && this.getWeek().equals(g2.getWeek()))  {
-                return true;
-            }
             if(this.getGroupID() == g2.getGroupID()
                     && this.getSubject().equals(g2.getSubject())){
                 return true;
             }
             if(this.getDay().equals(g2.getDay())
                     && this.getHour1().equals(g2.getHour1())
-                    && this.getHour2().equals(g2.getHour2())){
+                    && this.getHour2().equals(g2.getHour2())
+                    && this.getRoom().equals(g2.getRoom())){
                 return true;
             }
 

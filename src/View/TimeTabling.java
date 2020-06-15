@@ -1,9 +1,8 @@
 package View;
 
 import Controller.GroupDAO;
-import Controller.TimeTablingDAO;
+import Controller.GroupLabDAO;
 import Model.Group;
-import Model.GroupLab;
 import Model.Room;
 import Model.RoomLab;
 import Model.Subject;
@@ -23,20 +22,20 @@ public class TimeTabling extends javax.swing.JFrame implements ActionListener {
         week = new String();
         panelLab.setVisible(false);
 
-        TimeTablingDAO db = new TimeTablingDAO();
+        GroupDAO db = new GroupDAO();
         db.listSubject().forEach((i) -> {
             cbListSubject.addItem(i.getName());
         });
         db.listRoom().forEach((i) -> {
             cbListRoom.addItem(i.getNameRoom());
         });
-        db.listRoomLab().forEach((i) -> {
-            cbRoomLab.addItem(i.getNameRoomLab());
-        });
+//        db.listRoomLab().forEach((i) -> {
+//            cbRoomLab.addItem(i.getNameRoomLab());
+//        });
 
         cbListSubject.addActionListener((ActionEvent e) -> {
             if (cbListSubject.getSelectedItem().toString().equals("Phát triển ứng dụng cho các thiết bị di động")) {
-                panelLab.setVisible(true);
+                panelLab.setVisible(false);
             } else {
                 panelLab.setVisible(false);
             }
@@ -134,17 +133,17 @@ public class TimeTabling extends javax.swing.JFrame implements ActionListener {
         return group;
     }
 
-    public GroupLab setLab() {
-        GroupLab lab = new GroupLab();
-        GroupDAO dao = new GroupDAO();
-        lab.setTeam(Integer.parseInt(cbGroupLab.getSelectedItem().toString()));
-        lab.setGroupID(Integer.parseInt(cbListGroup.getSelectedItem().toString()));
-        lab.setSubject(dao.searchSubject(cbListSubject.getSelectedItem().toString()));
-        lab.setRoomLab(dao.searchroomLab(cbRoomLab.getSelectedItem().toString()));
-        lab.setDay(cbDayLab.getSelectedItem().toString());
-        lab.setHour(cbTimeLab.getSelectedItem().toString());
-        return lab;
-    }
+//    public GroupLab setLab() {
+//        GroupLab lab = new GroupLab();
+//        GroupDAO dao = new GroupDAO();
+//        lab.setTeam(Integer.parseInt(cbGroupLab.getSelectedItem().toString()));
+//        lab.setGroupID(Integer.parseInt(cbListGroup.getSelectedItem().toString()));
+//        lab.setSubject(dao.searchSubject(cbListSubject.getSelectedItem().toString()));
+//        lab.setRoomLab(dao.searchroomLab(cbRoomLab.getSelectedItem().toString()));
+//        lab.setDay(cbDayLab.getSelectedItem().toString());
+//        lab.setHour(cbTimeLab.getSelectedItem().toString());
+//        return lab;
+//    }
 
     public void addSaveListener(ActionListener log) {
         btnSave.addActionListener(log);
@@ -242,6 +241,11 @@ public class TimeTabling extends javax.swing.JFrame implements ActionListener {
         jLabel7.setText("Nhóm");
 
         cbListGroup.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4" }));
+        cbListGroup.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbListGroupActionPerformed(evt);
+            }
+        });
 
         btnSave.setText("Lưu");
 
@@ -328,24 +332,26 @@ public class TimeTabling extends javax.swing.JFrame implements ActionListener {
                                 .addGroup(panelLabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(cbDayLab, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(cbRoomLab, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                        .addGap(88, 88, 88)
-                        .addGroup(panelLabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel13)
-                            .addComponent(jLabel12))
+                        .addGap(98, 98, 98)
                         .addGroup(panelLabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panelLabLayout.createSequentialGroup()
-                                .addGap(30, 30, 30)
-                                .addComponent(cbTimeLab, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(panelLabLayout.createSequentialGroup()
-                                .addGap(46, 46, 46)
-                                .addGroup(panelLabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jCheckBox39)
-                                    .addComponent(jCheckBox31))
+                                .addGroup(panelLabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(panelLabLayout.createSequentialGroup()
+                                        .addGap(46, 46, 46)
+                                        .addComponent(jCheckBox39))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLabLayout.createSequentialGroup()
+                                        .addComponent(jLabel12)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jCheckBox31)))
                                 .addGap(18, 18, 18)
                                 .addGroup(panelLabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jCheckBox32)
                                     .addComponent(jCheckBox40))
-                                .addGap(0, 0, Short.MAX_VALUE)))))
+                                .addGap(0, 14, Short.MAX_VALUE))
+                            .addGroup(panelLabLayout.createSequentialGroup()
+                                .addComponent(jLabel13)
+                                .addGap(30, 30, 30)
+                                .addComponent(cbTimeLab, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                 .addGap(18, 18, 18)
                 .addGroup(panelLabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jCheckBox41)
@@ -354,23 +360,21 @@ public class TimeTabling extends javax.swing.JFrame implements ActionListener {
                 .addGroup(panelLabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jCheckBox34)
                     .addComponent(jCheckBox42))
+                .addGap(6, 6, 6)
+                .addGroup(panelLabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jCheckBox43)
+                    .addComponent(jCheckBox35))
+                .addGap(6, 6, 6)
+                .addGroup(panelLabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jCheckBox36)
+                    .addComponent(jCheckBox44))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panelLabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelLabLayout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jCheckBox43)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jCheckBox44)
-                        .addGap(18, 18, 18)
-                        .addComponent(jCheckBox45))
-                    .addGroup(panelLabLayout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jCheckBox35)
-                        .addGap(6, 6, 6)
-                        .addComponent(jCheckBox36)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jCheckBox37)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jCheckBox38)))
+                        .addComponent(jCheckBox38))
+                    .addComponent(jCheckBox45))
                 .addGap(45, 45, 45))
         );
         panelLabLayout.setVerticalGroup(
@@ -668,15 +672,15 @@ public class TimeTabling extends javax.swing.JFrame implements ActionListener {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
                 .addComponent(jLabel7)
-                .addGap(18, 18, 18)
+                .addGap(65, 65, 65)
                 .addComponent(cbListGroup, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(121, 121, 121)
+                .addGap(63, 63, 63)
                 .addComponent(jLabel4)
-                .addGap(26, 26, 26)
+                .addGap(18, 18, 18)
                 .addComponent(cbListRoom, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lbSubject)
@@ -714,13 +718,11 @@ public class TimeTabling extends javax.swing.JFrame implements ActionListener {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelHour2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(cbListGroup, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel7))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(cbListRoom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel4)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cbListGroup, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4)
+                    .addComponent(cbListRoom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(panelLab, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
@@ -740,6 +742,10 @@ public class TimeTabling extends javax.swing.JFrame implements ActionListener {
     private void jCheckBox29ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox29ActionPerformed
 
     }//GEN-LAST:event_jCheckBox29ActionPerformed
+
+    private void cbListGroupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbListGroupActionPerformed
+        
+    }//GEN-LAST:event_cbListGroupActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

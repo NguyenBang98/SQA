@@ -2,7 +2,7 @@ package View;
 
 import Controller.*;
 import Controller.TimeTableController;
-import Controller.TimeTablingDAO;
+import Controller.GroupLabDAO;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import Model.*;
@@ -16,7 +16,7 @@ public class EditFrm extends javax.swing.JFrame implements ActionListener {
     private GroupLab lab;
     private int index;
     private GroupDAO dao;
-    private TimeTablingDAO tdao;
+    private GroupLabDAO tdao;
 
     public EditFrm(TimeTable time, Group group) {
         super("Chỉnh sửa thời khóa biểu");
@@ -30,13 +30,13 @@ public class EditFrm extends javax.swing.JFrame implements ActionListener {
         btnExit.addActionListener(this);
         btnDelete.addActionListener(this);
 
-        TimeTablingDAO db = new TimeTablingDAO();
+        GroupDAO db = new GroupDAO();
         db.listRoom().forEach((i) -> {
             cbListRoom.addItem(i.getNameRoom());
         });
-        db.listRoomLab().forEach((i) -> {
-            cbRoomLab.addItem(i.getNameRoomLab());
-        });
+//        db.listRoomLab().forEach((i) -> {
+//            cbRoomLab.addItem(i.getNameRoomLab());
+//        });
 
         initForm();
 
@@ -789,7 +789,7 @@ public class EditFrm extends javax.swing.JFrame implements ActionListener {
         JButton btnClicked = (JButton) e.getSource();
         if (btnClicked.equals(btnReset)) {
             initForm();
-            return;
+            
         }
         if (btnClicked.equals(btnUpdate)) {
             btnUpdateClick();
@@ -832,18 +832,6 @@ public class EditFrm extends javax.swing.JFrame implements ActionListener {
     }
 
     private void initForm() {
-//        if(lab != null && group == null){
-//            txtSubject.setText(lab.getSubject().getName());
-//            pnDay.setVisible(false);
-//            panelHour1.setVisible(false);
-//            panelHour2.setVisible(false);
-//            pnRoom.setVisible(false);
-//            panelLab.setVisible(true);
-//            txtTeam.setText(String.valueOf(lab.getTeam()));
-//            txtTimeLab.setText(lab.getHour());
-//            txtDayLab.setText(lab.getDay());
-//            txtRoomLab.setText(lab.getRoomLab().getNameRoomLab());
-//        }
         if (group != null) {
             txtSubject.setText(group.getSubject().getName());
             txtSubject.setEditable(false);
