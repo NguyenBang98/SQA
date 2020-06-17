@@ -63,9 +63,12 @@ public class TimeTable extends javax.swing.JFrame implements ActionListener {
 
                         model = (DefaultTableModel) tblResult.getModel();
                         Object[] row = new Object[lstGroup.length];
+                        tblResult.getColumnModel().getColumn(0).setPreferredWidth(25);
                         for (int i = 0; i < lstGroup.length; i++) {
+                            String s1 = lstGroup[i].getHour1();
+                            s1 = s1.concat("\n").concat(lstGroup[i].getHour2());
                             Object[] obj = {lstGroup[i].getSubject().getSubjectID(), lstGroup[i].getSubject().getName(),
-                                lstGroup[i].getGroupID(), lstGroup[i].getDay(), lstGroup[i].getHour1().concat(lstGroup[i].getHour2()),
+                                lstGroup[i].getGroupID(), lstGroup[i].getDay(), s1,
                                 lstGroup[i].getRoom().getNameRoom(), lstGroup[i].getWeek()};
                             model.addRow(obj);
                         }
@@ -93,7 +96,7 @@ public class TimeTable extends javax.swing.JFrame implements ActionListener {
                     Object[] row = new Object[lstGroup.length];
                     for (int i = 0; i < lstGroup.length; i++) {
                         Object[] obj = {lstGroup[i].getSubject().getSubjectID(), lstGroup[i].getSubject().getName(),
-                            lstGroup[i].getGroupID(), lstGroup[i].getDay(), lstGroup[i].getHour1().concat(lstGroup[i].getHour2()),
+                            lstGroup[i].getGroupID(), lstGroup[i].getDay(), lstGroup[i].getHour1().concat("\n").concat(lstGroup[i].getHour2()),
                             lstGroup[i].getRoom().getNameRoom(), lstGroup[i].getWeek()};
                         model.addRow(obj);
                     }
@@ -110,7 +113,7 @@ public class TimeTable extends javax.swing.JFrame implements ActionListener {
                     Object[] row = new Object[lstGroup.length];
                     for (int i = 0; i < lstGroup.length; i++) {
                         Object[] obj = {lstGroup[i].getSubject().getSubjectID(), lstGroup[i].getSubject().getName(),
-                            lstGroup[i].getGroupID(), lstGroup[i].getDay(), lstGroup[i].getHour1().concat(lstGroup[i].getHour2()),
+                            lstGroup[i].getGroupID(), lstGroup[i].getDay(), lstGroup[i].getHour1().concat("\n").concat(lstGroup[i].getHour2()),
                             lstGroup[i].getRoom().getNameRoom(), lstGroup[i].getWeek()};
                         model.addRow(obj);
                     }
@@ -210,7 +213,7 @@ public class TimeTable extends javax.swing.JFrame implements ActionListener {
         );
         pnTimeTableLayout.setVerticalGroup(
             pnTimeTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         javax.swing.GroupLayout pnMainLayout = new javax.swing.GroupLayout(pnMain);
@@ -231,7 +234,7 @@ public class TimeTable extends javax.swing.JFrame implements ActionListener {
                                 .addGap(96, 96, 96)
                                 .addComponent(btnSearch))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 163, Short.MAX_VALUE))
+                        .addGap(0, 209, Short.MAX_VALUE))
                     .addGroup(pnMainLayout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addComponent(btnExcel)
@@ -255,7 +258,7 @@ public class TimeTable extends javax.swing.JFrame implements ActionListener {
                     .addGroup(pnMainLayout.createSequentialGroup()
                         .addGap(36, 36, 36)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
                 .addComponent(pnTimeTable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(33, 33, 33)
                 .addGroup(pnMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -284,12 +287,12 @@ public class TimeTable extends javax.swing.JFrame implements ActionListener {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-//    public static void main(String[] args) {
-//        TimeTable t = new TimeTable();
-//        TimeTableController c = new TimeTableController(t);
-//        t.setVisible(true);
-//        t.setLocationRelativeTo(null);
-//    }
+    public static void main(String[] args) {
+        TimeTable t = new TimeTable();
+        TimeTableController c = new TimeTableController(t);
+        t.setVisible(true);
+        t.setLocationRelativeTo(null);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnExcel;

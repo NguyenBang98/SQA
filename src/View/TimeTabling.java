@@ -3,6 +3,7 @@ package View;
 import Controller.GroupDAO;
 import Controller.GroupLabDAO;
 import Model.Group;
+import Model.GroupLab;
 import Model.Room;
 import Model.RoomLab;
 import Model.Subject;
@@ -17,25 +18,26 @@ public class TimeTabling extends javax.swing.JFrame implements ActionListener {
     String week;
 
     public TimeTabling() {
-        super("Create Timetable");
+        super("Tạo thời khóa biểu");
         initComponents();
-        week = new String();
+        week = new String("123456789101112131415-");
         panelLab.setVisible(false);
 
         GroupDAO db = new GroupDAO();
+        GroupLabDAO gl = new GroupLabDAO();
         db.listSubject().forEach((i) -> {
             cbListSubject.addItem(i.getName());
         });
         db.listRoom().forEach((i) -> {
             cbListRoom.addItem(i.getNameRoom());
         });
-//        db.listRoomLab().forEach((i) -> {
-//            cbRoomLab.addItem(i.getNameRoomLab());
-//        });
+        gl.listRoomLab().forEach((i) -> {
+            cbRoomLab.addItem(i.getNameRoomLab());
+        });
 
         cbListSubject.addActionListener((ActionEvent e) -> {
             if (cbListSubject.getSelectedItem().toString().equals("Phát triển ứng dụng cho các thiết bị di động")) {
-                panelLab.setVisible(false);
+                panelLab.setVisible(true);
             } else {
                 panelLab.setVisible(false);
             }
@@ -133,17 +135,17 @@ public class TimeTabling extends javax.swing.JFrame implements ActionListener {
         return group;
     }
 
-//    public GroupLab setLab() {
-//        GroupLab lab = new GroupLab();
-//        GroupDAO dao = new GroupDAO();
-//        lab.setTeam(Integer.parseInt(cbGroupLab.getSelectedItem().toString()));
-//        lab.setGroupID(Integer.parseInt(cbListGroup.getSelectedItem().toString()));
-//        lab.setSubject(dao.searchSubject(cbListSubject.getSelectedItem().toString()));
-//        lab.setRoomLab(dao.searchroomLab(cbRoomLab.getSelectedItem().toString()));
-//        lab.setDay(cbDayLab.getSelectedItem().toString());
-//        lab.setHour(cbTimeLab.getSelectedItem().toString());
-//        return lab;
-//    }
+    public GroupLab setLab() {
+        GroupLab lab = new GroupLab();
+        GroupLabDAO dao = new GroupLabDAO();
+        lab.setTeam(Integer.parseInt(cbGroupLab.getSelectedItem().toString()));
+        lab.setGroupID(Integer.parseInt(cbListGroup.getSelectedItem().toString()));
+        lab.setSubject(dao.searchSubject(cbListSubject.getSelectedItem().toString()));
+        lab.setRoomLab(dao.searchroomLab(cbRoomLab.getSelectedItem().toString()));
+        lab.setDay(cbDayLab.getSelectedItem().toString());
+        lab.setHour(cbTimeLab.getSelectedItem().toString());
+        return lab;
+    }
 
     public void addSaveListener(ActionListener log) {
         btnSave.addActionListener(log);
@@ -319,21 +321,21 @@ public class TimeTabling extends javax.swing.JFrame implements ActionListener {
                         .addComponent(jLabel8))
                     .addGroup(panelLabLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(panelLabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(panelLabLayout.createSequentialGroup()
-                                .addComponent(jLabel9)
-                                .addGap(18, 18, 18)
-                                .addComponent(cbGroupLab, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(panelLabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(panelLabLayout.createSequentialGroup()
                                 .addGroup(panelLabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel11)
                                     .addComponent(jLabel10))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(panelLabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGap(52, 52, 52)
+                                .addGroup(panelLabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(cbDayLab, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(cbRoomLab, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                        .addGap(98, 98, 98)
-                        .addGroup(panelLabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cbRoomLab, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(panelLabLayout.createSequentialGroup()
+                                .addComponent(jLabel9)
+                                .addGap(18, 18, 18)
+                                .addComponent(cbGroupLab, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(panelLabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(panelLabLayout.createSequentialGroup()
                                 .addGroup(panelLabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(panelLabLayout.createSequentialGroup()
@@ -346,36 +348,39 @@ public class TimeTabling extends javax.swing.JFrame implements ActionListener {
                                 .addGap(18, 18, 18)
                                 .addGroup(panelLabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jCheckBox32)
-                                    .addComponent(jCheckBox40))
-                                .addGap(0, 14, Short.MAX_VALUE))
+                                    .addComponent(jCheckBox40)))
                             .addGroup(panelLabLayout.createSequentialGroup()
                                 .addComponent(jLabel13)
                                 .addGap(30, 30, 30)
-                                .addComponent(cbTimeLab, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                .addGap(18, 18, 18)
-                .addGroup(panelLabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jCheckBox41)
-                    .addComponent(jCheckBox33))
-                .addGap(2, 2, 2)
+                                .addComponent(cbTimeLab, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(18, 18, 18)
+                        .addGroup(panelLabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jCheckBox41)
+                            .addComponent(jCheckBox33))))
+                .addGap(42, 42, 42)
                 .addGroup(panelLabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jCheckBox34)
                     .addComponent(jCheckBox42))
-                .addGap(6, 6, 6)
                 .addGroup(panelLabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jCheckBox43)
-                    .addComponent(jCheckBox35))
-                .addGap(6, 6, 6)
+                    .addGroup(panelLabLayout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addComponent(jCheckBox43)
+                        .addGap(12, 12, 12))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLabLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jCheckBox35)
+                        .addGap(18, 18, 18)))
                 .addGroup(panelLabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jCheckBox36)
                     .addComponent(jCheckBox44))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addGroup(panelLabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelLabLayout.createSequentialGroup()
                         .addComponent(jCheckBox37)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(jCheckBox38))
                     .addComponent(jCheckBox45))
-                .addGap(45, 45, 45))
+                .addGap(13, 13, 13))
         );
         panelLabLayout.setVerticalGroup(
             panelLabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -469,44 +474,50 @@ public class TimeTabling extends javax.swing.JFrame implements ActionListener {
             panelHour2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelHour2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel3)
-                .addGap(70, 70, 70)
-                .addComponent(cbListTime2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(64, 64, 64)
-                .addComponent(jLabel6)
-                .addGap(18, 18, 18)
                 .addGroup(panelHour2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelHour2Layout.createSequentialGroup()
-                        .addComponent(jCheckBox17)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jCheckBox16)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jCheckBox18)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jCheckBox19)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jCheckBox20)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jCheckBox21)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jCheckBox22)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jCheckBox23)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jCheckBox24)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jCheckBox25)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jCheckBox26))
+                        .addComponent(jLabel3)
+                        .addGap(70, 70, 70)
+                        .addComponent(cbListTime2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(64, 64, 64)
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jCheckBox17))
                     .addGroup(panelHour2Layout.createSequentialGroup()
-                        .addComponent(jCheckBox27)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jCheckBox28)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jCheckBox24)))
+                .addGap(18, 18, 18)
+                .addGroup(panelHour2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jCheckBox16)
+                    .addComponent(jCheckBox25))
+                .addGap(18, 18, 18)
+                .addGroup(panelHour2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jCheckBox26)
+                    .addComponent(jCheckBox18))
+                .addGap(30, 30, 30)
+                .addGroup(panelHour2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jCheckBox19)
+                    .addComponent(jCheckBox27))
+                .addGap(18, 18, 18)
+                .addGroup(panelHour2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jCheckBox28)
+                    .addComponent(jCheckBox20))
+                .addGroup(panelHour2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelHour2Layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addComponent(jCheckBox21)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelHour2Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jCheckBox29)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jCheckBox30)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)))
+                .addGroup(panelHour2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelHour2Layout.createSequentialGroup()
+                        .addComponent(jCheckBox22)
+                        .addGap(18, 18, 18)
+                        .addComponent(jCheckBox23))
+                    .addComponent(jCheckBox30))
+                .addGap(21, 21, 21))
         );
         panelHour2Layout.setVerticalGroup(
             panelHour2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -515,28 +526,29 @@ public class TimeTabling extends javax.swing.JFrame implements ActionListener {
                 .addGroup(panelHour2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cbListTime2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
-                    .addComponent(jLabel6))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(panelHour2Layout.createSequentialGroup()
-                .addGroup(panelHour2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
                     .addComponent(jCheckBox17)
                     .addComponent(jCheckBox16)
-                    .addComponent(jCheckBox18)
+                    .addComponent(jCheckBox18))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelHour2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(panelHour2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jCheckBox19)
                     .addComponent(jCheckBox20)
                     .addComponent(jCheckBox21)
                     .addComponent(jCheckBox22)
-                    .addComponent(jCheckBox23)
-                    .addComponent(jCheckBox24)
-                    .addComponent(jCheckBox25)
-                    .addComponent(jCheckBox26))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jCheckBox23))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panelHour2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jCheckBox27)
+                    .addComponent(jCheckBox26)
+                    .addComponent(jCheckBox25)
+                    .addComponent(jCheckBox24)
                     .addComponent(jCheckBox28)
                     .addComponent(jCheckBox29)
                     .addComponent(jCheckBox30))
-                .addGap(0, 7, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         jLabel2.setText("Kíp 1");
@@ -602,38 +614,40 @@ public class TimeTabling extends javax.swing.JFrame implements ActionListener {
                 .addGap(64, 64, 64)
                 .addComponent(jLabel5)
                 .addGap(18, 18, 18)
-                .addGroup(panelHour1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panelHour1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(panelHour1Layout.createSequentialGroup()
                         .addComponent(jCheckBox1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(24, 24, 24)
                         .addComponent(jCheckBox2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jCheckBox3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jCheckBox4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jCheckBox5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jCheckBox6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jCheckBox7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jCheckBox8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jCheckBox9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jCheckBox10)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jCheckBox11))
+                        .addGap(22, 22, 22))
                     .addGroup(panelHour1Layout.createSequentialGroup()
-                        .addComponent(jCheckBox12)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jCheckBox13)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jCheckBox14)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jCheckBox15)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jCheckBox9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jCheckBox10)
+                        .addGap(18, 18, 18)))
+                .addGroup(panelHour1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jCheckBox3)
+                    .addComponent(jCheckBox11))
+                .addGap(28, 28, 28)
+                .addGroup(panelHour1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jCheckBox4)
+                    .addComponent(jCheckBox12))
+                .addGap(23, 23, 23)
+                .addGroup(panelHour1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jCheckBox13)
+                    .addComponent(jCheckBox5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addGroup(panelHour1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jCheckBox6)
+                    .addComponent(jCheckBox14))
+                .addGap(18, 18, 18)
+                .addGroup(panelHour1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelHour1Layout.createSequentialGroup()
+                        .addComponent(jCheckBox7)
+                        .addGap(18, 18, 18)
+                        .addComponent(jCheckBox8))
+                    .addComponent(jCheckBox15))
+                .addGap(21, 21, 21))
         );
         panelHour1Layout.setVerticalGroup(
             panelHour1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -654,16 +668,16 @@ public class TimeTabling extends javax.swing.JFrame implements ActionListener {
                     .addComponent(jCheckBox5)
                     .addComponent(jCheckBox6)
                     .addComponent(jCheckBox7)
-                    .addComponent(jCheckBox8)
-                    .addComponent(jCheckBox9)
-                    .addComponent(jCheckBox10)
-                    .addComponent(jCheckBox11))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 4, Short.MAX_VALUE)
+                    .addComponent(jCheckBox8))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
                 .addGroup(panelHour1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jCheckBox12)
                     .addComponent(jCheckBox13)
                     .addComponent(jCheckBox14)
-                    .addComponent(jCheckBox15))
+                    .addComponent(jCheckBox15)
+                    .addComponent(jCheckBox11)
+                    .addComponent(jCheckBox10)
+                    .addComponent(jCheckBox9)
+                    .addComponent(jCheckBox12))
                 .addContainerGap())
         );
 
@@ -671,6 +685,11 @@ public class TimeTabling extends javax.swing.JFrame implements ActionListener {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(panelHour1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panelHour2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel7)
@@ -682,27 +701,26 @@ public class TimeTabling extends javax.swing.JFrame implements ActionListener {
                 .addComponent(cbListRoom, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lbSubject)
-                .addGap(29, 29, 29)
-                .addComponent(cbListSubject, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(98, 98, 98)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(cbDay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(147, 147, 147))
-            .addComponent(panelHour2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(panelHour1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(panelLab, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(61, 61, 61)
                 .addComponent(btnSave)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnShowTimtable)
-                .addGap(90, 90, 90))
+                .addGap(108, 108, 108))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(panelLab, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lbSubject)
+                        .addGap(29, 29, 29)
+                        .addComponent(cbListSubject, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel1)
+                        .addGap(49, 49, 49)
+                        .addComponent(cbDay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(33, 33, 33))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -725,19 +743,15 @@ public class TimeTabling extends javax.swing.JFrame implements ActionListener {
                     .addComponent(cbListRoom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(panelLab, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnShowTimtable)
-                    .addComponent(btnSave))
-                .addContainerGap())
+                    .addComponent(btnSave)
+                    .addComponent(btnShowTimtable))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void cbGroupLabActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbGroupLabActionPerformed
-
-    }//GEN-LAST:event_cbGroupLabActionPerformed
 
     private void jCheckBox29ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox29ActionPerformed
 
@@ -746,6 +760,10 @@ public class TimeTabling extends javax.swing.JFrame implements ActionListener {
     private void cbListGroupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbListGroupActionPerformed
         
     }//GEN-LAST:event_cbListGroupActionPerformed
+
+    private void cbGroupLabActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbGroupLabActionPerformed
+
+    }//GEN-LAST:event_cbGroupLabActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

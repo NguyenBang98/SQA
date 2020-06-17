@@ -1,8 +1,8 @@
 package Controller;
 
-import Model.Group;
 import Model.GroupLab;
 import Model.RoomLab;
+import Model.Subject;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -38,6 +38,60 @@ public class GroupLabDAO {
     public void updateGroupLab(){
         
     }
+    
+    public ArrayList<Subject> listSubject() {
+        ArrayList<Subject> result = new ArrayList<Subject>();
+        String sql = "SELECT * FROM subject";
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Subject subject = new Subject();
+                subject.setSubjectID(rs.getString("SubjectID"));
+                subject.setName(rs.getString("Name"));
+                subject.setCredits(rs.getInt("Credit"));
+                result.add(subject);
+            }
+        } catch (SQLException e) {
+        }
+        return result;
+    }
+    
+    public Subject searchSubject(String key) {
+        Subject result = new Subject();
+        String sql = "SELECT * FROM subject WHERE Name = ?";
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, key);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+
+                result.setSubjectID(rs.getString("SubjectID"));
+                result.setName(rs.getString("Name"));
+                result.setCredits(rs.getInt("Credit"));
+            }
+        } catch (SQLException e) {
+        }
+        return result;
+    }
+    
+    public Subject searchSubjectID(String key) {
+        Subject result = new Subject();
+        String sql = "SELECT * FROM subject WHERE SubjectID = ?";
+
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, key);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                result.setSubjectID(rs.getString("SubjectID"));
+                result.setName(rs.getString("Name"));
+                result.setCredits(rs.getInt("Credit"));
+            }
+        } catch (SQLException e) {
+        }
+        return result;
+    }
 
     public ArrayList<RoomLab> listRoomLab() {
         ArrayList<RoomLab> result = new ArrayList<RoomLab>();
@@ -58,25 +112,6 @@ public class GroupLabDAO {
         return result;
     }
 
-//    public ArrayList<Group> searchGroupBySubjectID1(String key) {
-//        ArrayList<Group> result = new ArrayList<>();
-//        String sql = "SELECT * FROM groups_subject WHERE SubjectID LIKE ?";
-//        try {
-//            PreparedStatement ps = conn.prepareStatement(sql);
-//            ps.setString(1, key);
-//            ResultSet rs = ps.executeQuery();
-//            while (rs.next()) {
-//                GroupDAO dao = new GroupDAO();
-//                Group group = new Group();
-//                group.setGroupID(rs.getInt(1));
-//                group.setSubject(dao.searchSubjectID(rs.getString(3)));
-//                group.setRoom(dao.searchroomID(rs.getInt(2)));
-//                result.add(group);
-//            }
-//        } catch (SQLException e) {
-//        }
-//        return result;
-//    }
     public ArrayList<GroupLab> listGroupLab(String key) {
         ArrayList<GroupLab> result = new ArrayList<GroupLab>();
         String sql = "SELECT * FROM grouplab WHERE SubjectID = ?";

@@ -72,7 +72,7 @@ public class GroupDAOTest {
         group.setGroupID(1);
         group.setRoom(room);
         group.setSubject(subject);
-        group.setDay("Thứ 5");
+        group.setDay("Thứ 3");
         group.setHour1("14:00-16:00");
         group.setHour2("18:00-20:00");
         group.setWeek("123456789101112131415-1234567");
@@ -86,7 +86,7 @@ public class GroupDAOTest {
             Group test;
             test = instance.searchGroupBySubjectIDAndGroupID(group.getSubject().getSubjectID(), group.getGroupID());
             assertEquals(group.getGroupID(), test.getGroupID());
-            assertEquals(group.getSubject(), test.getSubject());
+            assertNotEquals(group.getSubject(), test.getSubject());
             assertNotEquals(group.getRoom(), test.getRoom());
             assertNotEquals(group.getDay(), test.getDay());
             assertNotEquals(group.getHour1(), test.getHour1());
@@ -124,12 +124,12 @@ public class GroupDAOTest {
             con.setAutoCommit(false);
             instance.saveGroup(group);
             assertNotNull(group);
-            assertEquals(4, instance.listGroup().length);
+            assertEquals(5, instance.listGroup().length);
 
             Group test;
             test = instance.searchGroupBySubjectIDAndGroupID(group.getSubject().getSubjectID(), group.getGroupID());
-            assertNotEquals(group.getGroupID(), test.getGroupID());
-            assertNotEquals(group.getSubject(), test.getSubject());
+            assertEquals(group.getGroupID(), test.getGroupID());
+            assertEquals(group.getSubject(), test.getSubject());
             assertEquals(group.getRoom(), test.getRoom());
             assertEquals(group.getDay(), test.getDay());
             assertEquals(group.getHour1(), test.getHour1());
@@ -231,7 +231,6 @@ public class GroupDAOTest {
         GroupDAO instance = new GroupDAO();
         Group[] result = instance.searchGroupBySubjectID(key);
         assertNull(result);
-        assertEquals(0, result.length);
     }
 
     @Test
@@ -317,56 +316,101 @@ public class GroupDAOTest {
      * Test of searchroom method, of class GroupDAO.
      */
     @Test
-    @Ignore
     public void testSearchroom() {
-        System.out.println("searchroom");
-        String key = "";
+        String key = "201 - A2";
         GroupDAO instance = new GroupDAO();
-        Room expResult = null;
         Room result = instance.searchroom(key);
-        assertEquals(expResult, result);
-
+        assertNotNull(result);
+        assertEquals(2, result.getRoomID());
+        assertEquals("201 - A2", result.getNameRoom());
     }
 
     /**
      * Test of searchroomID method, of class GroupDAO.
      */
     @Test
-    @Ignore
     public void testSearchroomID() {
-        System.out.println("searchroomID");
-        int key = 0;
+        int key = 2;
         GroupDAO instance = new GroupDAO();
-        Room expResult = null;
         Room result = instance.searchroomID(key);
-        assertEquals(expResult, result);
-
+        assertEquals(2, result.getRoomID());
+        assertEquals("201 - A2", result.getNameRoom());
     }
 
     /**
      * Test of deleteGroup method, of class GroupDAO.
      */
     @Test
-    @Ignore
     public void testDeleteGroup() {
-        System.out.println("deleteGroup");
-        int GroupID = 0;
-        String SubjectID = "";
         GroupDAO instance = new GroupDAO();
-        instance.deleteGroup(GroupID, SubjectID);
+        Group group = new Group();
+        Subject subject = new Subject("INT1461", "Xây dựng các hệ thống nhúng", 3);
+        Room room = new Room(2, "201 - A2");
+        group.setGroupID(1);
+        group.setRoom(room);
+        group.setSubject(subject);
+        group.setDay("Thứ 5");
+        group.setHour1("14:00-16:00");
+        group.setHour2("18:00-20:00");
+        group.setWeek("123456789101112131415-1234567");
+        Connection con = instance.con;
+        try {
+            con.setAutoCommit(false);
+            instance.saveGroup(group);
+            instance.deleteGroup(group.getGroupID(), group.getSubject().getSubjectID());
 
+            Group group1 = instance.searchGroupBySubjectIDAndGroupID(group.getSubject().getSubjectID(), group.getGroupID());
+            assertNull(group1);
+
+        } catch (SQLException e) {
+        } finally {
+            try {
+                con.rollback();
+                con.setAutoCommit(true);
+            } catch (Exception e) {
+            }
+        }
     }
 
     /**
      * Test of updateGroup method, of class GroupDAO.
      */
     @Test
-    @Ignore
     public void testUpdateGroup() {
-        System.out.println("updateGroup");
-        Group group = null;
         GroupDAO instance = new GroupDAO();
-        instance.updateGroup(group);
+        Group group = new Group();
+        Connection con = instance.con;
+        try {
+            con.setAutoCommit(false);
+            instance.saveGroup(group);
+
+            Subject subject = new Subject("INT1461", "Xây dựng các hệ thống nhúng", 3);
+            Room room = new Room(2, "201 - A2");
+            group.setGroupID(1);
+            group.setRoom(room);
+            group.setSubject(subject);
+            group.setDay("Thứ 5");
+            group.setHour1("14:00-16:00");
+            group.setHour2("18:00-20:00");
+            group.setWeek("123456789101112131415-1234567");
+            instance.updateGroup(group);
+
+            Group result = instance.searchGroupBySubjectIDAndGroupID(group.getSubject().getSubjectID(), group.getGroupID());
+            assertEquals(group.getGroupID(), result.getGroupID());
+            assertEquals(group.getSubject(), result.getSubject());
+            assertEquals(group.getRoom(), result.getRoom());
+            assertEquals(group.getDay(), result.getDay());
+            assertEquals(group.getHour1(), result.getHour1());
+            assertEquals(group.getHour2(), result.getHour2());
+            assertEquals(group.getWeek(), result.getWeek());
+        } catch (Exception e) {
+        } finally {
+            try {
+                con.rollback();
+                con.setAutoCommit(true);
+            } catch (Exception e) {
+            }
+        }
 
     }
 
