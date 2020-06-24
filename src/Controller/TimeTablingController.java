@@ -12,7 +12,7 @@ public class TimeTablingController {
 
     private TimeTabling tb;
     Group[] lstGroup;
-    private boolean tick = false;
+    boolean tick = false;
 
     public TimeTablingController(TimeTabling tb) {
         this.tb = tb;
@@ -24,29 +24,32 @@ public class TimeTablingController {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            GroupDAO dao = new GroupDAO();
-            lstGroup = dao.searchGroupBySubjectID(tb.setGroup().getSubject().getSubjectID());
-            if (lstGroup == null) {
+            saveGroup();
+        }
+
+    }
+
+    public void saveGroup() {
+        GroupDAO dao = new GroupDAO();
+        lstGroup = dao.searchGroupBySubjectID(tb.setGroup().getSubject().getSubjectID());
+        if (lstGroup == null) {
+            GroupDAO daog = new GroupDAO();
+            daog.saveGroup(tb.setGroup());
+            JOptionPane.showMessageDialog(tb, "Đã lưu thành công");
+        } else {
+            for (int i = 0; i < lstGroup.length; i++) {
+                if (lstGroup[i].equals(tb.setGroup())) {
+                    JOptionPane.showMessageDialog(tb, "Nhóm môn học đã tồn tại. Vui lòng chỉnh sửa thông tin!");
+                    tick = true;
+                    break;
+                }
+            }
+            if (tick == false) {
                 GroupDAO daog = new GroupDAO();
                 daog.saveGroup(tb.setGroup());
                 JOptionPane.showMessageDialog(tb, "Đã lưu thành công");
-            } else {
-                for (int i = 0; i < lstGroup.length; i++) {
-                    if (lstGroup[i].equals(tb.setGroup())) {
-                        JOptionPane.showMessageDialog(tb, "Nhóm môn học đã tồn tại. Vui lòng chỉnh sửa thông tin!");
-                        tick = true;
-                        break;
-                    }
-                }
-                if (tick == false) {
-                    GroupDAO daog = new GroupDAO();
-                    daog.saveGroup(tb.setGroup());
-                    JOptionPane.showMessageDialog(tb, "Đã lưu thành công");
-                }
             }
-
         }
-
     }
 
     class ShowListerner implements ActionListener {

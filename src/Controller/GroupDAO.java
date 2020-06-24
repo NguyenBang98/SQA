@@ -179,11 +179,11 @@ public class GroupDAO {
 
     public Room searchroom(String key) {
         Room result = new Room();
-        String sql = "SELECT * FROM room WHERE NameRoom LIKE ?";
+        String sql = "SELECT * FROM room WHERE NameRoom = ?";
 
         try {
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setString(1, "%" + key + "%");
+            ps.setString(1, key );
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 result.setRoomID(rs.getInt("RoomID"));

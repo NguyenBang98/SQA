@@ -17,6 +17,7 @@ public class EditFrm extends javax.swing.JFrame implements ActionListener {
     private int index;
     private GroupDAO dao;
     private GroupLabDAO tdao;
+    private String week;
 
     public EditFrm(TimeTable time, Group group) {
         super("Chỉnh sửa thời khóa biểu");
@@ -66,6 +67,7 @@ public class EditFrm extends javax.swing.JFrame implements ActionListener {
                     jCheckBox28.setSelected(false);
                     jCheckBox29.setSelected(false);
                     jCheckBox30.setSelected(false);
+                    week = "123456789101112131415-1234567";
                 } else {
                     jCheckBox16.setSelected(false);
                     jCheckBox17.setSelected(false);
@@ -81,6 +83,7 @@ public class EditFrm extends javax.swing.JFrame implements ActionListener {
                     jCheckBox28.setSelected(true);
                     jCheckBox29.setSelected(true);
                     jCheckBox30.setSelected(true);
+                    week = "123456789101112131415-9101112131415";
                 }
             }
         });
@@ -788,48 +791,38 @@ public class EditFrm extends javax.swing.JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         JButton btnClicked = (JButton) e.getSource();
         if (btnClicked.equals(btnReset)) {
-            initForm();
-            
-        }
-        if (btnClicked.equals(btnUpdate)) {
-            btnUpdateClick();
-        }
-        if (btnClicked.equals(btnExit)) {
-            btnExitClick();
-        }
-        if (btnClicked.equals(btnDelete)) {
-            btnDeleteClick();
+            initForm();            
         }
     }
 
-    private void btnUpdateClick() {
-        Group group = new Group();
-        GroupDAO dao = new GroupDAO();
-        group.setGroupID(Integer.parseInt(txtGroupID.getText().toString().trim()));
-        group.setSubject(dao.searchSubject(txtSubject.getText().toString().trim()));
-        group.setRoom(dao.searchroom(txtRoom.getText().toString().trim()));
-        group.setDay(txtDay.getText().toString().trim());
-        group.setHour1(txtTime1.getText().toString().trim());
-        group.setHour2(txtTime2.getText().toString().trim());
-        dao.updateGroup(group);
-    }
+//    private void btnUpdateClick() {
+//        Group group = new Group();
+//        GroupDAO dao = new GroupDAO();
+//        group.setGroupID(Integer.parseInt(txtGroupID.getText().toString().trim()));
+//        group.setSubject(dao.searchSubject(txtSubject.getText().toString().trim()));
+//        group.setRoom(dao.searchroom(txtRoom.getText().toString().trim()));
+//        group.setDay(txtDay.getText().toString().trim());
+//        group.setHour1(txtTime1.getText().toString().trim());
+//        group.setHour2(txtTime2.getText().toString().trim());
+//        dao.updateGroup(group);
+//    }
 
-    private void btnDeleteClick() {
-        int dialogButton = JOptionPane.YES_NO_OPTION;
-        int dialogResult = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn xóa nhóm môn học?", "Cảnh báo", dialogButton);
-        if (dialogResult == JOptionPane.YES_OPTION) {
-
-            GroupDAO dao = new GroupDAO();
-            int GroupID = Integer.parseInt(txtGroupID.getText().toString().trim());
-            String SubjectID = dao.searchSubject(txtSubject.getText().toString().trim()).getSubjectID();
-            dao.deleteGroup(GroupID, SubjectID);
-            TimeTable t = new TimeTable();
-            TimeTableController tr = new TimeTableController(t);
-            t.setVisible(true);
-            t.setLocationRelativeTo(null);
-            this.dispose();
-        }
-    }
+//    private void btnDeleteClick() {
+//        int dialogButton = JOptionPane.YES_NO_OPTION;
+//        int dialogResult = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn xóa nhóm môn học?", "Cảnh báo", dialogButton);
+//        if (dialogResult == JOptionPane.YES_OPTION) {
+//
+//            GroupDAO dao = new GroupDAO();
+//            int GroupID = Integer.parseInt(txtGroupID.getText().toString().trim());
+//            String SubjectID = dao.searchSubject(txtSubject.getText().toString().trim()).getSubjectID();
+//            dao.deleteGroup(GroupID, SubjectID);
+//            TimeTable t = new TimeTable();
+//            TimeTableController tr = new TimeTableController(t);
+//            t.setVisible(true);
+//            t.setLocationRelativeTo(null);
+//            this.dispose();
+//        }
+//    }
 
     private void initForm() {
         if (group != null) {
@@ -870,13 +863,30 @@ public class EditFrm extends javax.swing.JFrame implements ActionListener {
             }
         }
     }
-
-    private void btnExitClick() {
-        TimeTable t = new TimeTable();
-        TimeTableController tr = new TimeTableController(t);
-        t.setVisible(true);
-        t.setLocationRelativeTo(null);
-        this.dispose();
+    
+    public Group setGroup(){
+        Group group = new Group();
+        GroupDAO dao = new GroupDAO();
+        group.setGroupID(Integer.parseInt(txtGroupID.getText().trim().toString()));
+        group.setSubject(dao.searchSubject(txtSubject.getText().trim().toString()));
+        group.setRoom(dao.searchroom(cbListRoom.getSelectedItem().toString()));
+        group.setDay(txtDay.getText().trim().toString());
+        group.setHour1(cbListTime1.getSelectedItem().toString());
+        group.setHour2(cbListTime2.getSelectedItem().toString());
+        group.setWeek(week);
+        return group;
+    }
+    
+    public void addExitActionListener(ActionListener log){
+        btnExit.addActionListener(log);
+    }
+    
+    public void addUpdateActionListener(ActionListener log){
+        btnUpdate.addActionListener(log);
+    }
+    
+    public void addDeleteActionListener(ActionListener log){
+        btnDelete.addActionListener(log);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

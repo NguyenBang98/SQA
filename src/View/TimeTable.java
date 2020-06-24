@@ -1,5 +1,6 @@
 package View;
 
+import Controller.EditTimeTableController;
 import Controller.GroupDAO;
 import Controller.TimeTableController;
 import java.awt.event.ActionEvent;
@@ -29,6 +30,7 @@ public class TimeTable extends javax.swing.JFrame implements ActionListener {
     public TimeTable() {
         super("Timetable");
         initComponents();
+        this.setSize(800, 600);
 
         lstGroup = gdao.listGroup();
         listGroup = new ArrayList<Group>(Arrays.asList(lstGroup));
@@ -63,7 +65,8 @@ public class TimeTable extends javax.swing.JFrame implements ActionListener {
 
                         model = (DefaultTableModel) tblResult.getModel();
                         Object[] row = new Object[lstGroup.length];
-                        tblResult.getColumnModel().getColumn(0).setPreferredWidth(25);
+                        tblResult.getColumnModel().getColumn(3).setPreferredWidth(20);
+                        tblResult.getColumnModel().getColumn(2).setPreferredWidth(5);
                         for (int i = 0; i < lstGroup.length; i++) {
                             String s1 = lstGroup[i].getHour1();
                             s1 = s1.concat("\n").concat(lstGroup[i].getHour2());
@@ -136,10 +139,7 @@ public class TimeTable extends javax.swing.JFrame implements ActionListener {
                 } catch (SQLException ex) {
                     Logger.getLogger(TimeTable.class.getName()).log(Level.SEVERE, null, ex);
                 }
-
-                //System.out.println(group.getRoom().getNameRoom());//index row
                 editGroup(group);
-
             }
         });
 
@@ -149,8 +149,9 @@ public class TimeTable extends javax.swing.JFrame implements ActionListener {
         this.pack();
     }
 
-    private void editGroup(Group group) {
+    public void editGroup(Group group) {
         EditFrm frm = new EditFrm(this, group);
+        EditTimeTableController con = new EditTimeTableController(frm);
         frm.setVisible(true);
         frm.setLocationRelativeTo(null);
         this.dispose();
@@ -234,7 +235,7 @@ public class TimeTable extends javax.swing.JFrame implements ActionListener {
                                 .addGap(96, 96, 96)
                                 .addComponent(btnSearch))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 209, Short.MAX_VALUE))
+                        .addGap(0, 214, Short.MAX_VALUE))
                     .addGroup(pnMainLayout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addComponent(btnExcel)
@@ -258,7 +259,7 @@ public class TimeTable extends javax.swing.JFrame implements ActionListener {
                     .addGroup(pnMainLayout.createSequentialGroup()
                         .addGap(36, 36, 36)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
                 .addComponent(pnTimeTable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(33, 33, 33)
                 .addGroup(pnMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -287,12 +288,12 @@ public class TimeTable extends javax.swing.JFrame implements ActionListener {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public static void main(String[] args) {
-        TimeTable t = new TimeTable();
-        TimeTableController c = new TimeTableController(t);
-        t.setVisible(true);
-        t.setLocationRelativeTo(null);
-    }
+//    public static void main(String[] args) {
+//        TimeTable t = new TimeTable();
+//        TimeTableController c = new TimeTableController(t);
+//        t.setVisible(true);
+//        t.setLocationRelativeTo(null);
+//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnExcel;
