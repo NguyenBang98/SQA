@@ -3,11 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/White_Tiger/Desktop/SQA/src/Controller/EditTimeTableController.java</file>
-            <file>file:/C:/Users/White_Tiger/Desktop/SQA/src/Controller/TimeTableController.java</file>
-            <file>file:/C:/Users/White_Tiger/Desktop/SQA/test/Controller/TimeTablingControllerTest.java</file>
-            <file>file:/C:/Users/White_Tiger/Desktop/SQA/test/Controller/GroupDAOTest.java</file>
-            <file>file:/C:/Users/White_Tiger/Desktop/SQA/src/View/TimeTable.java</file>
+            <file>file:/C:/Users/White_Tiger/Desktop/SQA/test/Controller/LoginDAOTest.java</file>
+            <file>file:/C:/Users/White_Tiger/Desktop/SQA/src/Controller/LogInController.java</file>
+            <file>file:/C:/Users/White_Tiger/Desktop/SQA/src/Controller/GroupDAO.java</file>
+            <file>file:/C:/Users/White_Tiger/Desktop/SQA/src/Controller/LoginDAO.java</file>
         </group>
     </open-files>
 </project-private>
