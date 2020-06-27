@@ -30,8 +30,5 @@ public class LoginDAOTest {
         boolean expResult = true;
         boolean result = instance.checkUser(user);
         assertNotEquals(expResult, result);
-    }
-    
-    
-    
+    }   
 }

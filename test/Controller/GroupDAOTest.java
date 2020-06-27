@@ -147,6 +147,90 @@ public class GroupDAOTest {
             }
         }
     }
+    
+    @Test
+    public void testSaveGroup4() {
+        GroupDAO instance = new GroupDAO();
+        Group group = new Group();
+        Subject subject = new Subject("INT1448", "Phát triển phần mềm hướng dịch vụ", 3);
+        Room room = new Room(21, "505 - A2");
+        group.setGroupID(3);
+        group.setRoom(room);
+        group.setSubject(subject);
+        group.setDay("Thứ 6");
+        group.setHour1("14:00-16:00");
+        group.setHour2("18:00-20:00");
+        group.setWeek("123456789101112131415-1234567");
+        Connection con = instance.con;
+        try {
+            con.setAutoCommit(false);
+            instance.saveGroup(group);
+            assertNotNull(group);
+            assertEquals(4, instance.listGroup().length);
+
+            Group test;
+            test = instance.searchGroupBySubjectIDAndGroupID(group.getSubject().getSubjectID(), group.getGroupID());
+            assertEquals(group.getGroupID(), test.getGroupID());
+            assertTrue(group.getSubject().equals(test.getSubject()));
+            assertTrue(group.getRoom().equals(test.getRoom()));
+            assertEquals(group.getDay(), test.getDay());
+            assertEquals(group.getHour1(), test.getHour1());
+            assertEquals(group.getHour2(), test.getHour2());
+            assertEquals(group.getWeek(), test.getWeek());
+
+        } catch (SQLException ex) {
+            Logger.getLogger(GroupDAOTest.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                con.rollback();
+                con.setAutoCommit(true);
+            } catch (SQLException ex) {
+                Logger.getLogger(GroupDAOTest.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    
+    @Test
+    public void testSaveGroup5() {
+        GroupDAO instance = new GroupDAO();
+        Group group = new Group();
+        Subject subject = new Subject("INT1448", "Phát triển phần mềm hướng dịch vụ", 3);
+        Room room = new Room(21, "505 - A2");
+        group.setGroupID(1);
+        group.setRoom(room);
+        group.setSubject(subject);
+        group.setDay("Thứ 5");
+        group.setHour1("14:00-16:00");
+        group.setHour2("18:00-20:00");
+        group.setWeek("123456789101112131415-1234567");
+        Connection con = instance.con;
+        try {
+            con.setAutoCommit(false);
+            instance.saveGroup(group);
+            assertNotNull(group);
+            assertEquals(5, instance.listGroup().length);
+
+            Group test;
+            test = instance.searchGroupBySubjectIDAndGroupID(group.getSubject().getSubjectID(), group.getGroupID());
+            assertEquals(group.getGroupID(), test.getGroupID());
+            assertTrue(group.getSubject().equals(test.getSubject()));
+            assertTrue(group.getRoom().equals(test.getRoom()));
+            assertEquals(group.getDay(), test.getDay());
+            assertEquals(group.getHour1(), test.getHour1());
+            assertEquals(group.getHour2(), test.getHour2());
+            assertEquals(group.getWeek(), test.getWeek());
+
+        } catch (SQLException ex) {
+            Logger.getLogger(GroupDAOTest.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                con.rollback();
+                con.setAutoCommit(true);
+            } catch (SQLException ex) {
+                Logger.getLogger(GroupDAOTest.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
 
     /**
      * Test of listSubject method, of class GroupDAO.
