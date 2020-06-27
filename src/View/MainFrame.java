@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 public class MainFrame extends javax.swing.JFrame implements ActionListener {
 
     public MainFrame() {
-        super("Main home");
+        super("Trang chủ");
         initComponents();
         btnTimeTabling.addActionListener(this);
         btnStatics.addActionListener(this);

@@ -96,11 +96,11 @@ public class GroupDAO {
     
     public Group[] searchGroupBySubjectID(String key) {
         Group[] result = null;
-        String sql = "SELECT * FROM groups_subject WHERE SubjectID = ?";
+        String sql = "SELECT * FROM groups_subject WHERE SubjectID LIKE ?";
         GroupDAO dao;
         try {
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setString(1, key);
+            ps.setString(1, "%" + key + "%");
             ResultSet rs = ps.executeQuery();
             if (rs.last()) {
                 result = new Group[rs.getRow()];
