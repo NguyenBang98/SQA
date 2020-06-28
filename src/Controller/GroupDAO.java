@@ -142,14 +142,14 @@ public class GroupDAO {
     }
 
     public Subject searchSubject(String key) {
-        Subject result = new Subject();
+        Subject result = null;
         String sql = "SELECT * FROM subject WHERE Name = ?";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, key);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-
+                result= new Subject();
                 result.setSubjectID(rs.getString("SubjectID"));
                 result.setName(rs.getString("Name"));
                 result.setCredits(rs.getInt("Credit"));
@@ -160,7 +160,7 @@ public class GroupDAO {
     }
 
     public Subject searchSubjectID(String key) {
-        Subject result = new Subject();
+        Subject result = null;
         String sql = "SELECT * FROM subject WHERE SubjectID = ?";
 
         try {
@@ -168,6 +168,7 @@ public class GroupDAO {
             ps.setString(1, key);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
+                result= new Subject();
                 result.setSubjectID(rs.getString("SubjectID"));
                 result.setName(rs.getString("Name"));
                 result.setCredits(rs.getInt("Credit"));
@@ -178,7 +179,7 @@ public class GroupDAO {
     }
 
     public Room searchroom(String key) {
-        Room result = new Room();
+        Room result = null;
         String sql = "SELECT * FROM room WHERE NameRoom = ?";
 
         try {
@@ -186,6 +187,7 @@ public class GroupDAO {
             ps.setString(1, key );
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
+                result= new Room();
                 result.setRoomID(rs.getInt("RoomID"));
                 result.setNameRoom(rs.getString("NameRoom"));
             }
@@ -195,7 +197,7 @@ public class GroupDAO {
     }
 
     public Room searchroomID(int key) {
-        Room result = new Room();
+        Room result = null;
         String sql = "SELECT * FROM room WHERE RoomID = ?";
 
         try {
@@ -203,6 +205,7 @@ public class GroupDAO {
             ps.setInt(1, key);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
+                result= new Room();
                 result.setRoomID(rs.getInt("RoomID"));
                 result.setNameRoom(rs.getString("NameRoom"));
             }

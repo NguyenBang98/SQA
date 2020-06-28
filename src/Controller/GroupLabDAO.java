@@ -24,12 +24,13 @@ public class GroupLabDAO {
         }
     }
 
-    public void deleteGroupLab(int team, int GroupID) {
-        String sql = "DELETE FROM grouplab WHERE team = ? AND codelab = ?";
+    public void deleteGroupLab(int team, int GroupID, String SubjectID) {
+        String sql = "DELETE FROM grouplab WHERE team = ? AND GroupID = ? AND SubjectID = ?";
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, team);
             ps.setInt(2, GroupID);
+            ps.setString(3, SubjectID);
             ps.executeUpdate();
         } catch (SQLException e) {
         }
@@ -112,49 +113,50 @@ public class GroupLabDAO {
         return result;
     }
 
-    public ArrayList<GroupLab> listGroupLab(String key) {
-        ArrayList<GroupLab> result = new ArrayList<GroupLab>();
+    public GroupLab[] listGroupLab(String key) {
+        GroupLab[] result = null;
         String sql = "SELECT * FROM grouplab WHERE SubjectID = ?";
+        GroupLabDAO dao;
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, key);
             ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                GroupLab grouplab = new GroupLab();
-                GroupDAO dao = new GroupDAO();
-                grouplab.setTeam(rs.getInt("team"));
-                grouplab.setGroupID(rs.getInt("GroupID"));
-                grouplab.setSubject(dao.searchSubjectID(rs.getString("SubjectID")));
-                grouplab.setRoomLab(searchroomLabID(rs.getInt("RoomLabID")));
-                grouplab.setDay(rs.getString("Days"));
-                grouplab.setHour(rs.getString("hour1"));
-                grouplab.setWeek(rs.getString("week"));
-                result.add(grouplab);
+            if (rs.last()) {
+                result = new GroupLab[rs.getRow()];
+                rs.beforeFirst();
             }
-        } catch (SQLException e) {
+            int count = 0;
+            while (rs.next()) {
+                dao = new GroupLabDAO();
+                result[count] = new GroupLab(rs.getInt("GroupID"), rs.getInt("team"),
+                        dao.searchroomLabID(rs.getInt("RoomLabID")), dao.searchSubjectID(rs.getString("SubjectID")),
+                        rs.getString("Days"), rs.getString("hour"), rs.getString("week"));
+                count++;
+            }
+        } catch (Exception e) {
         }
         return result;
     }
 
-    public ArrayList<GroupLab> searchGroupLab() {
-        ArrayList<GroupLab> result = new ArrayList<GroupLab>();
+    public GroupLab[] searchGroupLab() {
+        GroupLab[] result = null;
         String sql = "SELECT * FROM grouplab";
+        GroupLabDAO dao;
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                GroupLab grouplab = new GroupLab();
-                GroupDAO dao = new GroupDAO();
-                grouplab.setTeam(rs.getInt("team"));
-                grouplab.setGroupID(rs.getInt("GroupID"));
-                grouplab.setSubject(dao.searchSubjectID(rs.getString("SubjectID")));
-                grouplab.setRoomLab(searchroomLabID(rs.getInt("RoomLabID")));
-                grouplab.setDay(rs.getString("Days"));
-                grouplab.setHour(rs.getString("hour1"));
-                grouplab.setWeek(rs.getString("week"));
-                result.add(grouplab);
+            if (rs.last()) {
+                result = new GroupLab[rs.getRow()];
+                rs.beforeFirst();
             }
-        } catch (SQLException e) {
+            int count = 0;
+            while (rs.next()) {
+                dao = new GroupLabDAO();
+                result[count] = new GroupLab(rs.getInt("GroupID"), rs.getInt("team"),
+                        dao.searchroomLabID(rs.getInt("RoomLabID")), dao.searchSubjectID(rs.getString("SubjectID")),
+                        rs.getString("Days"), rs.getString("hour"), rs.getString("week"));
+                count++;
+            }
+        } catch (Exception e) {
         }
         return result;
     }
@@ -182,7 +184,7 @@ public class GroupLabDAO {
 
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, "%" + key + "%");
+            ps.setString(1, key);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 result.setRoomLabID(rs.getInt("RoomLabID"));

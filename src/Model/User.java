@@ -6,18 +6,28 @@ public class User {
     private String name;
     private String pass;
     private String mail;
+    private int permission;
+
+    public User(String code, String name, String pass, String mail, int permission) {
+        this.code = code;
+        this.name = name;
+        this.pass = pass;
+        this.mail = mail;
+        this.permission = permission;
+    }
+
+    public User(String code, String name, int permission) {
+        this.code = code;
+        this.name = name;
+        this.permission = permission;
+    }
 
     public User(String code, String pass) {
         this.code = code;
         this.pass = pass;
     }
-
-    public User(String code, String name, String pass, String mail) {
-        this.code = code;
-        this.name = name;
-        this.pass = pass;
-        this.mail = mail;
-    }
+    
+    
 
     public String getCode() {
         return code;
@@ -49,6 +59,14 @@ public class User {
 
     public void setMail(String mail) {
         this.mail = mail;
+    }
+
+    public int getPermission() {
+        return permission;
+    }
+
+    public void setPermission(int permission) {
+        this.permission = permission;
     }
 
 }

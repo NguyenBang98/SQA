@@ -30,7 +30,9 @@ public class LoginDAO {
             ps.setString(2, user.getPass());
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                return true;
+                if (rs.getInt("permission") == 1) {
+                    return true;
+                }
             }
         } catch (SQLException e) {
         }

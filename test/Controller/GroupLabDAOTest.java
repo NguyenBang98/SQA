@@ -16,8 +16,9 @@ public class GroupLabDAOTest {
     public void testDeleteGroupLab() {
         int team = 0;
         int GroupID = 0;
+        String SubjectID = null;
         GroupLabDAO instance = new GroupLabDAO();
-        instance.deleteGroupLab(team, GroupID);
+        instance.deleteGroupLab(team, GroupID, SubjectID);
         
     }
 
@@ -78,8 +79,8 @@ public class GroupLabDAOTest {
         String key = "";
         GroupLabDAO instance = new GroupLabDAO();
         ArrayList<GroupLab> expResult = null;
-        ArrayList<GroupLab> result = instance.listGroupLab(key);
-        assertEquals(expResult, result);
+        //ArrayList<GroupLab> result = instance.listGroupLab(key);
+        //assertEquals(expResult, result);
         
     }
 
@@ -89,8 +90,8 @@ public class GroupLabDAOTest {
         
         GroupLabDAO instance = new GroupLabDAO();
         ArrayList<GroupLab> expResult = null;
-        ArrayList<GroupLab> result = instance.searchGroupLab();
-        assertEquals(expResult, result);
+        //ArrayList<GroupLab> result = instance.searchGroupLab();
+        //assertEquals(expResult, result);
         
     }
 
@@ -108,26 +109,41 @@ public class GroupLabDAOTest {
      * Test of searchroomLab method, of class GroupLabDAO.
      */
     @Test
-    public void testSearchroomLab() {
-        
-        String key = "";
+    public void testSearchroomLab1() {        
+        String key = "409 - A3";
         GroupLabDAO instance = new GroupLabDAO();
-        RoomLab expResult = null;
         RoomLab result = instance.searchroomLab(key);
-        assertEquals(expResult, result);
-        
+        assertNotNull(result);
+        assertEquals(3, result.getRoomLabID());
+        assertEquals("409 - A3", result.getNameRoomLab());
     }
-
+    
+    @Test
+    public void testSearchroomLab2() {        
+        String key = "409 - A2";
+        GroupLabDAO instance = new GroupLabDAO();
+        RoomLab result = instance.searchroomLab(key);
+        assertNull(result);       
+    }    
    
     @Test
-    public void testSearchroomLabID() {
-        
-        int key = 0;
+    public void testSearchroomLabID1() {        
+        int key = 3;
         GroupLabDAO instance = new GroupLabDAO();
-        RoomLab expResult = null;
         RoomLab result = instance.searchroomLabID(key);
-        assertEquals(expResult, result);
+        assertNotNull(result);
+        assertEquals(3, result.getRoomLabID());
+        assertEquals("409 - A3", result.getNameRoomLab());
         
+    }
+    
+    @Test
+    public void testSearchroomLabID2() {        
+        int key = 50;
+        GroupLabDAO instance = new GroupLabDAO();
+        RoomLab result = instance.searchroomLabID(key);
+        assertNull(result);
+                
     }
     
 }

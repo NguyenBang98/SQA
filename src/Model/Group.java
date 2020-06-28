@@ -91,8 +91,8 @@ public class Group implements Serializable{
                 return true;
             }
             if(this.getDay().equals(g2.getDay())
-                    && this.getHour1().equals(g2.getHour1())
-                    && this.getHour2().equals(g2.getHour2())
+                    && (this.getHour1().equals(g2.getHour1())
+                    && this.getHour2().equals(g2.getHour2()))
                     && this.getRoom().equals(g2.getRoom())){
                 return true;
             }
