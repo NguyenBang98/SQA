@@ -10,16 +10,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import org.junit.Ignore;
 
 public class GroupDAOTest {
 
     public GroupDAOTest() {
     }
-
-    /**
-     * Test of saveGroup method, of class GroupDAO.
-     */
+//Luu nhom moi
     @Test
     public void testSaveGroup1() {
         GroupDAO instance = new GroupDAO();
@@ -38,16 +34,16 @@ public class GroupDAOTest {
             con.setAutoCommit(false);
             instance.saveGroup(group);
             assertNotNull(group);
-            assertEquals(5, instance.listGroup().length);
+            assertEquals(6, instance.listGroup().length);
 
             Group test;
             test = instance.searchGroupBySubjectIDAndGroupID(group.getSubject().getSubjectID(), group.getGroupID());
             assertEquals(group.getGroupID(), test.getGroupID());
             assertEquals(group.getSubject(), test.getSubject());
-            assertFalse(group.getRoom().equals(test.getRoom()));
+            assertTrue(group.getRoom().equals(test.getRoom()));
             assertEquals(group.getDay(), test.getDay());
-            assertNotEquals(group.getHour1(), test.getHour1());
-            assertNotEquals(group.getHour2(), test.getHour2());
+            assertEquals(group.getHour1(), test.getHour1());
+            assertEquals(group.getHour2(), test.getHour2());
             assertEquals(group.getWeek(), test.getWeek());
 
         } catch (SQLException ex) {
@@ -62,7 +58,7 @@ public class GroupDAOTest {
 
         }
     }
-
+//Luu nhom trung MMH va mon hoc
     @Test
     public void testSaveGroup2() {
         GroupDAO instance = new GroupDAO();
@@ -105,7 +101,7 @@ public class GroupDAOTest {
 
         }
     }
-
+//Luu nhom trung phong, thoi gian hoc
     @Test
     public void testSaveGroup3() {
         GroupDAO instance = new GroupDAO();
@@ -125,16 +121,9 @@ public class GroupDAOTest {
             instance.saveGroup(group);
             assertNotNull(group);
             assertEquals(5, instance.listGroup().length);
-
             Group test;
             test = instance.searchGroupBySubjectIDAndGroupID(group.getSubject().getSubjectID(), group.getGroupID());
-            assertEquals(group.getGroupID(), test.getGroupID());
-            assertTrue(group.getSubject().equals(test.getSubject()));
-            assertFalse(group.getRoom().equals(test.getRoom()));
-            assertNotEquals(group.getDay(), test.getDay());
-            assertEquals(group.getHour1(), test.getHour1());
-            assertEquals(group.getHour2(), test.getHour2());
-            assertEquals(group.getWeek(), test.getWeek());
+            assertNull(test);
 
         } catch (SQLException ex) {
             Logger.getLogger(GroupDAOTest.class.getName()).log(Level.SEVERE, null, ex);
@@ -147,7 +136,7 @@ public class GroupDAOTest {
             }
         }
     }
-
+//Luu nhom da ton tai trong csdl
     @Test
     public void testSaveGroup4() {
         GroupDAO instance = new GroupDAO();
@@ -231,10 +220,9 @@ public class GroupDAOTest {
             }
         }
     }
-
     /**
-     * Test of listSubject method, of class GroupDAO.
-     */
+    * Test of listSubject method, of class GroupDAO.
+    */
     @Test
     public void testListSubject() {
         GroupDAO instance = new GroupDAO();
@@ -280,7 +268,6 @@ public class GroupDAOTest {
         assertEquals("123456789101112131415-1234567", result[0].getWeek());
         return;
     }
-
     /**
      * Test of searchGroupBySubjectID method, of class GroupDAO.
      */
@@ -344,7 +331,6 @@ public class GroupDAOTest {
             assertTrue(result[i].getSubject().getSubjectID().toLowerCase().contains(key));
         }
     }
-
     @Test
     public void testSearchGroupBySubjectID6() {
         //test key 
@@ -357,7 +343,6 @@ public class GroupDAOTest {
             assertTrue(result[i].getSubject().getSubjectID().toLowerCase().contains(key));
         }
     }
-
     @Test
     public void testSearchGroupBySubjectID7() {
         //test key 
@@ -366,7 +351,6 @@ public class GroupDAOTest {
         Group[] result = instance.searchGroupBySubjectID(key);
         assertNull(result);
     }
-
     @Test
     public void testSearchGroupBySubjectID8() {
         //test key 
@@ -375,7 +359,6 @@ public class GroupDAOTest {
         Group[] result = instance.searchGroupBySubjectID(key);
         assertNull(result);
     }
-
     /**
      * Test of searchGroupBySubjectIDAndGroupID method, of class GroupDAO.
      */
@@ -393,7 +376,6 @@ public class GroupDAOTest {
         assertEquals("12:00-14:00", result.getHour2());
         assertEquals("123456789101112131415-1234567", result.getWeek());
     }
-
     @Test
     public void testSearchGroupBySubjectIDAndGroupID2() throws SQLException {
         String key1 = "INT";
@@ -402,16 +384,14 @@ public class GroupDAOTest {
         Group result = instance.searchGroupBySubjectIDAndGroupID(key1, key2);
         assertNull(result);
     }
-
     @Test
     public void testSearchGroupBySubjectIDAndGroupID3() throws SQLException {
         String key1 = "INT1416";
         int key2 = 10;
         GroupDAO instance = new GroupDAO();
         Group result = instance.searchGroupBySubjectIDAndGroupID(key1, key2);
-        assertNull(result);
+       assertNull(result);
     }
-
     @Test
     public void testSearchGroupBySubjectIDAndGroupID4() throws SQLException {
         String key1 = "INT";
@@ -420,7 +400,6 @@ public class GroupDAOTest {
         Group result = instance.searchGroupBySubjectIDAndGroupID(key1, key2);
         assertNull(result);
     }
-
     @Test
     public void testSearchGroupBySubjectIDAndGroupID5() throws SQLException {
         String key1 = "";
@@ -429,7 +408,6 @@ public class GroupDAOTest {
         Group result = instance.searchGroupBySubjectIDAndGroupID(key1, key2);
         assertNull(result);
     }
-
     @Test
     public void testSearchGroupBySubjectIDAndGroupID6() throws SQLException {
         String key1 = "a' or 't'='t";
@@ -438,7 +416,6 @@ public class GroupDAOTest {
         Group result = instance.searchGroupBySubjectIDAndGroupID(key1, key2);
         assertNull(result);
     }
-
     /**
      * Test of searchSubject method, of class GroupDAO.
      */
@@ -459,15 +436,13 @@ public class GroupDAOTest {
         Subject result = instance.searchSubject(key);
         assertNull(result);
     }
-
     @Test
     public void testSearchSubject3() {
         String key = "";
         GroupDAO instance = new GroupDAO();
         Subject result = instance.searchSubject(key);
-        assertNull(result);
+         assertNull(result);
     }
-
     @Test
     public void testSearchSubject4() {
         String key = "a' or 't'='t";
@@ -489,7 +464,6 @@ public class GroupDAOTest {
         assertEquals(3, result.getCredits());
 
     }
-
     @Test
     public void testSearchSubjectID2() {
         String key = "123455";
@@ -498,7 +472,6 @@ public class GroupDAOTest {
         assertNull(result);
 
     }
-
     @Test
     public void testSearchSubjectID3() {
         String key = "";
@@ -507,7 +480,6 @@ public class GroupDAOTest {
         assertNull(result);
 
     }
-
     @Test
     public void testSearchSubjectID4() {
         String key = "a' or 't'='t";
@@ -529,7 +501,6 @@ public class GroupDAOTest {
         assertEquals(2, result.getRoomID());
         assertEquals("201 - A2", result.getNameRoom());
     }
-
     @Test
     public void testSearchroom2() {
         String key = "201";
@@ -537,7 +508,6 @@ public class GroupDAOTest {
         Room result = instance.searchroom(key);
         assertNull(result);
     }
-
     @Test
     public void testSearchroom3() {
         String key = "";
@@ -545,7 +515,6 @@ public class GroupDAOTest {
         Room result = instance.searchroom(key);
         assertNull(result);
     }
-
     @Test
     public void testSearchroom4() {
         String key = "'OR='";
@@ -565,7 +534,6 @@ public class GroupDAOTest {
         assertEquals(2, result.getRoomID());
         assertEquals("201 - A2", result.getNameRoom());
     }
-
     @Test
     public void testSearchroomID2() {
         int key = -1;
@@ -573,8 +541,7 @@ public class GroupDAOTest {
         Room result = instance.searchroomID(key);
         assertNull(result);
     }
-
-    /**
+     /**
      * Test of deleteGroup method, of class GroupDAO.
      */
     @Test
@@ -608,7 +575,6 @@ public class GroupDAOTest {
             }
         }
     }
-
     /**
      * Test of updateGroup method, of class GroupDAO.
      */
@@ -647,7 +613,7 @@ public class GroupDAOTest {
         }
 
     }
-
+//Update cung phong va thoi gian    
     @Test
     public void testUpdateGroup2() {
         GroupDAO instance = new GroupDAO();
@@ -681,43 +647,6 @@ public class GroupDAOTest {
             } catch (Exception e) {
             }
         }
-
     }
 
-    //trùng thông tin
-    @Test
-    public void testUpdateGroup3() {
-        GroupDAO instance = new GroupDAO();
-        Group group = new Group();
-        Connection con = instance.con;
-        try {
-            con.setAutoCommit(false);
-            Subject subject = new Subject("INT1461", "Xây dựng các hệ thống nhúng", 3);
-            Room room = new Room(4, "203 - A2");
-            group.setGroupID(1);
-            group.setRoom(room);
-            group.setSubject(subject);
-            group.setDay("Thứ 2");
-            group.setHour1("7:00-9:00");
-            group.setHour2("12:00-14:00");
-            group.setWeek("123456789101112131415-1234567");
-            instance.updateGroup(group);
-            Group result = instance.searchGroupBySubjectIDAndGroupID(group.getSubject().getSubjectID(), group.getGroupID());
-            assertEquals(group.getGroupID(), result.getGroupID());
-            assertEquals(group.getSubject(), result.getSubject());
-            assertTrue(group.getRoom().equals(result.getRoom()));
-            assertEquals(group.getDay(), result.getDay());
-            assertEquals(group.getHour1(), result.getHour1());
-            assertEquals(group.getHour2(), result.getHour2());
-            assertEquals(group.getWeek(), result.getWeek());
-        } catch (Exception e) {
-        } finally {
-            try {
-                con.rollback();
-                con.setAutoCommit(true);
-            } catch (Exception e) {
-            }
-        }
-
-    }
 }

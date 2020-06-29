@@ -31,17 +31,17 @@ public class TimeTabling extends javax.swing.JFrame implements ActionListener {
         db.listRoom().forEach((i) -> {
             cbListRoom.addItem(i.getNameRoom());
         });
-        gl.listRoomLab().forEach((i) -> {
-            cbRoomLab.addItem(i.getNameRoomLab());
-        });
+//        gl.listRoomLab().forEach((i) -> {
+//            cbRoomLab.addItem(i.getNameRoomLab());
+//        });
 
-        cbListSubject.addActionListener((ActionEvent e) -> {
-            if (cbListSubject.getSelectedItem().toString().equals("Phát triển ứng dụng cho các thiết bị di động")) {
-                panelLab.setVisible(true);
-            } else {
-                panelLab.setVisible(false);
-            }
-        });
+//        cbListSubject.addActionListener((ActionEvent e) -> {
+//            if (cbListSubject.getSelectedItem().toString().equals("Phát triển ứng dụng cho các thiết bị di động")) {
+//                panelLab.setVisible(true);
+//            } else {
+//                panelLab.setVisible(false);
+//            }
+//        });
 
         cbListSubject.addActionListener((ActionEvent e) -> {
             if (cbListSubject.getSelectedItem().toString().equals("Chuyên đề công nghệ phần mềm")) {

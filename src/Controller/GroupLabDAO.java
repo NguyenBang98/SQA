@@ -36,8 +36,20 @@ public class GroupLabDAO {
         }
     }
     
-    public void updateGroupLab(){
-        
+    public void updateGroupLab(GroupLab lab){
+        String sql = "UPDATE groups_lab SET RoomLabID = ?, Days = ?, hour1 = ? WHERE GroupID = ? AND SubjectID = ? AND team = ?";
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, lab.getRoomLab().getRoomLabID());
+            ps.setString(2, lab.getDay());
+            ps.setString(3, lab.getHour());
+            ps.setInt(6, lab.getTeam());
+            ps.setInt(4, lab.getGroupID());
+            ps.setString(5, lab.getSubject().getSubjectID());
+            
+            ps.executeUpdate();
+        } catch (Exception e) {
+        }
     }
     
     public ArrayList<Subject> listSubject() {
@@ -119,6 +131,34 @@ public class GroupLabDAO {
         GroupLabDAO dao;
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, key);
+            ResultSet rs = ps.executeQuery();
+            if (rs.last()) {
+                result = new GroupLab[rs.getRow()];
+                rs.beforeFirst();
+            }
+            int count = 0;
+            while (rs.next()) {
+                dao = new GroupLabDAO();
+                result[count] = new GroupLab(rs.getInt("GroupID"), rs.getInt("team"),
+                        dao.searchroomLabID(rs.getInt("RoomLabID")), dao.searchSubjectID(rs.getString("SubjectID")),
+                        rs.getString("Days"), rs.getString("hour"), rs.getString("week"));
+                count++;
+            }
+        } catch (Exception e) {
+        }
+        return result;
+    }
+    
+    public GroupLab[] listGroupLabID(String key, int team, int id) {
+        GroupLab[] result = null;
+        String sql = "SELECT * FROM grouplab WHERE SubjectID = ? AND team = ? AND GroupID = ?";
+        GroupLabDAO dao;
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, key);
+            ps.setInt(2, team);
+            ps.setInt(3, id);
             ResultSet rs = ps.executeQuery();
             if (rs.last()) {
                 result = new GroupLab[rs.getRow()];
